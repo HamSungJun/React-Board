@@ -1,0 +1,52 @@
+{
+  "name": "react-board",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack-dev-server --hot",
+    "production": "webpack -p",
+    "bundle": "webpack"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3",
+    "node-sass": "^4.9.3",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-icons": "^3.2.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-spinners": "^0.4.7",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
+    "redux-devtools": "^3.4.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HamSungJun/React-Board.git"
+  },
+  "author": "HSJPRIME",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HamSungJun/React-Board/issues"
+  },
+  "homepage": "https://github.com/HamSungJun/React-Board#readme"
+}

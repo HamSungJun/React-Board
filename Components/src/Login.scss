@@ -1,0 +1,108 @@
+$material_tomato : hsl(1, 83%, 63%);
+$material_skyblue : hsl(207, 89%, 68%);
+$material_deepblue : hsl(212, 80%, 42%);
+$material_shadow : hsl(200, 19%, 18%);
+$material_gray : hsl(0, 0%, 88%);
+$material_deeppurple : hsl(267, 75%, 31%);
+$material_lightpeach : hsl(354, 100%, 90%);
+$material_bluegrey : hsl(200, 18%, 46%);
+$material_lightgrey : hsl(200, 15%, 73%);
+$border-width : 3px;
+
+.LoginBox{
+  margin-top : 200px;
+  width : 350px;
+  border-radius: 6px;
+  // border : $border-width solid $material_shadow;
+  height : 400px;
+  background-color: hsla(0,0%,98%,0.85);
+  box-shadow: 6px 6px 3px $material_shadow;
+  .User{
+    margin-top : -64px;
+    text-align: center;
+  }
+  .circle{
+    border-radius: 50%;
+    background-color: white;
+    color : $material_shadow;
+    box-shadow: 0 6px 6px $material_shadow;
+    z-index: 2;
+  }
+  .Header{
+    text-align: center;
+    padding : 20px;
+  }
+  .Header__Text{
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color : $material_shadow;
+  }
+
+  .Input-Row{
+    text-align: center;
+  }
+  .Input-Row:nth-child(1){
+    margin-bottom : 7px;
+  }
+  .Input-Row__Input{
+    width : 240px;
+    height : 40px;
+    border-radius: 8px;
+    border : 2px solid #ccc;
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    
+  }
+  .Input-Row__Input:focus{
+    outline : none;
+    border : 2px solid $material_shadow;
+  }
+  .--ShadowBorder{
+    border : 2px solid $material_shadow;
+  }
+  .Input-Row__Check{
+    margin-left: 54px;
+    margin-top : 14px;
+  }
+  .Input-Row__Find{
+    margin-left : 75px;
+    
+  }
+  .Input-Row__Text{
+    font-weight : bold;
+    font-size : 14px;
+  }
+  .Input-Row__Text a{
+    color : black;
+    text-decoration: none;
+  }
+  .Input-Row__Text a:hover{
+    color : $material_deepblue;
+  }
+
+  .Button-Row{
+    text-align: center;
+    padding : 30px 0;
+  }
+  .Button-Row__Button{
+    cursor: pointer;
+    border: none;
+    background-color: $material_lightgrey;
+    transition: background-color 0.25s ease-out;
+    width: 240px;
+    height : 40px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color : white;
+  }
+  .Button-Row__Button:hover{
+    background-color: $material_shadow;
+  }
+  .Button-Row__Button:focus{
+    outline : none;
+  }
+}

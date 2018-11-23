@@ -1,0 +1,31 @@
+$material_skintone : hsl(14, 100%, 70%);
+
+
+@font-face{
+  font-family: "NotoSansKR-Regular";
+  src: url("../../public/Fonts/NotoSansKR-Regular-Hestia.woff") format("woff");
+  font-weight: normal;
+}
+@font-face{
+  font-family: "NotoSansKR-Bold";
+  src: url("../../public/Fonts/NotoSansKR-Regular-Hestia.woff") format("woff");
+  font-weight: bold;
+}
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "NotoSansKR-Bold",sans-serif
+}
+.Wrapper{
+  background-color: $material_skintone;
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+%Flex-Center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
