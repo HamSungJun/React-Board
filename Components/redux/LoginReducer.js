@@ -1,4 +1,4 @@
-import { A_TYPING_LOGIN_FORM_ID , A_TYPING_LOGIN_FORM_PW , A_IS_REMEMBER_CHECKED , A_SUBMIT_BUTTON_CLCICKED} from './LoginAction.js'
+import { A_TYPING_LOGIN_FORM_ID , A_TYPING_LOGIN_FORM_PW , A_IS_REMEMBER_CHECKED , A_SUBMIT_BUTTON_CLCICKED , A_AUTH_SUCCESS , A_AUTH_ERROR , A_CLEAR_LOGIN} from './LoginAction.js'
 
 const loginInitialState = {
   ID : "",
@@ -29,6 +29,23 @@ const loginReducer = (state = loginInitialState , action) => {
     case A_SUBMIT_BUTTON_CLCICKED :
       return Object.assign({},state,{
         IS_AUTHORIZING : action.value
+      })
+
+    case A_AUTH_SUCCESS :
+      return Object.assign({},state,{
+        IS_AUTHORIZING : !(action.value),
+        IS_AUTH_SUCCESS : action.value
+      })
+    case A_AUTH_ERROR :
+      return Object.assign({},state,{
+        IS_AUTHORIZING : !(action.value),
+        IS_AUTH_ERROR : action.value
+      })
+    case A_CLEAR_LOGIN :
+      return Object.assign({},state,{
+        IS_AUTHORIZING : action.value,
+        IS_AUTH_SUCCESS : action.value,
+        IS_AUTH_ERROR : action.value
       })
 
     default : 
