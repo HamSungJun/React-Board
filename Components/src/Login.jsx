@@ -20,14 +20,45 @@ const MoveToHome = (props) => {
   console.log(props)
 }
 const LoginProcess = (props) => (
+
 <div className="Wrapper">
+
+  <div className="Modal-Wrapper">
+
+    <div className="Modal-Content">
+
+      <div className="Modal-Header">
+        <div className="Modal-Header__Block --Top-Left-Block">
+          <span className="Modal-Header__Text">
+          Register</span>
+        </div>
+        <div className="Modal-Header__Block --Top-Right-Block">
+          <span className="Modal-Header__Text">
+          Close</span>
+        </div>
+      </div>
+
+      
+      <div className="Modal-Body__Row">
+        <div className="User_Img">
+          <img src="./Images/unknown.png" alt="userimg"/>
+        </div>
+      </div>
+
+      <div className="Modal-Footer">
+      </div>
+
+    </div>
+
+  </div>
+
 
   <div className="LoginBox" >
 
     <div>
 
         <div className="User">
-            <MdAccountCircle id="circle" className="circle" size={120}/>
+            <MdAccountCircle id="initialCircle" className="circle" size={120}/>
         </div>
         
         <div className="Header">
@@ -45,16 +76,22 @@ const LoginProcess = (props) => (
           </div>
 
           <div>
-            <input checked={props.isChecked} onChange={props.remember} className="Input-Row__Check" type="checkbox" name="REMEMBER" /> <span className="Input-Row__Text">Remember</span> 
-            <span  className="Input-Row__Find Input-Row__Text"><Link to="/home">Find ID/PW</Link></span>
+            <input checked={props.isChecked} onChange={props.remember} className="Input-Row__Left" type="checkbox" name="REMEMBER" /> <span className="Input-Row__Text">Remember</span> 
+            <span  className="Input-Row__Right Input-Row__Text"><Link to="/home">Find ID/PW</Link></span>
           </div>
 
+          
+          
         </div>
 
         <div className="Button-Row">
 
           <div>
-            <button onClick={props.submit} className="Button-Row__Button" type="button">Login</button>
+            <button onClick={props.submit} className="Button-Row__Button --Login-Button" type="button">Login</button>
+          </div>
+
+          <div>
+            <button className="Button-Row__Button --Register-Button" type="button">Register</button>  
           </div>
           
         </div>

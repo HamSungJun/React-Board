@@ -7,6 +7,8 @@ $material_deeppurple : hsl(267, 75%, 31%);
 $material_lightpeach : hsl(354, 100%, 90%);
 $material_bluegrey : hsl(200, 18%, 46%);
 $material_lightgrey : hsl(200, 15%, 73%);
+$material_lightred : hsl(339, 100%, 48%);
+
 $border-width : 3px;
 
 .LoginBox{
@@ -63,11 +65,11 @@ $border-width : 3px;
   .--ShadowBorder{
     border : 2px solid $material_shadow;
   }
-  .Input-Row__Check{
+  .Input-Row__Left{
     margin-left: 54px;
     margin-top : 14px;
   }
-  .Input-Row__Find{
+  .Input-Row__Right{
     margin-left : 75px;
     
   }
@@ -90,19 +92,116 @@ $border-width : 3px;
   .Button-Row__Button{
     cursor: pointer;
     border: none;
-    background-color: $material_lightgrey;
-    transition: background-color 0.25s ease-out;
     width: 240px;
     height : 40px;
     border-radius: 8px;
     font-size: 20px;
     font-weight: bold;
     color : white;
-  }
-  .Button-Row__Button:hover{
-    background-color: $material_shadow;
+    transition: color 0.25s ease-out;
   }
   .Button-Row__Button:focus{
     outline : none;
+  }
+  .--Login-Button{
+    background-color: $material_tomato;
+  }
+  .--Login-Button:hover{
+    color: $material_shadow;
+  }
+  .--Register-Button{
+    margin-top : 5px;
+    background-color: $material_shadow;
+  }
+  .--Register-Button:hover{
+    color : $material_tomato;
+  }
+
+
+}
+
+.Modal-Wrapper{
+  //display: none;
+  position: fixed;
+  z-index: 1;
+  width : 100%;
+  height : 100%;
+  top : 0;
+  left : 0;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  .Modal-Content {
+    background-color: white;
+    margin: 130px auto 0 auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    height : 500px;           
+    border-radius: 12px;
+    box-shadow: 5px 5px 5px $material_shadow;
+  }
+
+  .Modal-Header__Block{
+    cursor : pointer;
+    background-color : white;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width : calc(50% - 20px);
+    height : 25px;
+    margin-top : -20px;
+    transition: color 0.25s ease-out;
+    transition: background-color 0.25s ease-out;
+    opacity: 0.5;
+  }
+
+  .Modal-Header__Text{
+    font-size: 22px;
+  }
+
+  .--Top-Left-Block{
+    margin-left : -20px;
+    border-top-left-radius: 12px;
+    color : $material_shadow;
+    box-shadow: inset 0 0 1px $material_shadow;
+    
+  }
+  .--Top-Left-Block:hover{
+    color : white;
+    background-color: $material_shadow;
+    opacity: 1;
+  }
+
+  .--Top-Right-Block{
+    margin-right : -20px;
+    border-top-right-radius: 12px;
+    color : $material_lightred;
+    box-shadow: inset 0 0 1px $material_lightred;
+  }
+  .--Top-Right-Block:hover{
+    color : white;
+    background-color: $material_lightred;
+    opacity: 1;
+  }
+
+  .Modal-Body__Row{
+    text-align: center;
+  }
+  .User_Img{
+    margin-top : 20px;
+    display: inline-block;
+    text-align: center;
+    overflow: hidden;
+    width : 150px;
+    height : 150px;
+    border : 3px solid #ccc  ;
+    border-radius: 50%;
+  }
+  .User_Img img{
+    margin-top : 20px;
+    width: 100%;
+    height : 100%;
   }
 }
