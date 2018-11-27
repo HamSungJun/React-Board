@@ -3,6 +3,7 @@
 ## Installation
 
 ~~~
+  (!Client Side)
 
   ./Project Root Diretory
 
@@ -10,6 +11,11 @@
     $npm install
     $npm run dev ---> localhost:9000
 
+  (!Server Side <= This is local REST)
+
+    $node app.js ---> localhost:3000
+
+  After then, all of Client's Http Requests wiil be sent to localhost:3000/(Some Routes)
 ~~~
 
 ## 개발 내역
