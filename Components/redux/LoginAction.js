@@ -9,6 +9,8 @@ export const A_AUTH_SUCCESS = "A_AUTH_SUCCESS"
 export const A_AUTH_ERROR = "A_AUTH_ERROR"
 export const A_CLEAR_LOGIN = "A_CLEAR_LOGIN"
 
+export const A_TOGGLE_MODAL = "A_TOGGLE_MODAL"
+
 export const AC_TYPING_LOGIN_FORM = (TargetName , TargetValue) => {
 
   if(TargetName === "INPUT_ID"){
@@ -83,5 +85,11 @@ export const AC_CLEAR_LOGIN = () => {
   return {
     type : A_CLEAR_LOGIN,
     value : false
+  }
+}
+
+export const AC_TOGGLE_MODAL = () => {
+  return {
+    type : A_TOGGLE_MODAL
   }
 }

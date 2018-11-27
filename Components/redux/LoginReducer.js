@@ -1,4 +1,4 @@
-import { A_TYPING_LOGIN_FORM_ID , A_TYPING_LOGIN_FORM_PW , A_IS_REMEMBER_CHECKED , A_SUBMIT_BUTTON_CLCICKED , A_AUTH_SUCCESS , A_AUTH_ERROR , A_CLEAR_LOGIN} from './LoginAction.js'
+import { A_TYPING_LOGIN_FORM_ID , A_TYPING_LOGIN_FORM_PW , A_IS_REMEMBER_CHECKED , A_SUBMIT_BUTTON_CLCICKED , A_AUTH_SUCCESS , A_AUTH_ERROR , A_CLEAR_LOGIN , A_TOGGLE_MODAL} from './LoginAction.js'
 
 const loginInitialState = {
   ID : "",
@@ -6,7 +6,8 @@ const loginInitialState = {
   REMEMBER : false,
   IS_AUTHORIZING : false,
   IS_AUTH_SUCCESS : false,
-  IS_AUTH_ERROR : false
+  IS_AUTH_ERROR : false,
+  TOGGLE_MODAL : false
 }
 
 const loginReducer = (state = loginInitialState , action) => {
@@ -47,7 +48,10 @@ const loginReducer = (state = loginInitialState , action) => {
         IS_AUTH_SUCCESS : action.value,
         IS_AUTH_ERROR : action.value
       })
-
+    case A_TOGGLE_MODAL :
+      return Object.assign({},state,{
+        TOGGLE_MODAL : !(state.TOGGLE_MODAL)
+      })
     default : 
       return state
   }
