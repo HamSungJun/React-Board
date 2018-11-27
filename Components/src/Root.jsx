@@ -11,7 +11,6 @@ import Home from './Home.jsx'
 
 import '../Styles/Share.scss'
 
-
 class Root extends React.Component{
 
   render(){

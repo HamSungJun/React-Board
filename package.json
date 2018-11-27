@@ -11,9 +11,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "bson-ext": "^2.0.1",
     "cors": "^2.8.5",
     "express": "^4.16.3",
     "history": "^4.7.2",
+    "kerberos": "^1.1.2",
+    "mongodb": "^3.1.10",
     "node-sass": "^4.9.3",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
@@ -24,7 +27,8 @@
     "react-spinners": "^0.4.7",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

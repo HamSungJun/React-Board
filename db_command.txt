@@ -1,0 +1,6 @@
+create collection('formalUsers');
+create collection('nonformalUsers');
+
+db.unformalUsers.ensureIndex({expire:1},{expireAfterSeconds : 10});
+db.unformalUsers.insertOne({a:'a',expire: new Date()})
+
