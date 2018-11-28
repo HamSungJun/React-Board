@@ -1,6 +1,7 @@
+// 컬렉션 생성
 db.createcollection('formalUsers');
 db.createcollection('nonformalUsers');
-
+// TTL 설정
 db.unformalUsers.ensureIndex({expire:1},{expireAfterSeconds : 600});
 db.unformalUsers.insertOne({a:'a',expire: new Date()})
 

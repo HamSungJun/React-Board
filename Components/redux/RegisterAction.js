@@ -18,7 +18,7 @@ export const AC_TYPING_REGISTER_FORM = (TYPE,VALUE,VALID) => {
 
 export const AC_ASSIGN_PROFILE_IMAGE = (VALUE) => {
   return {
-    type : AC_ASSIGN_PROFILE_IMAGE,
+    type : A_ASSIGN_PROFILE_IMAGE,
     value : VALUE
   }
 }

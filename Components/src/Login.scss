@@ -4,11 +4,11 @@ $material_deepblue : hsl(212, 80%, 42%);
 $material_shadow : hsl(200, 19%, 18%);
 $material_gray : hsl(0, 0%, 88%);
 $material_deeppurple : hsl(267, 75%, 31%);
-$material_lightpeach : hsl(354, 100%, 90%);
 $material_bluegrey : hsl(200, 18%, 46%);
 $material_lightgrey : hsl(200, 15%, 73%);
 $material_lightred : hsl(339, 100%, 48%);
 $material_grey : hsl(200, 18%, 26%);
+$material_palegreen : hsl(151, 100%, 45%);
 $border-width : 3px;
 
 .--Modal-hide {
@@ -161,13 +161,13 @@ $border-width : 3px;
     margin-top : -20px;
     transition: color 0.25s ease-out;
     transition: background-color 0.25s ease-out;
-    opacity: 0.5;
+    
   }
 
   .Modal-Header__Text{
     font-size: 22px;
   }
-
+  
   .--Top-Left-Block{
     margin-left : -20px;
     border-top-left-radius: 12px;
@@ -175,22 +175,22 @@ $border-width : 3px;
     box-shadow: inset 0 0 1px $material_shadow;
     
   }
-  .--Top-Left-Block:hover{
-    color : white;
-    background-color: $material_shadow;
+ 
+  .--UnAvailable{
+    opacity: 0.5;  
+  }
+  .--Available{
     opacity: 1;
+    color : $material_shadow;
+    background-color: $material_palegreen;
   }
 
   .--Top-Right-Block{
     margin-right : -20px;
     border-top-right-radius: 12px;
-    color : $material_lightred;
-    box-shadow: inset 0 0 1px $material_lightred;
-  }
-  .--Top-Right-Block:hover{
     color : white;
+    box-shadow: inset 0 0 1px $material_lightred;
     background-color: $material_lightred;
-    opacity: 1;
   }
 
   .Modal-Body__Row{

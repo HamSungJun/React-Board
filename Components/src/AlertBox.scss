@@ -1,0 +1,16 @@
+$material_alertborder : hsl(42, 100%, 50%);
+$material_alertbackground : hsl(45, 100%, 85%);
+$material_shadow : hsl(200, 19%, 18%);
+$material_alerttext : hsl(16, 18%, 47%);
+.AlertBox{
+  margin : 20px 20px;
+  border : 1px solid $material_alertborder;
+  background-color: $material_alertbackground;
+  border-radius : 12px;
+  padding : 10px;
+  
+}
+.AlertBox__Text{
+  color : $material_alerttext;
+  font-size: 12px;
+}

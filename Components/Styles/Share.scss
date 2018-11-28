@@ -1,5 +1,5 @@
 $material_skintone : hsl(14, 100%, 70%);
-
+$material_lightpeach : hsl(5, 100%, 75%);
 
 @font-face{
   font-family: "NotoSansKR-Regular";
@@ -17,7 +17,7 @@ $material_skintone : hsl(14, 100%, 70%);
   font-family: "NotoSansKR-Bold",sans-serif
 }
 .Wrapper{
-  background-color: $material_skintone;
+  background-color: $material_lightpeach;
   width: 100%;
   min-height: 100vh;
   height: auto;

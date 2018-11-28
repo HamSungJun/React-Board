@@ -115,7 +115,15 @@ const mapDispatchToProps = (dispatch) => {
 
         }
 
+      },
+
+      imageFlush(){
+        dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(false))
+      },
+      imageAlloc(){
+        dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(true))
       }
+
     }
   }
   

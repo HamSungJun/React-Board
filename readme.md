@@ -33,3 +33,10 @@
 
 ![login_2](./ScreenShots/login_2.PNG)
 
+#### 2018-11-29
+
+>수요일 시간 많은 날에 회원가입 폼을 리덕스 스토어와 연결하였습니다. 입력 인풋 요소들에게는 각각의 정규식을 통해 입력된 값에 대한 검증을 수행하고 유효한 입력이면 State는 true 상태로 변경됩니다. 입력이 유효하지 않을 경우 AlertBox가 Live Append 됩니다. 모든 필요 Boolean State가 만족하게 될때 Submit 버튼이 밝은 초록색으로 이용 가능해 집니다.
+
+![register_2](./ScreenShots/register_2.PNG)
+
+![register_3](./ScreenShots/register_3.PNG)
