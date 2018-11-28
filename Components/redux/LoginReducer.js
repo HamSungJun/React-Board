@@ -1,4 +1,4 @@
-import { A_TYPING_LOGIN_FORM_ID , A_TYPING_LOGIN_FORM_PW , A_IS_REMEMBER_CHECKED , A_SUBMIT_BUTTON_CLCICKED , A_AUTH_SUCCESS , A_AUTH_ERROR , A_CLEAR_LOGIN , A_TOGGLE_MODAL} from './LoginAction.js'
+import * as LoginActions from './LoginAction.js'
 
 const loginInitialState = {
   ID : "",
@@ -12,43 +12,43 @@ const loginInitialState = {
 
 const loginReducer = (state = loginInitialState , action) => {
   switch(action.type){
-    case A_TYPING_LOGIN_FORM_ID :
+    case LoginActions.A_TYPING_LOGIN_FORM_ID :
       return Object.assign({},state,{
         ID : action.value
       })
 
-    case A_TYPING_LOGIN_FORM_PW :
+    case LoginActions.A_TYPING_LOGIN_FORM_PW :
       return Object.assign({},state,{
         PW : action.value
       })
 
-    case A_IS_REMEMBER_CHECKED :
+    case LoginActions.A_IS_REMEMBER_CHECKED :
       return Object.assign({},state,{
         REMEMBER : action.value
       })
 
-    case A_SUBMIT_BUTTON_CLCICKED :
+    case LoginActions.A_SUBMIT_BUTTON_CLCICKED :
       return Object.assign({},state,{
         IS_AUTHORIZING : action.value
       })
 
-    case A_AUTH_SUCCESS :
+    case LoginActions.A_AUTH_SUCCESS :
       return Object.assign({},state,{
         IS_AUTHORIZING : !(action.value),
         IS_AUTH_SUCCESS : action.value
       })
-    case A_AUTH_ERROR :
+    case LoginActions.A_AUTH_ERROR :
       return Object.assign({},state,{
         IS_AUTHORIZING : !(action.value),
         IS_AUTH_ERROR : action.value
       })
-    case A_CLEAR_LOGIN :
+    case LoginActions.A_CLEAR_LOGIN :
       return Object.assign({},state,{
         IS_AUTHORIZING : action.value,
         IS_AUTH_SUCCESS : action.value,
         IS_AUTH_ERROR : action.value
       })
-    case A_TOGGLE_MODAL :
+    case LoginActions.A_TOGGLE_MODAL :
       return Object.assign({},state,{
         TOGGLE_MODAL : !(state.TOGGLE_MODAL)
       })

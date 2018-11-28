@@ -10,7 +10,6 @@ let MonDB = require('../MongoTransactions.js')
 registerRouter.use(bodyParser.urlencoded({ extended: false }))
 registerRouter.use(bodyParser.json())
 registerRouter.use(bodyParser.text())
-
 registerRouter.use(express.static('../'))
 
 registerRouter.post('/nonformalRegisterFile',(req,res)=>{
@@ -43,27 +42,6 @@ registerRouter.post('/nonformalRegisterFile',(req,res)=>{
     res.end(unique.toString())
   })
 
-
-  
-
-  
-
-  // let NF_USER_EMAIL = req.body.EMAIL
-  // let NF_USER_USERNAME = req.body.USERNAME
-  // let NF_USER_PW = req.body.PW
-  // // Hashed Password
-  // let hashedPW = shajs('sha256').update(NF_USER_PW).digest('hex')  
-
-  // let expireAt = new Date()
-  
-  // MonDB.INSERT_TO_NON_FORMAL_USERS({
-  //   EMAIL : NF_USER_EMAIL,
-  //   USERNAME : NF_USER_USERNAME,
-  //   PW : hashedPW,
-  //   U_IMG_PATH : "",
-  //   expire : expireAt
-  // })
-
 })
 
 registerRouter.delete('/nonformalRegisterFile',(req,res)=> {
@@ -90,6 +68,25 @@ registerRouter.delete('/nonformalRegisterFile',(req,res)=> {
 
 })
 
+// registerRouter.post('/nonformalRegister',(req,res) => {
+
+//   let NF_USER_EMAIL = req.body.EMAIL
+//   let NF_USER_USERNAME = req.body.USERNAME
+//   let NF_USER_PW = req.body.PW
+//   // Hashed Password
+//   let hashedPW = shajs('sha256').update(NF_USER_PW).digest('hex')  
+
+//   let expireAt = new Date()
+  
+//   MonDB.INSERT_TO_NON_FORMAL_USERS({
+//     EMAIL : NF_USER_EMAIL,
+//     USERNAME : NF_USER_USERNAME,
+//     PW : hashedPW,
+//     U_IMG_PATH : "",
+//     expire : expireAt
+//   })
+
+// })
 const getExt = (mime) => {
   let text = mime.split('/')
   return text[1]

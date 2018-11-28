@@ -22,7 +22,7 @@ class Root extends React.Component{
           <div>
             <Switch>
               <Route exact path="/" component={Login} ></Route>
-              {/* <Route path="/register" component={Register} ></Route>
+              {/*
               <Route path="/find" component={Find} ></Route> */}
               <Route path="/home" component={Home} ></Route>
               {/* <Route component={} ></Route> */}
