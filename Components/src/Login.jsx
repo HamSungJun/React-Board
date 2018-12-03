@@ -116,12 +116,14 @@ const mapDispatchToProps = (dispatch) => {
         }
 
       },
-
-      imageFlush(){
-        dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(false))
+      registerSubmit(){
+        dispatch(registerActions.AC_SUBMIT_REGISTER_FORM())
       },
-      imageAlloc(){
-        dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(true))
+      imageFlush(bool = false , file = {}){
+        dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(false , {}))
+      },
+      imageAlloc(bool = true , FILE_INFO){
+        dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(bool , FILE_INFO))
       }
 
     }

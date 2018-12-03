@@ -1,4 +1,5 @@
 import history from '../history/history.js'
+import { SERVER_URL } from './GlobalURL.js';
 
 export const A_TYPING_LOGIN_FORM_ID = "A_TYPING_LOGIN_FORM_ID"
 export const A_TYPING_LOGIN_FORM_PW = "A_TYPING_LOGIN_FORM_PW"
@@ -50,19 +51,20 @@ export const AC_LOGIN_PROCESS_START = () => {
 
     let SnapShot = getState();
   
-    fetch('http://localhost:3000/login',{
+    fetch(`${SERVER_URL}/login`,{
       method : 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body : JSON.stringify({
-        ID : SnapShot.ID,
-        PW : SnapShot.PW,
-        REMEMBER : SnapShot.REMEMBER
+        ID : SnapShot.login.ID,
+        PW : SnapShot.login.PW,
+        REMEMBER : SnapShot.login.REMEMBER
       })
     }).then((response) => (response.json())).then((Jres) => {
       if(Jres.status === 1){
+
         dispatch({
           type : A_AUTH_SUCCESS,
           value : true
