@@ -122,6 +122,18 @@ const mapDispatchToProps = (dispatch) => {
       },
       imageAlloc(){
         dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(true))
+      },
+
+      registerSubmit(event){
+
+        if(event.target.classList.contains('--Available')){
+          dispatch(registerActions.AC_SUBMIT_REGISTER_FORM())  
+        }
+        else{
+          alert('먼저 폼을 완전히 작성하십시오.')
+        }
+
+        
       }
 
     }

@@ -24,9 +24,33 @@ export const AC_ASSIGN_PROFILE_IMAGE = (VALUE) => {
 }
 
 export const AC_SUBMIT_REGISTER_FORM = () => {
-  return (dispatch , getState) => {
+  // return (dispatch , getState) => {
+  //   let SnapShot = getState()
 
-  }
+  //   fetch('http://localhost:3000/register/nonformalRegisterForm',{
+  //     method : 'POST',
+  //     headers: {
+  //       'Accept' : 'application/json',
+  //       'Content-Type' : 'application/json'
+  //     },
+  //     body : JSON.stringify({
+  //       USERNAME : SnapShot.register.USERNAME,
+  //       EMAIL : SnapShot.register.EMAIL,
+  //       PW : SnapShot.register.PW
+  //     })
+  //   }).then((response) => (response.json())).then((Jres) => {
+  //     if(Jres.status === 1){
+  //       dispatch({
+
+  //       })
+  //     }
+  //     else{
+  //       dispatch({
+          
+  //       })
+  //     }
+  //   })
+  // }
 }
 
 

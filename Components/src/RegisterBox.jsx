@@ -15,7 +15,7 @@ export const RegisterBox = (props) => {
 
       <div className="Modal-Content">
         <div className="Modal-Header">
-          <div className={"Modal-Header__Block --Top-Left-Block "+((props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED)?"--Available":"--Unavailable")}>
+          <div onClick={props.registerDispatch.registerSubmit} className={"Modal-Header__Block --Top-Left-Block "+((props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED)?"--Available":"--Unavailable")}>
             <span className="Modal-Header__Text">
             Submit</span>
           </div>

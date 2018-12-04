@@ -5,7 +5,6 @@ const registerInitialState = {
   USERNAME : "",
   EMAIL : "",
   PW : "",
-  SUBMIT_DISABLED : true,
   IS_IMG_ASSIGNED : false,
   IS_VALID_NAME : false,
   IS_VALID_EMAIL : false,
