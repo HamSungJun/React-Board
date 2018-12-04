@@ -12,9 +12,11 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import './filepond.min.css';
 import './filepond-plugin-image-preview.min.css'
-import AlertBox from './AlertBox.jsx'
-import { SERVER_URL } from '../redux/GlobalURL';
 
+import { Redirect } from 'react-router-dom'
+import { ScaleLoader } from 'react-spinners'
+import { SERVER_URL } from '../redux/GlobalURL';
+import AlertBox from './AlertBox.jsx'
 registerPlugin(
   FilePondPluginImagePreview,
   FilePondPluginFileValidateSize,
@@ -24,99 +26,117 @@ registerPlugin(
 
 export const RegisterBox = (props) => {
 
-  return(
-    <div className={"Modal-Wrapper " + (props.loginState.TOGGLE_MODAL?"--Modal-show":"--Modal-hide")}>
+    return(
 
-      <div className="Modal-Content">
-        <div className="Modal-Header">
-          <div onClick={()=>{
-            if(props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED){
-              props.registerDispatch.registerSubmit()
-            }
-          }} className={"Modal-Header__Block --Top-Left-Block "+((props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED)?"--Available":"--Unavailable")}>
-            <span className="Modal-Header__Text">
-            Submit</span>
-          </div>
-          <div onClick={props.loginDispatch.modal} className="Modal-Header__Block --Top-Right-Block">
-            <span className="Modal-Header__Text">
-            Close</span>
-          </div>
-        </div>
-
+      <div className={"Modal-Wrapper " + (props.loginState.TOGGLE_MODAL?"--Modal-show":"--Modal-hide")}>
+        {!props.IS_SUBMIT_SUCCESS?
+        (
+        <div className="Modal-Content">
         
-        <div className="Modal-Body">
-          {AlertDrawer(props.registerState)}
-          <div className="Form-Grid">
-
-            <div className="Form-Grid__Item">
-
-              <div className="Form-Input-Row">
-                <label className="Form-Label" htmlFor="">Username</label>
-                <input onChange={props.registerDispatch.registerTyping}  name="USERNAME" className={"Form-Input "+((props.registerState.IS_VALID_NAME?"--Available":"--Input-Unavaliable"))} type="text"/>
-              </div>
-
-              <div className="Form-Input-Row">
-                <label className="Form-Label" htmlFor="">Email</label>
-                <input onChange={props.registerDispatch.registerTyping} name="EMAIL" className={"Form-Input "+((props.registerState.IS_VALID_EMAIL?"--Available":"--Input-Unavaliable"))} type="text"/>
-              </div>
-
-              <div className="Form-Input-Row">
-                <label className="Form-Label" htmlFor="">Password</label>
-                <input onChange={props.registerDispatch.registerTyping} name="PASSWORD" className={"Form-Input "+((props.registerState.IS_VALID_PW?"--Available":"--Input-Unavaliable"))} type="password"/>
-              </div>
-
+          <div className="Modal-Header">
+            <div onClick={()=>{
+              if(props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED){
+                props.registerDispatch.registerSubmit()
+              }
+            }} className={"Modal-Header__Block --Top-Left-Block "+((props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED)?"--Available":"--Unavailable")}>
+              <span className="Modal-Header__Text">
+              Submit</span>
             </div>
-
-            <div className="Form-Grid__Item">
-              <label className="Form-Label" htmlFor="">Profile Image</label>
-              <FilePond 
-                
-                maxFiles={1}
-                server={`${SERVER_URL}/register/nonformalRegisterFile`}
-
-                allowDrop={(props.registerState.IS_VALID_PW && props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME)}
-                allowBrowse={(props.registerState.IS_VALID_PW && props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME)}
-                allowPaste={(props.registerState.IS_VALID_PW && props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME)}
-
-                allowMultiple={false}
-                allowRevert={true}
-
-                allowFileSizeValidation={true}
-                maxFileSize='2MB'
-
-                allowFileTypeValidation={true}
-                acceptedFileTypes={['image/*']}
-
-                onremovefile={()=>{
-                  props.registerDispatch.imageFlush(false,{})
-                }}
-                onprocessfile={(error,file)=>{
-
-                  let FILE_INFO = `${file.serverId}.${file.fileExtension}`
-
-                  props.registerDispatch.imageAlloc(true,FILE_INFO)
-
-                }}
-                onprocessfilerevert={()=>{
-                  props.registerDispatch.imageFlush(false,{})
-                }}
-                   
-              />
+            <div onClick={props.loginDispatch.modal} className="Modal-Header__Block --Top-Right-Block">
+              <span className="Modal-Header__Text">
+              Close</span>
             </div>
-
           </div>
-          
+        
+        <div>
+         {!props.registerState.IS_SUBMITTING?
+          (
+          <div className="Modal-Body">
+            {AlertDrawer(props.registerState)}
+            <div className="Form-Grid">
+        
+              <div className="Form-Grid__Item">
+        
+                <div className="Form-Input-Row">
+                  <label className="Form-Label" htmlFor="">Username</label>
+                  <input id="INPUT_ID" onChange={props.registerDispatch.registerTyping}  name="USERNAME" className={"Form-Input "+((props.registerState.IS_VALID_NAME?"--Available":"--Input-Unavaliable"))} type="text"/>
+                </div>
+        
+                <div className="Form-Input-Row">
+                  <label className="Form-Label" htmlFor="">Email</label>
+                  <input id="INPUT_EMAIL" onChange={props.registerDispatch.registerTyping} name="EMAIL" className={"Form-Input "+((props.registerState.IS_VALID_EMAIL?"--Available":"--Input-Unavaliable"))} type="text"/>
+                </div>
+        
+                <div className="Form-Input-Row">
+                  <label className="Form-Label" htmlFor="">Password</label>
+                  <input id="INPUT_PW" onChange={props.registerDispatch.registerTyping} name="PASSWORD" className={"Form-Input "+((props.registerState.IS_VALID_PW?"--Available":"--Input-Unavaliable"))} type="password"/>
+                </div>
+        
+              </div>
+        
+              <div className="Form-Grid__Item">
+                <label className="Form-Label" htmlFor="">Profile Image</label>
+                <FilePond 
+                  
+                  maxFiles={1}
+                  server={`${SERVER_URL}/register/nonformalRegisterFile`}
+        
+                  allowDrop={(props.registerState.IS_VALID_PW && props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME)}
+                  allowBrowse={(props.registerState.IS_VALID_PW && props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME)}
+                  allowPaste={(props.registerState.IS_VALID_PW && props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME)}
+        
+                  allowMultiple={false}
+                  allowRevert={true}
+        
+                  allowFileSizeValidation={true}
+                  maxFileSize='2MB'
+        
+                  allowFileTypeValidation={true}
+                  acceptedFileTypes={['image/*']}
+        
+                  onremovefile={()=>{
+                    props.registerDispatch.imageFlush(false,{})
+                  }}
+                  onprocessfile={(error,file)=>{
+        
+                    let FILE_INFO = `${file.serverId}.${file.fileExtension}`
+        
+                    props.registerDispatch.imageAlloc(true,FILE_INFO)
+        
+                  }}
+                  onprocessfilerevert={()=>{
+                    props.registerDispatch.imageFlush(false,{})
+                  }}
+                    
+                />
+              </div>
+        
+            </div>
+            
+          </div>
+          )
+          :
+          (
+          <div className="Loader-Box">
+            <ScaleLoader height={75} width={15} color='hsl(151, 100%, 45%)' />
+          </div>
+          )
+        }
+        
         </div>
-
-        <div className="Modal-Footer">
-        </div>
+        
+        </div>):
+        (
+          <div>
+            <Redirect />
+          </div>
+        )
+      }
 
       </div>
+    )
+  }
 
-    </div>
-  )
-
-}
 
 const AlertDrawer = (props) => {
 

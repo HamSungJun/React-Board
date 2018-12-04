@@ -118,6 +118,7 @@ const mapDispatchToProps = (dispatch) => {
       },
       registerSubmit(){
         dispatch(registerActions.AC_SUBMIT_REGISTER_FORM())
+        
       },
       imageFlush(bool = false , file = {}){
         dispatch(registerActions.AC_ASSIGN_PROFILE_IMAGE(false , {}))

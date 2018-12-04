@@ -19,7 +19,7 @@ $border-width : 3px;
 }
 
 .LoginBox{
-  margin-top : 200px;
+  margin-bottom: 150px;
   width : 350px;
   border-radius: 6px;
   // border : $border-width solid $material_shadow;
@@ -240,5 +240,12 @@ $border-width : 3px;
     border : 2px solid $material_grey;
     color : $material_shadow;
     transition : background-color 0.25s ease-out
+  }
+
+  .Loader-Box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height : 500px;
   }
 }

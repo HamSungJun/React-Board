@@ -62,6 +62,7 @@ const registerReducer = (state = registerInitialState , action) => {
         IS_SUBMITTING : false,
         IS_SUBMIT_SUCCESS : true,
         IS_SUBMIT_ERROR : false,
+        
       })
 
     case Actions.AC_SUBMIT_ERROR :
