@@ -22,14 +22,17 @@ class DB_Machine {
     const db = client.db(DB_board)
 
     db.collection(DB_Colletions.nonformalUsers).insertOne(doc,(err,result)=>{
+      
       console.log(doc)
       assert.equal(err,null)
       assert.equal(1,result.result.n)
       console.log(`Inserted 1 document into ${DB_board}.${DB_Colletions.nonformalUsers}`)
       client.close()
+      
     })
     
   })   
+
  }
 
 }

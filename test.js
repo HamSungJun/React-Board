@@ -1,6 +1,3 @@
-let USERNAME_REGEX = /^[가-힣a-zA-Z0-9\_\-]{2,12}$/
+let sha3_256 = require('js-sha3').sha3_256
 
-
-let result = USERNAME_REGEX.test("함성준123")
-
-console.log(result)
+console.log(sha3_256('tjdwns12!!'))
