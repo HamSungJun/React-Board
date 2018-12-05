@@ -42,7 +42,9 @@ export const LoginBox = (loginState , loginDispatch) => (
         </div>
 
         <div>
-          <button onClick={loginDispatch.modal} className="Button-Row__Button --Register-Button" type="button">Register</button>  
+          <button onClick={()=>{
+            loginDispatch.modal()
+          }} className="Button-Row__Button --Register-Button" type="button">Register</button>  
         </div>
         
       </div>

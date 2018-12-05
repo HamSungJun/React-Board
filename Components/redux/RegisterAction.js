@@ -14,6 +14,8 @@ export const A_SUBMIT_START = "A_SUBMIT_START"
 export const A_SUBMIT_SUCCESS = "A_SUBMIT_SUCCESS"
 export const A_SUBMIT_ERROR = "A_SUBMIT_ERROR"
 
+export const A_CLEAR_REDUCER = "A_CLEAR_REDUCER"
+
 export const AC_TYPING_REGISTER_FORM = (TYPE,VALUE,VALID) => {
   
   return {
@@ -56,7 +58,7 @@ export const AC_SUBMIT_REGISTER_FORM = () => {
         dispatch({
           type : A_SUBMIT_SUCCESS
         })
-        dispatch(AC_TOGGLE_MODAL())
+        // dispatch(AC_TOGGLE_MODAL())
         history.push('/')
       }
       else{
@@ -79,7 +81,11 @@ export const AC_SUBMIT_ERROR = () => {
   }
 }
 
-
+export const AC_CLEAR_REDUCER = () => {
+  return {
+    type : A_CLEAR_REDUCER
+  }
+}
 
 
 

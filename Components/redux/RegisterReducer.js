@@ -51,6 +51,20 @@ const registerReducer = (state = registerInitialState , action) => {
 
     case Actions.A_SUBMIT_SUCCESS :
       return Object.assign({},state,{
+        IS_SUBMITTING : false,
+        IS_SUBMIT_SUCCESS : true,
+      })
+
+    case Actions.A_SUBMIT_ERROR :
+      return Object.assign({},state,{
+        IS_SUBMITTING : false,
+        IS_SUBMIT_SUCCESS : false,
+        IS_SUBMIT_ERROR : true,
+    })
+
+    case Actions.A_CLEAR_REDUCER : 
+    
+      return Object.assign({},state,{
         USERNAME : "",
         EMAIL : "",
         PW : "",
@@ -60,18 +74,9 @@ const registerReducer = (state = registerInitialState , action) => {
         IS_VALID_EMAIL : false,
         IS_VALID_PW : false,
         IS_SUBMITTING : false,
-        IS_SUBMIT_SUCCESS : true,
-        IS_SUBMIT_ERROR : false,
-        
-      })
-
-    case Actions.AC_SUBMIT_ERROR :
-      return Object.assign({},state,{
-        IS_SUBMITTING : false,
         IS_SUBMIT_SUCCESS : false,
-        IS_SUBMIT_ERROR : true,
+        IS_SUBMIT_ERROR : false,
       })
-
 
     default :
       return state

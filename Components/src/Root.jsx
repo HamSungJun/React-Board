@@ -9,6 +9,8 @@ import _history from '../history/history.js'
 import Login from './Login.jsx'
 import Home from './Home.jsx'
 
+
+
 import '../Styles/Share.scss'
 
 class Root extends React.Component{
@@ -22,6 +24,7 @@ class Root extends React.Component{
           <div>
             <Switch>
               <Route exact path="/" component={Login} ></Route>
+              
               {/*
               <Route path="/find" component={Find} ></Route> */}
               <Route path="/home" component={Home} ></Route>

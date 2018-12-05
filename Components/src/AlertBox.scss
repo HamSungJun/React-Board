@@ -1,16 +1,28 @@
 $material_alertborder : hsl(42, 100%, 50%);
 $material_alertbackground : hsl(45, 100%, 85%);
-$material_shadow : hsl(200, 19%, 18%);
 $material_alerttext : hsl(16, 18%, 47%);
+$material_verifyborder : hsl(123, 46%, 34%);
+$material_verifybackground : hsl(151, 100%, 45%);
+$material_shadow : hsl(200, 19%, 18%);
+
 .AlertBox{
-  margin : 20px 20px;
-  border : 1px solid $material_alertborder;
-  background-color: $material_alertbackground;
   border-radius : 12px;
   padding : 10px;
-  
+}
+.AlertBox:nth-child(1){
+  margin-top: 10px;
 }
 .AlertBox__Text{
-  color : $material_alerttext;
   font-size: 12px;
+}
+.--AlertColor{
+  border : 1px solid $material_alertborder;
+  background-color: $material_alertbackground;
+  color : $material_alerttext;
+}
+.--VerifyColor{
+  border : 1px solid $material_verifyborder;
+  background-color: $material_verifybackground;
+  color : $material_shadow;
+  text-align: center;
 }

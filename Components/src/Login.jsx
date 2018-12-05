@@ -49,8 +49,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return{
     loginDispatch : {
-      modal(){
-        dispatch(loginActions.AC_TOGGLE_MODAL())
+      modal(bool = false){
+        if(bool){
+          dispatch(loginActions.AC_TOGGLE_MODAL())
+          dispatch(registerActions.AC_CLEAR_REDUCER());
+        }
+        else{
+          dispatch(loginActions.AC_TOGGLE_MODAL())
+        }
       },
       remember(event){
         dispatch(loginActions.AC_IS_REMEMBER_CHECKED(event.target.checked))
