@@ -40,3 +40,19 @@
 ![register_2](./ScreenShots/register_2.PNG)
 
 ![register_3](./ScreenShots/register_3.PNG)
+
+#### 2018-12-05
+
+>폼을 작성하게 되면 Submit 버튼을 클릭하여 유저가 입력한 이메일로 가입 인증을 위한 메일을 전송합니다. 메일을 보내는 것은 nodemailer모듈과 ethereal fake SMTP 서비스를 이용하였습니다. 받은 메일에서 유저를 구분하기 위한 Unique Key는 가입한 시각의 Timestamp값을 이용하였습니다. 링크를 클릭하게 되면 서버 고유의 가입 인증을 위한 라우팅 주소로 타임스탬프 값이 전해지며 이것을 MongoDB 다큐먼트의 식별값으로 이용하여 비인증된유저 컬렉션에서 인증된 유저컬렉션으로 다큐먼트를 이동시킵니다.
+
+#### 인증메일 발송
+![verify](./ScreenShots/verify_1.PNG)
+
+#### 비인증 유저 컬렉션
+![unformal](./ScreenShots/unformaluser.PNG)
+
+#### FAKE SMTP
+![ethereal](./ScreenShots/ethereal.PNG)
+
+#### 인증 유저 컬렉션
+![formal](./ScreenShots/formaluser.PNG)
