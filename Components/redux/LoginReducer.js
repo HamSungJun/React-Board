@@ -1,20 +1,21 @@
 import * as LoginActions from './LoginAction.js'
 
 const loginInitialState = {
-  ID : "",
+  EMAIL : "",
   PW : "",
   REMEMBER : false,
   IS_AUTHORIZING : false,
   IS_AUTH_SUCCESS : false,
   IS_AUTH_ERROR : false,
-  TOGGLE_MODAL : false
+  TOGGLE_MODAL : false,
+  AUTH_ERROR_MESG : ""
 }
 
 const loginReducer = (state = loginInitialState , action) => {
   switch(action.type){
-    case LoginActions.A_TYPING_LOGIN_FORM_ID :
+    case LoginActions.A_TYPING_LOGIN_FORM_EMAIL :
       return Object.assign({},state,{
-        ID : action.value
+        EMAIL : action.value
       })
 
     case LoginActions.A_TYPING_LOGIN_FORM_PW :
@@ -35,12 +36,14 @@ const loginReducer = (state = loginInitialState , action) => {
     case LoginActions.A_AUTH_SUCCESS :
       return Object.assign({},state,{
         IS_AUTHORIZING : !(action.value),
-        IS_AUTH_SUCCESS : action.value
+        IS_AUTH_SUCCESS : action.value,
+        AUTH_ERROR_MESG : ""
       })
     case LoginActions.A_AUTH_ERROR :
       return Object.assign({},state,{
         IS_AUTHORIZING : !(action.value),
-        IS_AUTH_ERROR : action.value
+        IS_AUTH_ERROR : action.value,
+        AUTH_ERROR_MESG : action.mesg
       })
     case LoginActions.A_CLEAR_LOGIN :
       return Object.assign({},state,{

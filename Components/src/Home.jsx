@@ -5,9 +5,9 @@ class Home extends React.Component{
   render(){
     
     return(
-      <div>
-      <h3>홈에 도착</h3>
-    </div>
+      <div className="wrapper">
+        <h3>홈에 도착</h3>
+      </div>
     )
   }
 }

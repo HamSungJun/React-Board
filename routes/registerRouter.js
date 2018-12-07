@@ -5,8 +5,8 @@ let fs = require('fs')
 let formidable = require('formidable')
 let sha256 = require('js-sha3').sha3_256
 let MonDB = require('../DB/MongoTransactions.js')
-let nodemailer = require('nodemailer')
 let secret = require('../DB/secret')
+let mailer = require('../routes/mailer.js')
 
 registerRouter.use(bodyParser.urlencoded({ extended: false }))
 registerRouter.use(bodyParser.json())
@@ -79,60 +79,7 @@ registerRouter.post('/nonformalRegisterSubmit',(req,res) => {
   let NF_FILE_NAME = req.body.FILENAME
   let NF_USER_PW = req.body.PW
   let NF_TIME_ID = NF_FILE_NAME.substr(0,NF_FILE_NAME.length-4)
-
   let createdAt = new Date()
-  
-  nodemailer.createTestAccount((err, account) => {
-    if (err) {
-        console.error('Failed to create a testing account. ' + err.message);
-        return process.exit(1);
-    }
-
-    console.log('Credentials obtained, sending message...');
-
-    // Create a SMTP transporter object
-    let transporter = nodemailer.createTransport({
-        host: secret.mailerConfig.host,
-        port: secret.mailerConfig.port,
-        secure: secret.mailerConfig.secure,
-        auth: {
-            user: secret.mailerConfig.user,
-            pass: secret.mailerConfig.password
-        }
-    });
-
-    // Message object
-    let message = {
-        from: `ReactBoard <tjdwns5123@gmail.com>`,
-        to: NF_USER_EMAIL,
-        subject: '게시판 가입인증 메일입니다.',
-        html: 
-        `
-        <div>
-          <header>
-            <h2>React Borad</h2>
-          </header>
-          <section>
-            <p>
-              해당 <a href="http://localhost:3000/register/verifyEmail?timeid=${NF_TIME_ID}">링크</a>를 클릭하여 가입을 완료하여 주십시오.
-            </p>
-          </section>          
-        </div>
-        `
-    };
-
-    transporter.sendMail(message, (err, info) => {
-        if (err) {
-            console.log('Error occurred. ' + err.message);
-            return process.exit(1);
-        }
-
-        console.log('Message sent: %s', info.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    });
-
-  });
 
   let DB_Machine = new MonDB();
 
@@ -143,7 +90,12 @@ registerRouter.post('/nonformalRegisterSubmit',(req,res) => {
     PW : sha256(NF_USER_PW),
     U_IMG_PATH : `./public/UserImages/${NF_FILE_NAME}`,
     createdAt : createdAt
-  },secret.MongoCollections.nonformalUsers,res)
+  },secret.MongoCollections.nonformalUsers).then((response)=>{
+    res.json(response)
+    mailer(NF_USER_EMAIL,NF_TIME_ID)
+  }).catch((response)=>{
+    res.json(response)
+  })
 
 })
 
@@ -154,9 +106,12 @@ registerRouter.get('/verifyEmail',(req,res)=>{
   let TIMEID = req.query.timeid
 
   let DB_Machine = new MonDB()
-  DB_Machine.MOVE_NONFORMAL_TO_FORMAL(TIMEID,secret.MongoCollections.nonformalUsers,secret.MongoCollections.formalUsers,res)
-
-  res.redirect('http://localhost:9000/')
+  DB_Machine.MOVE_NONFORMAL_TO_FORMAL(TIMEID,secret.MongoCollections.nonformalUsers,secret.MongoCollections.formalUsers).then(()=>{
+    console.log("이메일 인증에 성공.")
+    res.redirect('http://localhost:9000/')
+  }).catch((res)=>{
+    console.log(res.mesg)
+  })
 
 })
 

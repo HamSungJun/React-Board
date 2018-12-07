@@ -1,7 +1,7 @@
 import history from '../history/history.js'
 import { SERVER_URL } from './GlobalURL.js';
 
-export const A_TYPING_LOGIN_FORM_ID = "A_TYPING_LOGIN_FORM_ID"
+export const A_TYPING_LOGIN_FORM_EMAIL = "A_TYPING_LOGIN_FORM_EMAIL"
 export const A_TYPING_LOGIN_FORM_PW = "A_TYPING_LOGIN_FORM_PW"
 export const A_IS_REMEMBER_CHECKED = "A_IS_REMEMBER_CHECKED"
 
@@ -16,7 +16,7 @@ export const AC_TYPING_LOGIN_FORM = (TargetName , TargetValue) => {
 
   if(TargetName === "INPUT_ID"){
     return {
-      type : A_TYPING_LOGIN_FORM_ID,
+      type : A_TYPING_LOGIN_FORM_EMAIL,
       value : TargetValue
     }
   }
@@ -58,7 +58,7 @@ export const AC_LOGIN_PROCESS_START = () => {
         'Content-Type': 'application/json'
       },
       body : JSON.stringify({
-        ID : SnapShot.login.ID,
+        EMAIL : SnapShot.login.EMAIL,
         PW : SnapShot.login.PW,
         REMEMBER : SnapShot.login.REMEMBER
       })
@@ -69,12 +69,13 @@ export const AC_LOGIN_PROCESS_START = () => {
           type : A_AUTH_SUCCESS,
           value : true
         })
-        
         history.push('/home')
+
       }
       else{
         dispatch({
           type : A_AUTH_ERROR,
+          mesg : Jres.mesg,
           value : true
         })
       }

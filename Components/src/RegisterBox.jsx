@@ -34,15 +34,15 @@ export const RegisterBox = (props) => {
           
             <div className="Modal-Header">
               <div onClick={()=>{
-                if(props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED){
+                if(props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED && !(props.registerState.IS_SUBMIT_SUCCESS)){
                   props.registerDispatch.registerSubmit()
                 }
-              }} className={"Modal-Header__Block --Top-Left-Block "+((props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED)?"--Available":"--Unavailable")}>
+              }} className={"Modal-Header__Block --Top-Left-Block "+((props.registerState.IS_VALID_EMAIL && props.registerState.IS_VALID_NAME && props.registerState.IS_VALID_PW && props.registerState.IS_IMG_ASSIGNED && !(props.registerState.IS_SUBMIT_SUCCESS))?"--Available":"--Unavailable")}>
                 <span className="Modal-Header__Text">
                 Submit</span>
               </div>
               <div onClick={()=>{
-                props.loginDispatch.modal(props.registerState.IS_SUBMIT_SUCCESS)
+                props.loginDispatch.modal(props.registerState.IS_SUBMIT_SUCCESS || props.registerState.IS_SUBMIT_ERROR)
               }} className="Modal-Header__Block --Top-Right-Block">
                 <span className="Modal-Header__Text">
                 Close</span>
@@ -52,19 +52,24 @@ export const RegisterBox = (props) => {
           <div>
 
             {
-            props.registerState.IS_SUBMIT_SUCCESS?
+            props.registerState.IS_SUBMIT_ERROR?
             (
-              VerifyDrawer(props)
+              ErrorDrawer(props)
             )
-            : 
-              props.registerState.IS_SUBMITTING === false?
-                (
-                  BodyDrawer(props)
-                )
-                :
-                (
-                  LoaderDrawer(props)
-                )
+            :
+              props.registerState.IS_SUBMIT_SUCCESS?
+              (
+                VerifyDrawer(props)
+              )
+              : 
+                props.registerState.IS_SUBMITTING === false?
+                  (
+                    BodyDrawer(props)
+                  )
+                  :
+                  (
+                    LoaderDrawer(props)
+                  )
             }
           
           </div>
@@ -159,9 +164,9 @@ const AlertDrawer = (props) => {
   AlertBoxes.push(<AlertBox key={index++} alertType='Alert' text="비밀번호는 영어 대소문자 , 한글 , 특수문자 조합의 8~12자리 입니다."/>)
  }
  if((props.IS_VALID_PW && props.IS_VALID_EMAIL && props.IS_VALID_NAME) === true && props.IS_IMG_ASSIGNED === false){
-  AlertBoxes.push(<AlertBox key={index} alertType='Alert' text="이미지는 image/* , 2MB이하의 파일만 가능합니다." />)
+  AlertBoxes.push(<AlertBox key={index++} alertType='Alert' text="이미지는 image/* , 2MB이하의 파일만 가능합니다." />)
  }
-
+ 
  return AlertBoxes
 
 }
@@ -176,7 +181,15 @@ const LoaderDrawer = () => (
 const VerifyDrawer = (props) => (
   <div>
     <div>
-      <AlertBox alertType='Verify' text={`${props.registerState.EMAIL} 로 인증 메일을 전송하였습니다.`} />
+      <AlertBox alertType='Success' text={`${props.registerState.EMAIL} 로 인증 메일을 전송하였습니다.`} />
+    </div>
+  </div> 
+)
+
+const ErrorDrawer = (props) => (
+  <div>
+    <div>
+      <AlertBox alertType='Error' text={props.registerState.SUBMIT_ERROR_MESG} />
     </div>
   </div> 
 )

@@ -75,9 +75,7 @@ const mapDispatchToProps = (dispatch) => {
       loginSubmit(){
   
         dispatch(loginActions.AC_LOGIN_PROCESS_START())
-        setTimeout(()=>{
-          dispatch(loginActions.AC_CLEAR_LOGIN())
-        },1000)
+        
       }
     },
     registerDispatch : {

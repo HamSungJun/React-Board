@@ -3,6 +3,8 @@ $material_alertbackground : hsl(45, 100%, 85%);
 $material_alerttext : hsl(16, 18%, 47%);
 $material_verifyborder : hsl(123, 46%, 34%);
 $material_verifybackground : hsl(151, 100%, 45%);
+$material_errorborder : hsl(333, 84%, 42%);
+$material_errorbackground : hsl(5, 100%, 75%);
 $material_shadow : hsl(200, 19%, 18%);
 
 .AlertBox{
@@ -15,14 +17,21 @@ $material_shadow : hsl(200, 19%, 18%);
 .AlertBox__Text{
   font-size: 12px;
 }
-.--AlertColor{
+.--Alert{
   border : 1px solid $material_alertborder;
   background-color: $material_alertbackground;
   color : $material_alerttext;
 }
-.--VerifyColor{
+.--Success{
   border : 1px solid $material_verifyborder;
   background-color: $material_verifybackground;
   color : $material_shadow;
   text-align: center;
+}
+.--Error{
+  border : 1px solid $material_errorborder;
+  background-color: $material_errorbackground;
+  color : $material_shadow;
+  text-align: center;
+  font-size: 16px;
 }

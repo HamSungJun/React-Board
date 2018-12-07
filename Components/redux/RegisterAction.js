@@ -62,7 +62,7 @@ export const AC_SUBMIT_REGISTER_FORM = () => {
         history.push('/')
       }
       else{
-        dispatch(AC_SUBMIT_ERROR())
+        dispatch(AC_SUBMIT_ERROR(Jres.mesg))
       }
       
     })
@@ -75,9 +75,10 @@ export const AC_SUBMIT_START = () => {
  }
 }
 
-export const AC_SUBMIT_ERROR = () => {
+export const AC_SUBMIT_ERROR = (mesg) => {
   return {
-    type : A_SUBMIT_ERROR
+    type : A_SUBMIT_ERROR,
+    mesg : mesg
   }
 }
 
