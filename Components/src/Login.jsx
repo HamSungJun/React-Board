@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Cookies from 'js-cookie'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -22,6 +22,13 @@ const VALIDATOR = (REGEX,VALUE) => {
 }
 
 class Login extends React.Component{
+
+  componentDidMount(){
+    
+    let INPUT_ID = document.getElementById("INPUT_ID__LOGIN")
+    INPUT_ID.value = Cookies.get('user')
+    
+  }
 
   render(){
     
@@ -76,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
   
         dispatch(loginActions.AC_LOGIN_PROCESS_START())
         
-      }
+      },
     },
     registerDispatch : {
 

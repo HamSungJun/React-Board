@@ -177,7 +177,8 @@ FORMAL_USER_AUTHENTICATION(email,pw){
 
       if(count === 1){
         resolve({
-          status : 1
+          status : 1,
+          EMAIL : email
         })
       }
       else{

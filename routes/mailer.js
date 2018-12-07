@@ -34,7 +34,7 @@ module.exports = function VerifyMailProcess(to,timeid) {
           </header>
           <section>
             <p>
-              해당 <a href="http://localhost:3000/register/verifyEmail?timeid=${timeid}">링크</a>를 클릭하여 가입을 완료하여 주십시오.
+              해당 <a href="http://localhost:3000/register/verifyEmail?timeid=${timeid}" target="_self">링크</a>를 클릭하여 가입을 완료하여 주십시오.
             </p>
           </section>          
         </div>

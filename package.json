@@ -21,6 +21,7 @@
     "filepond-plugin-image-preview": "^3.1.4",
     "formidable": "^1.2.1",
     "history": "^4.7.2",
+    "js-cookie": "^2.2.0",
     "js-sha3": "^0.8.0",
     "kerberos": "^1.1.2",
     "mongodb": "^3.1.10",
@@ -38,6 +39,7 @@
     "react-router-dom": "^4.3.1",
     "react-spinners": "^0.4.7",
     "redux": "^4.0.0",
+    "redux-cookie": "^0.5.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sha.js": "^2.4.11"

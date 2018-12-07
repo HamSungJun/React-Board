@@ -123,7 +123,12 @@ $border-width : 3px;
   .--Register-Button:hover{
     color : $material_tomato;
   }
-
+  .Loader-Box--Login{
+    height : 205px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 }
 
@@ -242,7 +247,7 @@ $border-width : 3px;
     transition : background-color 0.25s ease-out
   }
 
-  .Loader-Box{
+  .Loader-Box--Register{
     display: flex;
     align-items: center;
     justify-content: center;

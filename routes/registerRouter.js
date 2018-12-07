@@ -108,6 +108,7 @@ registerRouter.get('/verifyEmail',(req,res)=>{
   let DB_Machine = new MonDB()
   DB_Machine.MOVE_NONFORMAL_TO_FORMAL(TIMEID,secret.MongoCollections.nonformalUsers,secret.MongoCollections.formalUsers).then(()=>{
     console.log("이메일 인증에 성공.")
+    res.header('Set-Cookie','abcd');
     res.redirect('http://localhost:9000/')
   }).catch((res)=>{
     console.log(res.mesg)

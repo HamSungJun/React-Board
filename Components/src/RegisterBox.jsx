@@ -92,17 +92,17 @@ const BodyDrawer = (props) => (
 
       <div className="Form-Input-Row">
         <label className="Form-Label" htmlFor="">Username</label>
-        <input id="INPUT_ID" onChange={props.registerDispatch.registerTyping}  name="USERNAME" className={"Form-Input "+((props.registerState.IS_VALID_NAME?"--Available":"--Input-Unavaliable"))} type="text"/>
+        <input id="INPUT_ID__REGISTER" onChange={props.registerDispatch.registerTyping}  name="USERNAME" className={"Form-Input "+((props.registerState.IS_VALID_NAME?"--Available":"--Input-Unavaliable"))} type="text"/>
       </div>
 
       <div className="Form-Input-Row">
         <label className="Form-Label" htmlFor="">Email</label>
-        <input id="INPUT_EMAIL" onChange={props.registerDispatch.registerTyping} name="EMAIL" className={"Form-Input "+((props.registerState.IS_VALID_EMAIL?"--Available":"--Input-Unavaliable"))} type="text"/>
+        <input id="INPUT_EMAIL__REGISTER" onChange={props.registerDispatch.registerTyping} name="EMAIL" className={"Form-Input "+((props.registerState.IS_VALID_EMAIL?"--Available":"--Input-Unavaliable"))} type="text"/>
       </div>
 
       <div className="Form-Input-Row">
         <label className="Form-Label" htmlFor="">Password</label>
-        <input id="INPUT_PW" onChange={props.registerDispatch.registerTyping} name="PASSWORD" className={"Form-Input "+((props.registerState.IS_VALID_PW?"--Available":"--Input-Unavaliable"))} type="password"/>
+        <input id="INPUT_PW__REGISTER" onChange={props.registerDispatch.registerTyping} name="PASSWORD" className={"Form-Input "+((props.registerState.IS_VALID_PW?"--Available":"--Input-Unavaliable"))} type="password"/>
       </div>
 
     </div>
@@ -172,7 +172,7 @@ const AlertDrawer = (props) => {
 }
 
 const LoaderDrawer = () => (
-  <div className="Loader-Box">
+  <div className="Loader-Box--Register">
     <ScaleLoader height={75} width={15} color='hsl(151, 100%, 45%)' />
   </div>
 )

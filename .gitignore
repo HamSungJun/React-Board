@@ -2,3 +2,4 @@ node_modules/
 .idea/
 GlobalURL.js
 DB/secret.js
+public/Userimages/

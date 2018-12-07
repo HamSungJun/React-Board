@@ -13,6 +13,7 @@ loginRouter.post('/',(req,res)=>{
 
   let POSTED_EMAIL = req.body.EMAIL
   let POSTED_PW = sha256(req.body.PW)
+  let REMEMBER = req.body.REMEMBER
 
   console.log(`${POSTED_EMAIL}와 ${POSTED_PW}`)
 

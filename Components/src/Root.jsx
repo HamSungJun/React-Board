@@ -9,8 +9,6 @@ import _history from '../history/history.js'
 import Login from './Login.jsx'
 import Home from './Home.jsx'
 
-
-
 import '../Styles/Share.scss'
 
 class Root extends React.Component{

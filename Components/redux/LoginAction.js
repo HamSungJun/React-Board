@@ -1,5 +1,6 @@
 import history from '../history/history.js'
-import { SERVER_URL } from './GlobalURL.js';
+import { SERVER_URL , CLIENT_URL } from './GlobalURL.js';
+import Cookies from 'js-cookie'
 
 export const A_TYPING_LOGIN_FORM_EMAIL = "A_TYPING_LOGIN_FORM_EMAIL"
 export const A_TYPING_LOGIN_FORM_PW = "A_TYPING_LOGIN_FORM_PW"
@@ -60,7 +61,6 @@ export const AC_LOGIN_PROCESS_START = () => {
       body : JSON.stringify({
         EMAIL : SnapShot.login.EMAIL,
         PW : SnapShot.login.PW,
-        REMEMBER : SnapShot.login.REMEMBER
       })
     }).then((response) => (response.json())).then((Jres) => {
       if(Jres.status === 1){
@@ -69,8 +69,18 @@ export const AC_LOGIN_PROCESS_START = () => {
           type : A_AUTH_SUCCESS,
           value : true
         })
-        history.push('/home')
+        
+        if(SnapShot.login.REMEMBER){
 
+          Cookies.set('user',Jres.EMAIL,{
+            expires : 7,
+            path : CLIENT_URL
+          })
+
+        }
+      
+        history.push('/home')
+        
       }
       else{
         dispatch({
