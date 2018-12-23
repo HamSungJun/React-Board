@@ -6,15 +6,16 @@ module.exports = {
     output : {
 
         filename : "bundle.js",
-        path : path.join(__dirname,"/public/bundle")
-        
+        path : path.join(__dirname,"/public"),
+    
     },
     devServer: {
         hot : true,
-        contentBase: path.join(__dirname, '/public'),
+        contentBase: [
+            path.join(__dirname, 'public'),
+            path.join(__dirname, 'Components')],
         watchContentBase: true,
         historyApiFallback: true,
-        publicPath : "/bundle/",
         compress: true,
         port: 9000
     },
@@ -27,7 +28,7 @@ module.exports = {
                 use : [
                     {loader : 'style-loader'},
                     {loader : 'css-loader'},
-                    {loader : 'sass-loader'}
+                    {loader : 'sass-loader'},
                 ]
             },
             {
@@ -36,13 +37,13 @@ module.exports = {
                 use : 'babel-loader'
             },
             {
-                test : /\.(woff)/,
+                test : /\.(woff|jpe?g|png|gif|svg)$/,
                 exclude: /node_modules/,
                 use: [{
                   loader: 'file-loader',
                   options: {
                       name: '[name].[ext]',
-                      outputPath: 'fonts/'
+                      outputPath: 'assets/'
                   }
               }]
             }

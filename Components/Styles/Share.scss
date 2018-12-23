@@ -1,5 +1,8 @@
 $material_skintone : hsl(14, 100%, 70%);
 $material_lightpeach : hsl(5, 100%, 75%);
+$material_homebackground : hsl(231, 44%, 94%);
+$material_lightgreen : hsl(125, 39%, 94%);
+$material_lightash : hsl(204, 15%, 94%);
 
 @font-face{
   font-family: "NotoSansKR-Regular";
@@ -17,14 +20,35 @@ $material_lightpeach : hsl(5, 100%, 75%);
   font-family: "NotoSansKR-Bold",sans-serif
 }
 .Wrapper{
-  background-color: $material_lightpeach;
+  
   width: 100%;
   min-height: 100vh;
   height: auto;
+  
+  
+
+}
+.--Login{
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.--Home{
+
+}
+.--Bg-lightpeach{
+  background-color: $material_lightpeach;
+}
+.--Bg-lightblue{
+  background-color: $material_homebackground;
+}
+.--Bg-lightgreen{
+  background-color: $material_lightgreen;
+}
+.--Bg-lightash{
+  background-color: $material_lightash;
+}
+
 %Flex-Center{
   display: flex;
   justify-content: center;

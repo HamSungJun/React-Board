@@ -28,7 +28,10 @@ export const LoginBox = (loginState , loginDispatch) => (
               </div>
 
               <div className="Input-Row">
-                <input onChange={loginDispatch.loginTyping} className="Input-Row__Input" name="INPUT_PW" type="password" placeholder="Password"/>
+                <input id="INPUT_PW__LOGIN" onChange={loginDispatch.loginTyping}
+                onKeyUp={
+                  loginDispatch.loginSubmit
+                } className="Input-Row__Input" name="INPUT_PW" type="password" placeholder="Password"/>
               </div>
 
               <div>
@@ -51,7 +54,7 @@ export const LoginBox = (loginState , loginDispatch) => (
       <div className="Button-Row">
 
         <div>
-          <button onClick={loginDispatch.loginSubmit} className="Button-Row__Button --Login-Button" type="button">Login</button>
+          <button id="LOGIN_BTN" onClick={loginDispatch.loginSubmit} className="Button-Row__Button --Login-Button" type="button">Login</button>
         </div>
 
         <div>

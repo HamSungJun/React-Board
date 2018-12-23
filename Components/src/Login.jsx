@@ -26,7 +26,14 @@ class Login extends React.Component{
   componentDidMount(){
     
     let INPUT_ID = document.getElementById("INPUT_ID__LOGIN")
-    INPUT_ID.value = Cookies.get('user')
+    let cookieData = Cookies.get('user');
+    if(cookieData == 'undefined'){
+      INPUT_ID.value = ""
+    }
+    else{
+      INPUT_ID.value = Cookies.get('user')
+    }
+    
     
   }
 
@@ -35,7 +42,7 @@ class Login extends React.Component{
     const { loginState , loginDispatch } = this.props
 
     return(
-      <div className="Wrapper">
+      <div className="Wrapper --Bg-lightash --Login ">
         {RegisterBox(this.props)}
         {LoginBox(loginState , loginDispatch)}
       </div>
@@ -79,9 +86,14 @@ const mapDispatchToProps = (dispatch) => {
   
         dispatch(loginActions.AC_TYPING_LOGIN_FORM(event.target.name,event.target.value))
       },
-      loginSubmit(){
-  
-        dispatch(loginActions.AC_LOGIN_PROCESS_START())
+      loginSubmit(event){
+
+        if(event.target.id == "LOGIN_BTN"){
+          dispatch(loginActions.AC_LOGIN_PROCESS_START())
+        }
+        if(event.keyCode == 13){
+          dispatch(loginActions.AC_LOGIN_PROCESS_START())
+        }
         
       },
     },

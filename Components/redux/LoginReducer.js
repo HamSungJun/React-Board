@@ -36,6 +36,7 @@ const loginReducer = (state = loginInitialState , action) => {
     case LoginActions.A_AUTH_SUCCESS :
       return Object.assign({},state,{
         IS_AUTHORIZING : !(action.value),
+        IS_AUTH_ERROR : !(action.value),
         IS_AUTH_SUCCESS : action.value,
         AUTH_ERROR_MESG : ""
       })
@@ -43,6 +44,7 @@ const loginReducer = (state = loginInitialState , action) => {
       return Object.assign({},state,{
         IS_AUTHORIZING : !(action.value),
         IS_AUTH_ERROR : action.value,
+        IS_AUTH_SUCCESS : !(action.value),
         AUTH_ERROR_MESG : action.mesg
       })
     case LoginActions.A_CLEAR_LOGIN :

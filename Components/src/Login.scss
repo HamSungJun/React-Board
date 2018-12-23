@@ -1,6 +1,7 @@
 $material_tomato : hsl(1, 83%, 63%);
 $material_skyblue : hsl(207, 89%, 68%);
 $material_deepblue : hsl(212, 80%, 42%);
+$material_deepblue2 : hsl(200, 97%, 45%);
 $material_shadow : hsl(200, 19%, 18%);
 $material_gray : hsl(0, 0%, 88%);
 $material_deeppurple : hsl(267, 75%, 31%);
@@ -23,9 +24,9 @@ $border-width : 3px;
   width : 350px;
   border-radius: 6px;
   // border : $border-width solid $material_shadow;
-  height : 400px;
+  height : 410px;
   background-color: hsla(0,0%,98%,0.85);
-  box-shadow: 6px 6px 3px $material_shadow;
+  box-shadow: 6px 6px 6px $material_shadow;
   .User{
     margin-top : -64px;
     text-align: center;
@@ -111,17 +112,17 @@ $border-width : 3px;
     outline : none;
   }
   .--Login-Button{
-    background-color: $material_tomato;
+    background-color: $material_deepblue2;
   }
   .--Login-Button:hover{
     color: $material_shadow;
   }
   .--Register-Button{
-    margin-top : 5px;
+    margin-top : 10px;
     background-color: $material_shadow;
   }
   .--Register-Button:hover{
-    color : $material_tomato;
+    color : $material_deepblue2;
   }
   .Loader-Box--Login{
     height : 205px;
