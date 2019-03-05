@@ -7,7 +7,7 @@ let loginRouter = require('./routes/loginRouter.js')
 let registerRouter = require('./routes/registerRouter.js')
 
 app.use(cors())
-
+app.use(express.static(__dirname))
 app.use('/login',loginRouter)
 app.use('/register',registerRouter)
 

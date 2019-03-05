@@ -2,6 +2,8 @@ import history from '../history/history.js'
 import { SERVER_URL , CLIENT_URL } from './GlobalURL.js';
 import Cookies from 'js-cookie'
 
+import { AC_SET_USER_INFO } from './UserAction.js'
+
 export const A_TYPING_LOGIN_FORM_EMAIL = "A_TYPING_LOGIN_FORM_EMAIL"
 export const A_TYPING_LOGIN_FORM_PW = "A_TYPING_LOGIN_FORM_PW"
 export const A_IS_REMEMBER_CHECKED = "A_IS_REMEMBER_CHECKED"
@@ -12,6 +14,9 @@ export const A_AUTH_ERROR = "A_AUTH_ERROR"
 export const A_CLEAR_LOGIN = "A_CLEAR_LOGIN"
 
 export const A_TOGGLE_MODAL = "A_TOGGLE_MODAL"
+
+export const A_SET_EMAIL_BY_COOKIE = "A_SET_EMAIL_BY_COOKIE"
+export const A_USER_LOGOUT = "A_USER_LOGOUT"
 
 export const AC_TYPING_LOGIN_FORM = (TargetName , TargetValue) => {
 
@@ -70,6 +75,8 @@ export const AC_LOGIN_PROCESS_START = () => {
           value : true
         })
         
+        dispatch(AC_SET_USER_INFO(Jres))
+
         if(SnapShot.login.REMEMBER){
 
           Cookies.set('user',Jres.EMAIL,{
@@ -92,6 +99,24 @@ export const AC_LOGIN_PROCESS_START = () => {
     })
     
   }
+}
+
+export const AC_SET_EMAIL_BY_COOKIE = (cookie_email) => {
+  return {
+    type : A_SET_EMAIL_BY_COOKIE,
+    value : cookie_email
+  }
+}
+
+export const AC_USER_LOGOUT = () => {
+
+  // 서버와 연결된 세션 폐기 , 스토어 Login 값 폐기
+  history.push('/')
+
+  return {
+      type : "A_USER_LOGOUT"
+  }
+
 }
 
 export const AC_CLEAR_LOGIN = () => {

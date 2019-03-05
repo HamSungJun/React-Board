@@ -8,6 +8,7 @@ import _history from '../history/history.js'
 
 import Login from './Login.jsx'
 import Home from './Home.jsx'
+import Write from './Write.jsx'
 
 import '../Styles/Share.scss'
 

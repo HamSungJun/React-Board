@@ -24,17 +24,14 @@ const VALIDATOR = (REGEX,VALUE) => {
 class Login extends React.Component{
 
   componentDidMount(){
-    
-    let INPUT_ID = document.getElementById("INPUT_ID__LOGIN")
-    let cookieData = Cookies.get('user');
-    if(cookieData == 'undefined'){
-      INPUT_ID.value = ""
+
+    if(Cookies.get('user') !== undefined){
+      let INPUT_ID = document.getElementById("INPUT_ID__LOGIN")
+      let EMAIL = Cookies.get('user')
+      INPUT_ID.value = EMAIL
+      this.props.loginDispatch.setEmailByCookie(EMAIL)
     }
-    else{
-      INPUT_ID.value = Cookies.get('user')
-    }
-    
-    
+
   }
 
   render(){
@@ -96,6 +93,9 @@ const mapDispatchToProps = (dispatch) => {
         }
         
       },
+      setEmailByCookie(cookie_email){
+        dispatch(loginActions.AC_SET_EMAIL_BY_COOKIE(cookie_email))
+      }
     },
     registerDispatch : {
 

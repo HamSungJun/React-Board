@@ -56,3 +56,13 @@
 
 #### 인증 유저 컬렉션
 ![formal](./ScreenShots/formaluser.PNG)
+
+<hr>
+
+#### 2019-03-05
+
+>모비젠이라는 회사에서 현장실습을 하느라 개발 재개가 늦어졌네요. 로그인 성공시 /Home으로 진입하며 현재 TopBar만 구성되어 있습니다. 현재 이슈는 새로고침시 Redux Store 데이터를 어떻게 직전의 Store값으로 복원 시키느냐와 세션 유지 및 파기 시간 설정입니다. 메뉴 아이콘은 ` react-icons` 를 이용하여 구성하였습니다.
+
+#### Home__TopBar
+
+![TopBar](./ScreenShots/2019-03-05_Home.png)

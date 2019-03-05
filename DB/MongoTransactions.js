@@ -164,30 +164,34 @@ FORMAL_USER_AUTHENTICATION(email,pw){
 
     const db = client.db(secret.MongoDB)
     
-    db.collection(secret.MongoCollections.formalUsers).find({EMAIL : email , PW : pw}).count((err,count)=>{
+    db.collection(secret.MongoCollections.formalUsers).find({EMAIL : email , PW : pw}).toArray((err , docs) => {
 
       assert.equal(err,null)
 
-      if(err){
-        reject({
-          status : 0,
-          mesg : "정식유저 컬렉션 쿼리중에 에러."
-        })
-      }
+      console.log(docs)
 
-      if(count === 1){
+      if(docs.length === 1){
+
         resolve({
           status : 1,
-          EMAIL : email
+          USERNAME : docs[0].USERNAME,
+          U_IMG_PATH : docs[0].U_IMG_PATH,
+          REG_DATE : docs[0].REG_DATE,
+          NUM_OF_ARTICLES : docs[0].NUM_OF_ARTICLES,
+          NUM_OF_REPLIES : docs[0].NUM_OF_REPLIES,
+          NUM_OF_GOTTEN_RECOMMENDS : docs[0].NUM_OF_GOTTEN_RECOMMENDS,
+          NUM_OF_HIT_RECOMMENS : docs[0].NUM_OF_HIT_RECOMMENDS
         })
+
       }
       else{
         reject({
           status : 0,
-          mesg : "아이디와 비밀번호를 다시 확인하여 주세요."
+          mesg : "formalUsers 컬렉션에서 정상적으로 쿼리되지 않습니다."
         })
       }
-
+      
+          
     })
       
     })

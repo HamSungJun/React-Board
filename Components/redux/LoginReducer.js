@@ -1,6 +1,7 @@
 import * as LoginActions from './LoginAction.js'
 
 const loginInitialState = {
+
   EMAIL : "",
   PW : "",
   REMEMBER : false,
@@ -8,7 +9,8 @@ const loginInitialState = {
   IS_AUTH_SUCCESS : false,
   IS_AUTH_ERROR : false,
   TOGGLE_MODAL : false,
-  AUTH_ERROR_MESG : ""
+  AUTH_ERROR_MESG : "",
+  
 }
 
 const loginReducer = (state = loginInitialState , action) => {
@@ -56,6 +58,14 @@ const loginReducer = (state = loginInitialState , action) => {
     case LoginActions.A_TOGGLE_MODAL :
       return Object.assign({},state,{
         TOGGLE_MODAL : !(state.TOGGLE_MODAL)
+      })
+    case LoginActions.A_SET_EMAIL_BY_COOKIE :
+      return Object.assign({},state,{
+        EMAIL : action.value
+      })
+    case LoginActions.A_USER_LOGOUT :
+      return Object.assign({},state,{
+        ...loginInitialState
       })
     default : 
       return state

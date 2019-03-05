@@ -16,11 +16,14 @@ $border-width : 3px;
   display: none;
 }
 .--Modal-show {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .LoginBox{
-  margin-bottom: 150px;
+  // margin-bottom: 150px;
   width : 350px;
   border-radius: 6px;
   // border : $border-width solid $material_shadow;
@@ -142,11 +145,10 @@ $border-width : 3px;
   left : 0;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-
-
+  
   .Modal-Content {
     background-color: white;
-    margin: 130px auto 0 auto; 
+    // margin: 130px auto 0 auto; 
     padding: 20px;
     border: 1px solid #888;
     width: 400px;

@@ -1,0 +1,169 @@
+$material_tomato : hsl(1, 83%, 63%);
+$material_skyblue : hsl(207, 89%, 68%);
+$material_deepblue : hsl(212, 80%, 42%);
+$material_deepblue2 : hsl(200, 97%, 45%);
+$material_shadow : hsl(200, 19%, 18%);
+$material_gray : hsl(0, 0%, 88%);
+$material_deeppurple : hsl(267, 75%, 31%);
+$material_bluegrey : hsl(200, 18%, 46%);
+$material_lightgrey : hsl(200, 15%, 73%);
+$material_lightred : hsl(339, 100%, 48%);
+$material_grey : hsl(200, 18%, 26%);
+$material_palegreen : hsl(151, 100%, 45%);
+$material_deepblack : hsl(225, 6%, 13%);
+
+.TopBar{
+
+    height : 60px;
+    background-color: $material_deepblack;
+    width: 100%;
+    box-shadow: 0px 5px 3px black;   
+    
+    .TopBar__Grid-Container{
+
+        display: grid;
+        grid-template-columns: 300px 1fr 350px;
+        height : 100%;
+
+        .TopBar__Grid-Container__Item:nth-child(1){
+
+            display: grid;
+            grid-template-columns: 70px 230px;
+
+            .TopBar__Grid-Container__Item__Item:nth-child(1){
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                .TopBar__Grid-Container__Item__Item__Img{
+                    width: 40px;
+                }
+            }
+
+            .TopBar__Grid-Container__Item__Item:nth-child(2){
+                display: flex;
+                align-items: center;
+                justify-content: center;
+  
+                .TopBar__Grid-Container__Item__Item__Text{
+                    color : $material_palegreen;
+                    font-weight: bold;
+                    font-size: 30px;
+                    letter-spacing: 2px;
+                }
+
+            }
+
+            
+            
+
+        }
+
+        .TopBar__Grid-Container__Item:nth-child(3){
+            display: grid;
+            grid-template-columns: 170px 60px 60px 60px;
+
+            .TopBar__Grid-Container__Item__Item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+                .Icon-Size {
+                    font-size: 30px;
+                    cursor: pointer;
+                }
+
+                #MdCreate{
+                    color : white;
+                }
+                #IoMdLogOut{
+                    color : white;
+                }
+                #MdAccountCircle{
+                    color : white;
+                }
+                #MdPublic{
+                    color : white;
+                }
+
+            }
+            .TopBar__Grid-Container__Item__Item:hover{
+                border-bottom: 2px solid white;
+            }
+            
+            .TopBar__Grid-Container__Item__Profile{
+                display: grid;
+                grid-template-columns: 50px 120px;
+
+                .TopBar__Grid-Container__Item__Profile__Item{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .TopBar__Grid-Container__Item__Profile__Item-Text{
+
+                    color : white;
+                    letter-spacing: 2px;
+
+                }
+                
+                .Profile-Image-Size{
+
+                    width : 45px;
+                    border-radius: 50%;
+
+                }
+
+                .Profile-Icon-Size{
+
+                    font-size : 60px;
+                    color : white;
+
+                }
+            }
+        }
+
+    }
+
+    
+}
+
+.--Fixed{
+    position: fixed;
+}
+
+/* #Media Queries
+================================================== */
+/* Large Desktop */
+@media only screen and (min-width: 1441px) {
+
+}
+/* Smaller that standard */
+@media only screen and (min-width: 959px) and (max-width: 1440px) {
+
+}
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+
+}
