@@ -12,6 +12,12 @@ $material_grey : hsl(200, 18%, 26%);
 $material_palegreen : hsl(151, 100%, 45%);
 $border-width : 3px;
 
+.--Login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .--Modal-hide {
   display: none;
 }

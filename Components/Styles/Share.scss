@@ -17,25 +17,17 @@ $material_lightash : hsl(204, 15%, 94%);
 *{
   margin: 0;
   padding: 0;
-  font-family: "NotoSansKR-Bold",sans-serif
+  font-family: "NotoSansKR-Bold",sans-serif;
 }
+
 .Wrapper{
   
   width: 100%;
   min-height: 100vh;
   height: auto;
   
-  
+}
 
-}
-.--Login{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.--Home{
-
-}
 .--Bg-lightpeach{
   background-color: $material_lightpeach;
 }
