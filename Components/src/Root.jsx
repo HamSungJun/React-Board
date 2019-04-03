@@ -14,6 +14,13 @@ import '../Styles/Share.scss'
 
 class Root extends React.Component{
 
+  componentDidMount() {
+
+
+
+  }
+
+
   render(){
     return(
       <Provider store={_store}>
@@ -26,7 +33,7 @@ class Root extends React.Component{
               <Route exact path="/" component={Login} ></Route>
               <Route path="/home" component={Home} ></Route>
               <Route path="/write" component={Write}></Route>
-              
+
             </Switch>
           </div>
 

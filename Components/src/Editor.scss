@@ -1,0 +1,134 @@
+.EditTools-Grid-Container{
+
+    height : 40px;
+    box-shadow: 0px 3px 3px black;
+    display: grid;
+    grid-template-columns: 200px 200px 1fr;
+    
+    .Nested-Grid{
+
+        display: grid;
+        grid-template-columns: repeat(5,40px);
+        height : 43px;
+
+        .EditTools-Grid-Container__Item{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width : 40px;
+            height : 40px;
+            box-sizing: border-box;
+            cursor: pointer;
+
+            .EditTools-Item__Icon{
+                width : 18px;
+                height : 18px;
+                transition : all 100ms;
+            }
+            .EditTools-Item__Icon:hover {
+                width : 26px;
+                height : 26px;
+            }
+    
+        }
+
+    }
+
+    .Nested-Flex-View{
+
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-bottom : 3px;
+
+        .View-Item{
+
+            cursor: pointer;
+            color : hsl(225, 6%, 13%);
+            border : 1px solid hsl(225, 6%, 13%);
+            border-radius: 8px;
+            height : 25px;
+            display: flex;
+            align-items: center;
+            width : 100px;
+            justify-content: center;
+            transition : all 250ms ease;
+
+        }
+        .View-Item:hover{
+
+            background-color : hsl(225, 6%, 13%);
+            color : hsl(204, 16%, 94%);
+            font-weight: bold;
+
+        }
+
+        .View-Item:nth-child(2){
+
+            margin : 0px 20px;
+
+        }
+
+        .--View-Clicked{
+
+            background-color : hsl(225, 6%, 13%);
+            color : hsl(204, 16%, 94%);
+            font-weight: bold;
+
+        }
+    }
+
+
+}
+
+#EDITOR , #EDITOR_HTML{
+    
+    padding : 10px;
+    overflow-y : auto;
+    height : calc(100vh - 105px);
+    box-sizing: border-box;
+    
+
+}
+
+#EDITOR:focus{
+
+    border: none;
+    outline: none;
+    
+}
+
+/* #Media Queries
+================================================== */
+/* Large Desktop */
+@media only screen and (min-width: 1441px) {
+
+}
+/* Smaller that standard */
+@media only screen and (min-width: 959px) and (max-width: 1440px) {
+
+}
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+
+}

@@ -1,7 +1,8 @@
 import * as WriteActions from './WriteAction.js'
 
 const writeInitialState = {
-    HTML : ""
+    HTML : "",
+    isEditing : true
 }
 
 const writeReducer = ( state = writeInitialState , action ) => {
@@ -12,7 +13,10 @@ const writeReducer = ( state = writeInitialState , action ) => {
             return Object.assign({},state,{
                 HTML : action.HTML
             })
-
+        case WriteActions.A_USER_TOGGLE_VIEW:
+            return Object.assign({},state,{
+                isEditing : action.value
+            })
         default :
             return state
     }

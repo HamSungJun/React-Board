@@ -168,7 +168,7 @@ FORMAL_USER_AUTHENTICATION(email,pw){
 
       assert.equal(err,null)
 
-      console.log(docs)
+      // console.log(docs)
 
       if(docs.length === 1){
 
@@ -180,7 +180,8 @@ FORMAL_USER_AUTHENTICATION(email,pw){
           NUM_OF_ARTICLES : docs[0].NUM_OF_ARTICLES,
           NUM_OF_REPLIES : docs[0].NUM_OF_REPLIES,
           NUM_OF_GOTTEN_RECOMMENDS : docs[0].NUM_OF_GOTTEN_RECOMMENDS,
-          NUM_OF_HIT_RECOMMENS : docs[0].NUM_OF_HIT_RECOMMENDS
+          NUM_OF_HIT_RECOMMENS : docs[0].NUM_OF_HIT_RECOMMENDS,
+          EMAIL : email
         })
 
       }

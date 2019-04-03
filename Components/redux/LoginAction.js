@@ -85,7 +85,12 @@ export const AC_LOGIN_PROCESS_START = () => {
           })
 
         }
-      
+
+        Cookies.set('SID',Jres.SID,{
+          expires : 7,
+          path : CLIENT_URL
+        })
+
         history.push('/home')
         
       }

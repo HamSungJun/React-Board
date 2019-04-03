@@ -5,19 +5,19 @@ $material_lightgreen : hsl(125, 39%, 94%);
 $material_lightash : hsl(204, 15%, 94%);
 
 @font-face{
-  font-family: "NotoSansKR-Regular";
+  font-family: "NotoSansKR";
   src: url("../../public/Fonts/NotoSansKR-Regular-Hestia.woff") format("woff");
   font-weight: normal;
 }
 @font-face{
-  font-family: "NotoSansKR-Bold";
-  src: url("../../public/Fonts/NotoSansKR-Regular-Hestia.woff") format("woff");
+  font-family: "NotoSansKR";
+  src: url("../../public/Fonts/NotoSansKR-Bold-Hestia.woff") format("woff");
   font-weight: bold;
 }
 *{
   margin: 0;
   padding: 0;
-  font-family: "NotoSansKR-Bold",sans-serif;
+  font-family: "NotoSansKR",sans-serif;
 }
 
 .Wrapper{
