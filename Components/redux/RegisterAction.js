@@ -41,6 +41,7 @@ export const AC_SUBMIT_REGISTER_FORM = () => {
     dispatch(AC_SUBMIT_START())
     fetch(`${SERVER_URL}/register/nonformalRegisterSubmit`,{
       method : 'POST',
+      credentials : 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

@@ -8,8 +8,8 @@ const userInitialState = {
     NUM_OF_ARTICLES : 0,
     NUM_OF_REPLIES : 0,
     NUM_OF_GOTTEN_RECOMMENDS : 0,
-    NUM_OF_HIT_RECOMMENS : 0
-
+    NUM_OF_HIT_RECOMMENS : 0,
+    IS_SESSION_SUCCESS : false
 }
 
 const userReducer = (state = userInitialState , action) => {
@@ -25,8 +25,8 @@ const userReducer = (state = userInitialState , action) => {
             NUM_OF_ARTICLES : action.value.NUM_OF_ARTICLES,
             NUM_OF_REPLIES : action.value.NUM_OF_REPLIES,
             NUM_OF_GOTTEN_RECOMMENDS : action.value.NUM_OF_GOTTEN_RECOMMENDS,
-            NUM_OF_HIT_RECOMMENS : action.value.NUM_OF_HIT_RECOMMENS
-
+            NUM_OF_HIT_RECOMMENS : action.value.NUM_OF_HIT_RECOMMENS,
+            IS_SESSION_SUCCESS : true
         })
 
         default :

@@ -201,6 +201,65 @@ FORMAL_USER_AUTHENTICATION(email,pw){
 
 }
 
+GET_USER_DATA_FROM_FORMALUSERS(email){
+
+  console.log("세션을 통해 유저정보를 받아올게요")
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+    
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+    
+    db.collection(secret.MongoCollections.formalUsers).find({EMAIL : email}).toArray((err , docs) => {
+
+      assert.equal(err,null)
+      if(err){
+        console.log(err)
+      }
+      console.log(docs)
+
+      if(docs.length === 1){
+
+        resolve({
+          status : 1,
+          USERNAME : docs[0].USERNAME,
+          U_IMG_PATH : docs[0].U_IMG_PATH,
+          REG_DATE : docs[0].REG_DATE,
+          NUM_OF_ARTICLES : docs[0].NUM_OF_ARTICLES,
+          NUM_OF_REPLIES : docs[0].NUM_OF_REPLIES,
+          NUM_OF_GOTTEN_RECOMMENDS : docs[0].NUM_OF_GOTTEN_RECOMMENDS,
+          NUM_OF_HIT_RECOMMENS : docs[0].NUM_OF_HIT_RECOMMENDS,
+          EMAIL : email
+        })
+
+      }
+      else{
+        reject({
+          status : 0,
+          mesg : "formalUsers 컬렉션에서 정상적으로 쿼리되지 않습니다."
+        })
+      }
+      
+    })
+
+
+    })
+
+  })
+}
 }
 
 module.exports = DB_Machine

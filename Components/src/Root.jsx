@@ -14,13 +14,6 @@ import '../Styles/Share.scss'
 
 class Root extends React.Component{
 
-  componentDidMount() {
-
-
-
-  }
-
-
   render(){
     return(
       <Provider store={_store}>

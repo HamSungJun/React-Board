@@ -1,5 +1,6 @@
 import React from 'react'
 import { SERVER_URL } from '../redux/GlobalURL.js'
+import Cookies from 'js-cookie'
 
 import * as LoginActions from '../redux/LoginAction.js'
 import * as UserActions from '../redux/UserAction.js'
@@ -16,6 +17,16 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 class TopBar extends React.Component{
+
+    componentDidMount(){
+
+        const SID = Cookies.get('SID')
+        
+        if(SID !== undefined && this.props.userState.USERNAME === "Unknown"){
+            this.props.TopBarDispatch.getSessionData(SID)
+        }
+
+    }
 
     render(){
 
@@ -43,7 +54,7 @@ class TopBar extends React.Component{
                         <div className="TopBar__Grid-Container__Item__Profile">
                             <div className="TopBar__Grid-Container__Item__Profile__Item">
                             {
-                                loginState.IS_AUTH_SUCCESS?
+                                loginState.IS_AUTH_SUCCESS || userState.IS_SESSION_SUCCESS?
                                 (
                                 <img className="Profile-Image-Size" src={`${SERVER_URL}${PARSE_U_IMG_PATH(userState.U_IMG_PATH)}`} alt=""/>
                                 )
@@ -98,6 +109,9 @@ const mapDispatchToProps = (dispatch) => {
 
         TopBarDispatch : {
 
+            getSessionData(sid){
+                dispatch(UserActions.AC_GET_SESSION_DATA(sid))
+            },
             logout(){
                 dispatch(LoginActions.AC_USER_LOGOUT())
             },

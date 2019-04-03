@@ -59,6 +59,7 @@ export const AC_LOGIN_PROCESS_START = () => {
   
     fetch(`${SERVER_URL}/login`,{
       method : 'POST',
+      credentials : `include`,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
