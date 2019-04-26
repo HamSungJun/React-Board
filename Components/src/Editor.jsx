@@ -15,29 +15,16 @@ import './Editor.scss'
 class Editor extends React.Component{
 
     constructor(props){
-        super(props)
-        this.state = {
-            selection : {}
-        }
-        this.handleFormatBold = this.handleFormatBold.bind(this)
-    }
-    componentDidMount(){
-        let EDITOR = document.getElementById('EDITOR')
-    
-        EDITOR.addEventListener('mouseup',()=>{
 
-            this.setState({
-                selection : window.getSelection().getRangeAt(0)
-            })
-            
-        })
+        super(props)
+        this.handleFormatBold = this.handleFormatBold.bind(this)
+
     }
 
     handleFormatBold(){
-        console.log(this.state.selection)
-        let EDITOR = document.getElementById('EDITOR')
-        
-        _store.dispatch(AC_USER_TYPING_EDITOR(EDITOR.innerHTML))
+
+        console.log(document.execCommand('bold'))
+
     }
 
     render(){
@@ -107,20 +94,26 @@ class Editor extends React.Component{
 
             <div>
 
-                {writeState.isEditing?
-                (
-                    <div id="EDITOR" contentEditable={true}>
-                        {writeState.HTML}
-                    </div>
-                )
-                :
-                (
-                    <div id="EDITOR_HTML" >
-                        {writeState.HTML}
-                    </div>
-                )
-                }
-            
+                <div
+                    id="EDITOR"
+                    suppressContentEditableWarning={true}
+                    className={`${writeState.isEditing?('--Show'):('--Hide')}`}
+                    // onInput={writeDispatch.syncToHtml}
+                    onKeyPress={(event)=>{
+                        writeDispatch.typeKeyPress(event)
+                    }}
+                    contentEditable={true}>
+
+                </div>
+
+                <div
+                    id="EDITOR_HTML"
+                    suppressContentEditableWarning={true}
+                    className={`${!writeState.isEditing?('--Show'):('--Hide')}`}
+                    contentEditable={true}>
+                    {writeState.HTML}
+                </div>
+
             </div>
 
         </div>
@@ -151,17 +144,44 @@ const mapDispatchToProps = (dispatch) => {
 
             },
 
-            syncDoc(){
+            typeKeyPress(event){
+
+              let pressedKey = event.which || event.keyCode
+
+              if(pressedKey !== 13){
+                  dispatch(AC_USER_TYPING_EDITOR(GET_EDITOR_INNERHTML()))
+                  return true
+              }
+
+
+
+            },
+            syncToEditor(){
 
                 let EDITOR = document.getElementById('EDITOR')
                 let Doc = EDITOR.innerHTML
                 dispatch(AC_USER_TYPING_EDITOR(Doc))
 
+            },
+            syncToHtml(){
+
+                dispatch(AC_USER_TYPING_EDITOR(GET_EDITOR_INNERHTML()))
+
             }
+
 
         }
 
     }
+
+}
+
+const GET_EDITOR_INNERHTML = () => {
+
+    let EDITOR = document.getElementById('EDITOR')
+    let Doc = EDITOR.innerHTML
+
+    return Doc
 
 }
 

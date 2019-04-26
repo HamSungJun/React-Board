@@ -32,14 +32,14 @@ loginRouter.post('/',(req,res) => {
       
     }
     
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
+
     res.json(response)
-    res.end()
+
 
   }).catch((response)=>{
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
+
     res.json(response)
-    res.end()
+
   })
 
 })
@@ -52,8 +52,6 @@ loginRouter.post('/getSessionData',(req,res) => {
   const POSTED_SID = req.body.SID
 
   console.log(`SID :  ${POSTED_SID}`)
-  console.log(`req.session.id : ${JSON.stringify(req.session.id)}` )
-  console.log(`req.session.EMAIL : ${JSON.stringify(req.session.EMAIL)}`)
   console.log(`req.sessionID : ${JSON.stringify(req.sessionID)}`)
   
   if(req.sessionID === POSTED_SID){
@@ -61,13 +59,13 @@ loginRouter.post('/getSessionData',(req,res) => {
     let DB_Machine = new MonDB()
     const SESSION_EMAIL = req.session.EMAIL
     DB_Machine.GET_USER_DATA_FROM_FORMALUSERS(SESSION_EMAIL).then((response) => {
-      res.setHeader('Access-Control-Allow-Credentials', 'true')
+
       res.json(response)
-      res.end()
+
     }).catch((response) => {
-      res.setHeader('Access-Control-Allow-Credentials', 'true')
+
       res.json(response)
-      res.end()
+
     })
     
   }

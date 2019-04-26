@@ -17,6 +17,10 @@ const writeReducer = ( state = writeInitialState , action ) => {
             return Object.assign({},state,{
                 isEditing : action.value
             })
+        case WriteActions.A_USER_TYPING_ENTER:
+            return Object.assign({},state,{
+                HTML : state.HTML.concat("<br>")
+            })
         default :
             return state
     }

@@ -18,16 +18,6 @@ import { withRouter } from 'react-router-dom'
 
 class TopBar extends React.Component{
 
-    componentDidMount(){
-
-        const SID = Cookies.get('SID')
-        
-        if(SID !== undefined && this.props.userState.USERNAME === "Unknown"){
-            this.props.TopBarDispatch.getSessionData(SID)
-        }
-
-    }
-
     render(){
 
         let { userState, loginState, TopBarDispatch } = this.props
@@ -109,9 +99,6 @@ const mapDispatchToProps = (dispatch) => {
 
         TopBarDispatch : {
 
-            getSessionData(sid){
-                dispatch(UserActions.AC_GET_SESSION_DATA(sid))
-            },
             logout(){
                 dispatch(LoginActions.AC_USER_LOGOUT())
             },

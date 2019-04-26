@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import { Router , Route , Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { AC_GET_SESSION_DATA } from '../redux/UserAction.js'
 
 import _store from '../redux/_store.js'
 import _history from '../history/history.js'
@@ -11,8 +12,19 @@ import Home from './Home.jsx'
 import Write from './Write.jsx'
 
 import '../Styles/Share.scss'
+import Cookies from "js-cookie";
 
 class Root extends React.Component{
+
+  componentDidMount(){
+
+    const SID = Cookies.get('SID')
+
+    if(SID !== undefined && _store.getState().user.USERNAME === 'Unknown'){
+      _store.dispatch(AC_GET_SESSION_DATA(SID))
+    }
+
+  }
 
   render(){
     return(
