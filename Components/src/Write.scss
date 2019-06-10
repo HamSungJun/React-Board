@@ -27,6 +27,28 @@
 /* Large Desktop */
 @media only screen and (min-width: 1441px) {
 
+    .Write-Grid-Container{
+
+        grid-template-columns: 1fr 350px;
+        
+        .Write-Grid-Container__Item:nth-child(1){
+            
+            padding-top : 65px;
+            background-color: white;
+            min-height: calc(100vh - 65px);
+            height : calc(100vh - 65px);
+            
+            
+        }
+        .Write-Grid-Container__Item:nth-child(2){
+
+            background-color: hsl(225, 6%, 13%);
+            height : 100%;
+
+        }
+
+    }
+
 }
 /* Smaller that standard */
 @media only screen and (min-width: 959px) and (max-width: 1440px) {

@@ -2,6 +2,7 @@ import * as WriteActions from './WriteAction.js'
 
 const writeInitialState = {
     HTML : "",
+    selection : {},
     isEditing : true
 }
 

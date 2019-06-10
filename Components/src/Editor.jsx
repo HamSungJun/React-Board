@@ -6,11 +6,13 @@ import { MdInsertLink , MdInsertPhoto , MdVideoLibrary } from 'react-icons/md'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { AC_USER_TOGGLE_VIEW , AC_USER_TYPING_EDITOR } from '../redux/WriteAction.js'
+import { AC_USER_TOGGLE_VIEW , AC_USER_TYPING_EDITOR , AC_USER_SELECTION } from '../redux/WriteAction.js'
 
 import _store from '../redux/_store'
 
 import './Editor.scss'
+
+let target;
 
 class Editor extends React.Component{
 
@@ -18,12 +20,28 @@ class Editor extends React.Component{
 
         super(props)
         this.handleFormatBold = this.handleFormatBold.bind(this)
+        
+    }
+
+    componentDidMount(){
+
+        const { writeDispatch } = this.props
+
+        let EDITOR = document.querySelector('#EDITOR')
+        
+        EDITOR.addEventListener('selectstart',() => {
+            
+            target = saveSelection()
+            
+            console.log(target)
+
+        })
 
     }
 
-    handleFormatBold(){
-
-        console.log(document.execCommand('bold'))
+    handleFormatBold(event){
+        event.stopPropagation()
+        console.log(`Hey! ${target.endContainer.text}`)
 
     }
 
@@ -95,23 +113,26 @@ class Editor extends React.Component{
             <div>
 
                 <div
+
                     id="EDITOR"
                     suppressContentEditableWarning={true}
                     className={`${writeState.isEditing?('--Show'):('--Hide')}`}
                     // onInput={writeDispatch.syncToHtml}
-                    onKeyPress={(event)=>{
-                        writeDispatch.typeKeyPress(event)
+                    onKeyUp={(event)=>{
+                        writeDispatch.typeKeyUp(event)
                     }}
                     contentEditable={true}>
 
                 </div>
 
                 <div
+
                     id="EDITOR_HTML"
                     suppressContentEditableWarning={true}
                     className={`${!writeState.isEditing?('--Show'):('--Hide')}`}
                     contentEditable={true}>
                     {writeState.HTML}
+
                 </div>
 
             </div>
@@ -122,6 +143,18 @@ class Editor extends React.Component{
     }
 
 
+}
+
+function saveSelection() {
+    if (window.getSelection) {
+        var sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            return sel.getRangeAt(0);
+        }
+    } else if (document.selection && document.selection.createRange) {
+        return document.selection.createRange();
+    }
+    return null;
 }
 
 const mapStateToProps = (state) => {
@@ -144,44 +177,19 @@ const mapDispatchToProps = (dispatch) => {
 
             },
 
-            typeKeyPress(event){
-
-              let pressedKey = event.which || event.keyCode
+            typeKeyUp(event){
+              
+              let pressedKey = event.keyCode || event.which()
 
               if(pressedKey !== 13){
-                  dispatch(AC_USER_TYPING_EDITOR(GET_EDITOR_INNERHTML()))
-                  return true
+                  dispatch(AC_USER_TYPING_EDITOR(document.getElementById('EDITOR').innerHTML))
               }
 
-
-
             },
-            syncToEditor(){
-
-                let EDITOR = document.getElementById('EDITOR')
-                let Doc = EDITOR.innerHTML
-                dispatch(AC_USER_TYPING_EDITOR(Doc))
-
-            },
-            syncToHtml(){
-
-                dispatch(AC_USER_TYPING_EDITOR(GET_EDITOR_INNERHTML()))
-
-            }
-
 
         }
 
     }
-
-}
-
-const GET_EDITOR_INNERHTML = () => {
-
-    let EDITOR = document.getElementById('EDITOR')
-    let Doc = EDITOR.innerHTML
-
-    return Doc
 
 }
 

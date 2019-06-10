@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    
+        window.onload = () => {
+
+            let fonts = document.querySelectorAll("select#fontChanger > option")
+            for (let index = 0; index < fonts.length; index++) {
+                
+                fonts.item(index).style.fontFamily = fonts.item(index).value
+                
+            }
+
+            let fontSizeChanger = document.querySelector("select#fontSizeChanger")
+            for (let index = 1; index <= 10; index++) {
+                
+                let $option = document.createElement('option')
+                $option.textContent = index
+                $option.value = index
+                
+
+                fontSizeChanger.append($option)
+            }
+
+            let editor = theWYSIWYG.document
+            editor.designMode = "on"
+
+            let boldButton = document.querySelector("button#boldButton")
+            boldButton.addEventListener('click',()=>{
+                editor.execCommand('Bold',false,null)
+            },false)
+
+            let italicButton = document.querySelector("button#italicButton")
+            italicButton.addEventListener('click',()=>{
+                editor.execCommand('Italic',false,null)
+            },false)
+
+            let supButton = document.querySelector("button#supButton")
+            supButton.addEventListener('click',()=>{
+                editor.execCommand('Superscript',false,null)
+            },false)
+
+            let subButton = document.querySelector("button#subButton")
+            subButton.addEventListener('click',()=>{
+                editor.execCommand('Subscript',false,null)
+            },false)
+
+            let strikeButton = document.querySelector("button#strikeButton")
+            strikeButton.addEventListener('click',()=>{
+                editor.execCommand('strikethrough',false,null)
+            },false)
+
+            let orderedListButton = document.querySelector("button#orderedListButton")
+            orderedListButton.addEventListener('click',()=>{
+                editor.execCommand('InsertOrderedList',false,"newOL" + Math.round(Math.random() * 1000))
+            },false)
+
+            let unorderedListButton = document.querySelector("button#orderedListButton")
+            unorderedListButton.addEventListener('click',()=>{
+                editor.execCommand('InsertUnorderedList',false,"newU L" + Math.round(Math.random() * 1000))
+            },false)
+
+            let fontColorInput = document.querySelector("input#fontColorButton")
+            fontColorButton.addEventListener('change',(event)=>{
+                editor.execCommand('ForeColor',false,event.target.value)                
+            },false)
+
+            let highlightInput = document.querySelector("input#highlightButton")
+            highlightButton.addEventListener('change',(event)=>{
+                editor.execCommand('BackColor',false,event.target.value)
+            })
+
+            let fontChangerSelect = document.querySelector("select#fontChanger")
+            fontChangerSelect.addEventListener('change',(event)=>{
+                editor.execCommand('FontName',false,event.target.value)
+            })
+
+            let fontSizeChangerSelect = document.querySelector("select#fontSizeChanger")
+            fontSizeChangerSelect.addEventListener('change',(event)=>{
+                editor.execCommand('FontSize',false,event.target.value)
+            })
+
+            let linkButton = document.querySelector("button#linkButton")
+            linkButton.addEventListener('click',()=>{
+                let URL = prompt('Enter a URL.',"https://")
+                editor.execCommand("CreateLink",false, URL)
+            })
+
+            let unLinkButton = document.querySelector("button#unlinkButton")
+            unLinkButton.addEventListener('click',()=>{
+                editor.execCommand("UnLink",false,null)
+            }) 
+
+            let undoButton = document.querySelector("button#undoButton")
+            undoButton.addEventListener('click',(event)=>{
+                editor.execCommand('undo',false,null)
+            })
+
+            let redoButton = document.querySelector("button#redoButton")
+            redoButton.addEventListener('click',(event)=>{
+                editor.execCommand('redo',false,null)
+            })
+
+        }
+    
+    </script>
+    <style>
+        #editor{
+            margin : 0 auto;
+            width : 750px;
+            height : 300px;
+        }
+        #ribbon{
+            border-bottom: none;
+            padding : 10px;
+            background-color : rgb(40,110,89);
+            color : white;
+            border-radius : 8px 8px 0px 0px;
+        }
+        #ribbon > button {
+            color : white;
+            border : none;
+            outline: none;
+            background-color: transparent;
+            cursor : pointer;
+        }
+        #ribbon > button:hover{
+            background-color: rgb(20,90,70);
+            transition: all 0.3s linear 0s;
+        }
+        #richTextArea{
+            border : 2px solid rgb(40,110,89);
+            height : 100%;
+            width : 746px;
+        }
+        #theWYSIWYG{
+            width : 100%;
+            height : 100%;
+        }
+        input[type="color"]{
+            border : none;
+            outline: none;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor">
+
+        <div id="ribbon">
+
+            <button id="boldButton" title="Bold"><b>B</b></button>
+            <button id="italicButton" title="italic"><em>I</em></button>
+            <button id="supButton" title="Superscript">X<sup>2</sup></button>
+            <button id="subButton" title="Subscript">X<sub>2</sub></button>
+            <button id="strikeButton" title="Strikethrough"><s>abc</s></button>
+            <button id="orderedListButton" title="Numbered list">(i)</button>
+            <button id="unorderedListButton" title="Bulleted list">&bull;</button>
+            
+            <input id="fontColorButton" type="color" title="Change Font Color">
+            <input id="highlightButton" type="color" title="Highlight Text">
+
+            <select id="fontChanger">
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Consolas">Consolas</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Monospace">Monospace</option>
+                <option value="Cursive">Cursive</option>
+                <option value="Sans-Serif">Sans-Serif</option>
+                <option value="Calibri">Calibri</option>
+            </select>
+
+            <select id="fontSizeChanger"></select>
+
+            <button id="linkButton" title="Create Link">Link</button>
+            <button id="unlinkButton" title="Remove Link">Unlink</button>
+            <button id="undoButton" title="Undo Prev Action">&larr;</button>
+            <button id="redoButton" title="Redo">&rarr;</button>
+
+        </div>
+
+        <div id="richTextArea">
+            <iframe id="theWYSIWYG" name="theWYSIWYG" frameborder="0"></iframe>
+        </div>
+
+    </div>
+</body>
+</html>
