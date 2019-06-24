@@ -3,13 +3,18 @@
     height : 40px;
     box-shadow: 0px 3px 3px black;
     display: grid;
-    grid-template-columns: 200px 200px 1fr;
+    grid-template-columns: 200px 200px 200px 1fr;
     
     .Nested-Grid{
 
         display: grid;
         grid-template-columns: repeat(5,40px);
         height : 43px;
+
+        .Format-Size{
+            position: relative;
+        }
+       
 
         .EditTools-Grid-Container__Item{
             display: flex;
@@ -19,6 +24,15 @@
             height : 40px;
             box-sizing: border-box;
             cursor: pointer;
+
+            .CMD_BTN{
+                background: transparent;
+                border : none;
+                outline: none;
+                width :  100%;
+                height : 100%;
+                cursor: pointer;
+            }
 
             .EditTools-Item__Icon{
                 width : 18px;
@@ -31,6 +45,31 @@
             }
     
         }
+
+        #FaUnlink{
+            width : 12px;
+            height : 12px;
+            transition: all 100ms;
+        }
+        #FaUnlink:hover{
+            width : 16px;
+            height : 16px;
+        }
+
+        #supButton{
+            font-size: 14px;
+            border : none;
+            outline: none;
+            background : transparent;
+            cursor : pointer;
+            transition : all 100ms;
+        }
+        #supButton:hover{
+            font-size: 18px;
+        }
+        
+       
+       
 
     }
 
@@ -105,6 +144,53 @@
     
 }
 
+#RICH_TEXT_AREA{
+
+    width : 100%;
+    height : 100%;
+
+}
+#FormatSizeList{
+    position : absolute;
+    top : 50px;
+    left : calc(50% - 20px);
+    max-height: 200px;
+    overflow-x : hidden;
+    overflow-y : auto;
+    width : 40px;
+    box-sizing: border-box;
+    border : 1px solid #ccc;
+    padding-top : 10px;
+    box-shadow: 2px 2px 2px grey;
+}
+#FormatSizeList ::-webkit-scrollbar{
+    width : 0 !important;
+    display: none;
+}
+.Format-Size-li{
+    width : 100%;
+    text-align: center;
+    font-size: 14px;
+    transition: all 100ms;
+    margin-bottom: 3px;
+}
+.Format-Size-li:hover{
+    color : white;
+    background : rgb(31, 32, 35);    
+}
+.top-pointing-triangle{
+    position: absolute;
+    top : 42px;
+    left : 25%;
+    transform: rotate(45deg);
+    width : 16px;
+    height : 16px;
+    background: rgb(255,255,255);
+    border : none;
+    border-top : 1px solid #ccc;
+    border-left : 1px solid #ccc;
+    z-index: 5;
+}
 
 /* #Media Queries
 ================================================== */
