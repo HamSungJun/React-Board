@@ -2,6 +2,8 @@ import React from 'react'
 
 import TopBar from '../src/TopBar.jsx'
 import Editor from './Editor.jsx'
+import ImageLoader from './ImageLoader.jsx'
+import VideoLoader from './VideoLoader.jsx'
 import '../src/Write.scss'
 
 import { withRouter } from 'react-router-dom'
@@ -13,7 +15,7 @@ class Write extends React.Component{
 
     render(){
 
-        let { writeDispatch } = this.props
+        let { writeState } = this.props
 
         return(
 
@@ -26,7 +28,12 @@ class Write extends React.Component{
                         <Editor />
                     </div>
                     <div className="Write-Grid-Container__Item">
-
+                        {
+                            writeState.MediaState?
+                                (<ImageLoader />)
+                                :
+                                (<VideoLoader />)
+                        }
                     </div>
                 </div>
                 
@@ -37,5 +44,15 @@ class Write extends React.Component{
     }
 
 }
+
+const mapStateToProps = (state) => {
+
+    return{
+        writeState : state.write
+    }
+
+}
+
+Write = withRouter(connect(mapStateToProps,null)(Write))
 
 export default Write

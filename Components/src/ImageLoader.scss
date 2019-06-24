@@ -1,0 +1,117 @@
+.Image-Loader-Wrapper{
+
+
+
+}
+.Image-Loader-Header{
+  height : 40px;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+
+  .Image-Loader-Header__Item{
+    display: flex;
+    align-items: center;
+  }
+
+  .Image-Loader-Icon{
+    color : white;
+    width : 35px;
+    height : 35px;
+  }
+  .Image-Loader-Header__Item:nth-child(1){
+    justify-content: center;
+    padding-left : 0;
+  }
+  .Image-Loader-Header__Item:nth-child(2){
+    justify-content: flex-start;
+    color : white;
+    font-size: 14pt;
+    letter-spacing: 0.1em;
+    padding-left : 10px;
+  }
+
+}
+
+.Image-Loader-Lists{
+  height : calc(100vh - 208px);
+  margin-top: 3px;
+  box-sizing: border-box;
+  padding : 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  overflow: auto;
+
+    .Image-Loader-Lists__Item{
+      width : 100%;
+      height : 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+
+      .Frame-Icon {
+        width: 100%;
+        height: 100%;
+
+        background:
+                linear-gradient(to right, white 4px, transparent 4px) 0 0,
+                linear-gradient(to right, white 4px, transparent 4px) 0 100%,
+                linear-gradient(to left, white 4px, transparent 4px) 100% 0,
+                linear-gradient(to left, white 4px, transparent 4px) 100% 100%,
+                linear-gradient(to bottom, white 4px, transparent 4px) 0 0,
+                linear-gradient(to bottom, white 4px, transparent 4px) 100% 0,
+                linear-gradient(to top, white 4px, transparent 4px) 0 100%,
+                linear-gradient(to top, white 4px, transparent 4px) 100% 100%;
+
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+      }
+
+    }
+
+}
+
+.Image-Loader-Controller{
+  height : 100px;
+  box-sizing: border-box;
+  padding-top : 15px;
+  .Image-Loader-Controller__Row{
+
+    height : 50px;
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+    padding : 0 10px;
+    grid-column-gap: 15px;
+    .Image-Loader-Controller__Row__Item{
+
+      .File-Btn {
+        outline: none;
+        border : none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        width : 100%;
+        height : 100%;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 3px 3px black;
+        transition: all 300ms ease;
+        .File-Icon{
+          width : 25px;
+          height : 25px;
+          margin-right: 5px;
+        }
+
+      }
+      .File-Btn:hover{
+        background-color: #00E677;
+      }
+
+    }
+  }
+
+}

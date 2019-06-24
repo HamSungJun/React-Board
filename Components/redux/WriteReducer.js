@@ -1,27 +1,25 @@
 import * as WriteActions from './WriteAction.js'
 
 const writeInitialState = {
-    HTML : "",
-    selection : {},
-    isEditing : true
+
+    ViewState : true,
+    MediaState : true
+
 }
 
 const writeReducer = ( state = writeInitialState , action ) => {
 
     switch(action.type){
 
-        case WriteActions.A_USER_TYPING_EDITOR:
+        case WriteActions.A_CHANGE_MEDIA_MODE :
             return Object.assign({},state,{
-                HTML : action.HTML
+                MediaState: action.value
             })
-        case WriteActions.A_USER_TOGGLE_VIEW:
+        case WriteActions.A_CHANGE_VIEW_MODE :
             return Object.assign({},state,{
-                isEditing : action.value
+                ViewState: action.value
             })
-        case WriteActions.A_USER_TYPING_ENTER:
-            return Object.assign({},state,{
-                HTML : state.HTML.concat("<br>")
-            })
+
         default :
             return state
     }

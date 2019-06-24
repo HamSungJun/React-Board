@@ -17,6 +17,7 @@
        
 
         .EditTools-Grid-Container__Item{
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -24,6 +25,12 @@
             height : 40px;
             box-sizing: border-box;
             cursor: pointer;
+
+            .Color-Picker-Box{
+                position: absolute;
+                top : 44px;
+                left : 0;
+            }
 
             .CMD_BTN{
                 background: transparent;
@@ -128,12 +135,10 @@
 }
 
 #EDITOR , #EDITOR_HTML{
-    
-    padding : 10px;
-    overflow-y : auto;
+
+    overflow-y : hidden;
     height : calc(100vh - 105px);
     box-sizing: border-box;
-    
 
 }
 
@@ -145,11 +150,10 @@
 }
 
 #RICH_TEXT_AREA{
-
     width : 100%;
     height : 100%;
-
 }
+
 #FormatSizeList{
     position : absolute;
     top : 50px;

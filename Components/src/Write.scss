@@ -43,7 +43,9 @@
         .Write-Grid-Container__Item:nth-child(2){
 
             background-color: hsl(225, 6%, 13%);
-            height : 100%;
+            padding-top : 65px;
+            min-height: calc(100vh - 65px);
+            height : calc(100vh - 65px);
 
         }
 

@@ -2,25 +2,23 @@ import React from 'react'
 
 import { MdFormatBold , MdFormatItalic , MdFormatUnderlined } from 'react-icons/md'
 import { MdFormatAlignJustify , MdFormatAlignLeft , MdFormatAlignCenter , MdFormatAlignRight } from 'react-icons/md'
-import { MdInsertLink , MdInsertPhoto , MdVideoLibrary , MdTextFormat , MdFormatColorText , MdFormatSize } from 'react-icons/md'
+import { MdInsertLink , MdInsertPhoto , MdVideoLibrary , MdFormatColorText , MdFormatSize } from 'react-icons/md'
 import { FaUnlink } from 'react-icons/fa'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { AC_USER_TOGGLE_VIEW , AC_USER_TYPING_EDITOR , AC_USER_SELECTION } from '../redux/WriteAction.js'
-import { TwitterPicker } from 'react-color'
-
-
-import _store from '../redux/_store'
+import { AC_CHANGE_VIEW_MODE , AC_CHANGE_MEDIA_MODE } from '../redux/WriteAction.js'
+import { ChromePicker } from 'react-color'
 
 import './Editor.scss'
+
 
 class Editor extends React.Component{
 
     constructor(props){
 
         super(props)
-           
+
     }
 
     componentDidMount(){
@@ -31,10 +29,17 @@ class Editor extends React.Component{
         INITIALIZE_EDIT_BUTTONS(InnerEditor)
         INITIALIZE_SIZE_LISTS(InnerEditor)
 
+        InnerEditor.addEventListener('click',()=>{
+            COLOR_PICKER_HIDE()
+            FORMAT_SIZE_LIST_HIDE()
+        })
+
         let OuterEditor = document.querySelector("#EDITOR")
 
         OuterEditor.addEventListener('click',(event) => {
+
             event.stopPropagation()
+
         })
 
         let EditTools = document.querySelectorAll(".EditTools-Grid-Container__Item")
@@ -43,6 +48,13 @@ class Editor extends React.Component{
                 event.stopPropagation()
             })
         })
+
+    }
+
+    handleColorChange(color,event){
+
+        let InnerEditor = RICH_TEXT_AREA.document
+        InnerEditor.execCommand('foreColor',false,color.hex)
 
     }
 
@@ -99,8 +111,14 @@ class Editor extends React.Component{
                 <div className="Nested-Grid">
                     <div className="EditTools-Grid-Container__Item">
                         <MdFormatColorText id="MdFormatColorText" className="EditTools-Item__Icon" />
-                        {/* <TwitterPicker class /> */}
+                        <div className="Color-Picker-Box --Hide">
+                            <ChromePicker
+                                triangle={'hide'}
+                                onChangeComplete={this.handleColorChange}
+                            />
+                        </div>
                     </div>
+
                     <div className="EditTools-Grid-Container__Item Format-Size">
                         <MdFormatSize id="MdFormatSize" className="EditTools-Item__Icon" />
                         <div id="FormatSizeListPointer" className="top-pointing-triangle --Hide"></div>
@@ -108,10 +126,14 @@ class Editor extends React.Component{
                             
                         </div>
                     </div>
-                    <div className="EditTools-Grid-Container__Item">
+                    <div onClick={()=>{
+                        writeDispatch.changeMediaMode(true)
+                    }} className="EditTools-Grid-Container__Item">
                         <MdInsertPhoto id="MdInsertPhoto" className="EditTools-Item__Icon" />
                     </div>
-                    <div className="EditTools-Grid-Container__Item">
+                    <div onClick={()=>{
+                        writeDispatch.changeMediaMode(false)
+                    }} className="EditTools-Grid-Container__Item">
                         <MdVideoLibrary id="MdVideoLibrary" className="EditTools-Item__Icon" />
                     </div> 
                 </div>
@@ -119,13 +141,13 @@ class Editor extends React.Component{
                 <div className="Nested-Flex-View">
                 
                     <div onClick={()=>{
-                        writeDispatch.toggleView('Editor')
-                    }} className={`View-Item ${writeState.isEditing?('--View-Clicked'):('')}`}>
+                        writeDispatch.changeViewMode(true)
+                    }} className={`View-Item ${writeState.ViewState?('--View-Clicked'):('')}`}>
                         <span className="View-Item-Text">Editor</span>
                     </div>
                     <div onClick={()=>{
-                        writeDispatch.toggleView('Html')
-                    }} className={`View-Item ${!writeState.isEditing?('--View-Clicked'):('')}`}>
+                        writeDispatch.changeViewMode(false)
+                    }} className={`View-Item ${!writeState.ViewState?('--View-Clicked'):('')}`}>
                         <span className="View-Item-Text">HTML</span>
                     </div>
                     
@@ -136,7 +158,7 @@ class Editor extends React.Component{
 
                 <div id="EDITOR">
 
-                    <iframe id="RICH_TEXT_AREA"  name="RICH_TEXT_AREA" frameborder="0"></iframe>                    
+                    <iframe id="RICH_TEXT_AREA"  name="RICH_TEXT_AREA" frameBorder="0"></iframe>
 
                 </div>
 
@@ -235,7 +257,8 @@ const INITIALIZE_EDIT_BUTTONS = (editor) => {
         if(formatSizeList.classList.contains('--Hide')){
 
             FORMAT_SIZE_LIST_SHOW()
-            
+            COLOR_PICKER_HIDE()
+
         }
         else{
             
@@ -245,10 +268,45 @@ const INITIALIZE_EDIT_BUTTONS = (editor) => {
     })
 
     let formatColorTextButton = document.querySelector("#MdFormatColorText")
+    formatColorTextButton.addEventListener('click',()=>{
 
+        let ColorPickerBox = document.querySelector('.Color-Picker-Box')
+        if(ColorPickerBox.classList.contains('--Hide')){
+
+            COLOR_PICKER_SHOW()
+            FORMAT_SIZE_LIST_HIDE()
+
+        }
+        else{
+
+            COLOR_PICKER_HIDE()
+
+        }
+
+    })
 
 }
 
+const COLOR_PICKER_HIDE = () => {
+
+    let ColorPickerBox = document.querySelector('.Color-Picker-Box')
+
+    if(ColorPickerBox.classList.contains('--Show')){
+        ColorPickerBox.classList.remove('--Show')
+        ColorPickerBox.classList.add('--Hide')
+    }
+
+}
+const COLOR_PICKER_SHOW = () => {
+
+    let ColorPickerBox = document.querySelector('.Color-Picker-Box')
+
+    if(ColorPickerBox.classList.contains('--Hide')){
+        ColorPickerBox.classList.remove('--Hide')
+        ColorPickerBox.classList.add('--Show')
+    }
+
+}
 const FORMAT_SIZE_LIST_SHOW = () => {
 
     let formatSizePointer = document.querySelector("#FormatSizeListPointer")
@@ -293,18 +351,22 @@ const mapDispatchToProps = (dispatch) => {
 
         writeDispatch : {
 
-            toggleView(view){
+            changeViewMode(mode){
 
-                dispatch(AC_USER_TOGGLE_VIEW(view))
+                dispatch(AC_CHANGE_VIEW_MODE(mode))
+
+            },
+            changeMediaMode(mode){
+
+                dispatch(AC_CHANGE_MEDIA_MODE(mode))
 
             }
-
         }
 
     }
 
 }
 
-Editor = connect(mapStateToProps,mapDispatchToProps)(Editor)
+Editor = withRouter(connect(mapStateToProps,mapDispatchToProps)(Editor))
 
 export default Editor
