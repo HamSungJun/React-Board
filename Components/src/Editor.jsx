@@ -2,46 +2,47 @@ import React from 'react'
 
 import { MdFormatBold , MdFormatItalic , MdFormatUnderlined } from 'react-icons/md'
 import { MdFormatAlignJustify , MdFormatAlignLeft , MdFormatAlignCenter , MdFormatAlignRight } from 'react-icons/md'
-import { MdInsertLink , MdInsertPhoto , MdVideoLibrary } from 'react-icons/md'
+import { MdInsertLink , MdInsertPhoto , MdVideoLibrary , MdTextFormat , MdFormatColorText , MdFormatSize } from 'react-icons/md'
+import { FaUnlink } from 'react-icons/fa'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { AC_USER_TOGGLE_VIEW , AC_USER_TYPING_EDITOR , AC_USER_SELECTION } from '../redux/WriteAction.js'
+import { TwitterPicker } from 'react-color'
+
 
 import _store from '../redux/_store'
 
 import './Editor.scss'
-
-let target;
 
 class Editor extends React.Component{
 
     constructor(props){
 
         super(props)
-        this.handleFormatBold = this.handleFormatBold.bind(this)
-        
+           
     }
 
     componentDidMount(){
 
-        const { writeDispatch } = this.props
+        let InnerEditor = RICH_TEXT_AREA.document
+        InnerEditor.designMode = "on"
 
-        let EDITOR = document.querySelector('#EDITOR')
-        
-        EDITOR.addEventListener('selectstart',() => {
-            
-            target = saveSelection()
-            
-            console.log(target)
+        INITIALIZE_EDIT_BUTTONS(InnerEditor)
+        INITIALIZE_SIZE_LISTS(InnerEditor)
 
+        let OuterEditor = document.querySelector("#EDITOR")
+
+        OuterEditor.addEventListener('click',(event) => {
+            event.stopPropagation()
         })
 
-    }
-
-    handleFormatBold(event){
-        event.stopPropagation()
-        console.log(`Hey! ${target.endContainer.text}`)
+        let EditTools = document.querySelectorAll(".EditTools-Grid-Container__Item")
+        EditTools.forEach((el)=>{
+            el.addEventListener('click',(event)=>{
+                event.stopPropagation()
+            })
+        })
 
     }
 
@@ -58,8 +59,7 @@ class Editor extends React.Component{
                 <div className="Nested-Grid">
 
                     <div className="EditTools-Grid-Container__Item">
-                        <MdFormatBold id="MdFormatBold" className="EditTools-Item__Icon"
-                        onClick={this.handleFormatBold} />
+                        <MdFormatBold id="MdFormatBold" className="EditTools-Item__Icon" />
                     </div>
                     <div className="EditTools-Grid-Container__Item">
                         <MdFormatItalic id="MdFormatItalic" className="EditTools-Item__Icon" />
@@ -87,11 +87,33 @@ class Editor extends React.Component{
                         <MdInsertLink id="MdInsertLink" className="EditTools-Item__Icon" />
                     </div>
                     <div className="EditTools-Grid-Container__Item">
+                        <FaUnlink id="FaUnlink" className="EditTools-Item__Icon" />
+                    </div>
+                    <div className="EditTools-Grid-Container__Item">
+                        <button id="supButton" title="Superscript">X<sup>2</sup></button>
+                    </div>
+
+                  
+                </div>
+
+                <div className="Nested-Grid">
+                    <div className="EditTools-Grid-Container__Item">
+                        <MdFormatColorText id="MdFormatColorText" className="EditTools-Item__Icon" />
+                        {/* <TwitterPicker class /> */}
+                    </div>
+                    <div className="EditTools-Grid-Container__Item Format-Size">
+                        <MdFormatSize id="MdFormatSize" className="EditTools-Item__Icon" />
+                        <div id="FormatSizeListPointer" className="top-pointing-triangle --Hide"></div>
+                        <div id="FormatSizeList" className="--Hide"> 
+                            
+                        </div>
+                    </div>
+                    <div className="EditTools-Grid-Container__Item">
                         <MdInsertPhoto id="MdInsertPhoto" className="EditTools-Item__Icon" />
                     </div>
                     <div className="EditTools-Grid-Container__Item">
                         <MdVideoLibrary id="MdVideoLibrary" className="EditTools-Item__Icon" />
-                    </div>
+                    </div> 
                 </div>
 
                 <div className="Nested-Flex-View">
@@ -112,26 +134,13 @@ class Editor extends React.Component{
 
             <div>
 
-                <div
+                <div id="EDITOR">
 
-                    id="EDITOR"
-                    suppressContentEditableWarning={true}
-                    className={`${writeState.isEditing?('--Show'):('--Hide')}`}
-                    // onInput={writeDispatch.syncToHtml}
-                    onKeyUp={(event)=>{
-                        writeDispatch.typeKeyUp(event)
-                    }}
-                    contentEditable={true}>
+                    <iframe id="RICH_TEXT_AREA"  name="RICH_TEXT_AREA" frameborder="0"></iframe>                    
 
                 </div>
 
-                <div
-
-                    id="EDITOR_HTML"
-                    suppressContentEditableWarning={true}
-                    className={`${!writeState.isEditing?('--Show'):('--Hide')}`}
-                    contentEditable={true}>
-                    {writeState.HTML}
+                <div>
 
                 </div>
 
@@ -145,16 +154,129 @@ class Editor extends React.Component{
 
 }
 
-function saveSelection() {
-    if (window.getSelection) {
-        var sel = window.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            return sel.getRangeAt(0);
-        }
-    } else if (document.selection && document.selection.createRange) {
-        return document.selection.createRange();
+const INITIALIZE_SIZE_LISTS = (editor) => {
+    
+    let $sizeList = document.querySelector('#FormatSizeList')
+    for (let index = 1; index <= 8; index++) {
+        
+        let $li = document.createElement('div')
+        $li.setAttribute('class','Format-Size-li')
+        $li.textContent = index
+        
+        $li.addEventListener('click',(event)=>{
+            editor.execCommand('FontSize',false,parseInt(event.target.textContent))
+            FORMAT_SIZE_LIST_HIDE()
+        })
+
+        $sizeList.append($li)
+
     }
-    return null;
+
+}
+
+const INITIALIZE_EDIT_BUTTONS = (editor) => {
+
+    let boldButton = document.querySelector("#MdFormatBold")
+    boldButton.addEventListener('click' , (event) => {
+        editor.execCommand('Bold',false,null)
+    },false)
+
+    let italicButton = document.querySelector("#MdFormatItalic")
+    italicButton.addEventListener('click' , (event) => {
+        editor.execCommand('italic',false,null)
+    },false)
+
+    let underlineButton = document.querySelector("#MdFormatUnderlined")
+    underlineButton.addEventListener('click' , (event) => {
+        editor.execCommand('Underline',false,null)
+    },false)
+
+    let alignJustifyButton = document.querySelector("#MdFormatAlignJustify")
+    alignJustifyButton.addEventListener('click' , (event) => {
+        editor.execCommand('justifyFull',false,null)
+    },false)
+
+    let alignCenterButton = document.querySelector("#MdFormatAlignCenter")
+    alignCenterButton.addEventListener('click' , (event) => {
+        editor.execCommand('justifyCenter',false,null)
+    },false)
+    
+    let alignLeftButton = document.querySelector("#MdFormatAlignLeft")
+    alignLeftButton.addEventListener('click' , (event) => {
+        editor.execCommand('justifyLeft',false,null)
+    },false)
+
+    let alignRightButton = document.querySelector("#MdFormatAlignRight")
+    alignRightButton.addEventListener('click' , (event) => {
+        editor.execCommand('justifyRight',false,null)
+    },false)
+
+    let linkButton = document.querySelector("#MdInsertLink")
+    linkButton.addEventListener('click' , (event) => {
+        let URL = prompt('URL을 입력하여 주세요.',"https://")
+        editor.execCommand('createLink',false,URL)
+    },false)
+
+    let unlinkButton = document.querySelector("#FaUnlink")
+    unlinkButton.addEventListener('click' , (event) => {
+        editor.execCommand('unlink',false,null)
+    },false)
+    
+    let supButton = document.querySelector("#supButton")
+    supButton.addEventListener('click' , () => {
+        editor.execCommand('Superscript',false,null)
+    },false)
+
+    let formatSizeButton = document.querySelector("#MdFormatSize")
+    let formatSizePointer = document.querySelector("#FormatSizeListPointer")
+    let formatSizeList = document.querySelector("#FormatSizeList")
+
+    formatSizeButton.addEventListener('click',() => {
+        if(formatSizeList.classList.contains('--Hide')){
+
+            FORMAT_SIZE_LIST_SHOW()
+            
+        }
+        else{
+            
+            FORMAT_SIZE_LIST_HIDE()
+
+        }
+    })
+
+    let formatColorTextButton = document.querySelector("#MdFormatColorText")
+
+
+}
+
+const FORMAT_SIZE_LIST_SHOW = () => {
+
+    let formatSizePointer = document.querySelector("#FormatSizeListPointer")
+    let formatSizeList = document.querySelector("#FormatSizeList")
+
+    if(formatSizeList.classList.contains('--Hide')){
+
+        formatSizeList.classList.remove('--Hide')
+        formatSizePointer.classList.remove('--Hide')
+        formatSizeList.classList.add('--Show')
+        formatSizePointer.classList.add('--Show')
+
+    }
+
+}
+const FORMAT_SIZE_LIST_HIDE = () => {
+
+    let formatSizePointer = document.querySelector("#FormatSizeListPointer")
+    let formatSizeList = document.querySelector("#FormatSizeList")
+
+    if(formatSizeList.classList.contains('--Show')){
+
+        formatSizeList.classList.remove('--Show')
+        formatSizePointer.classList.remove('--Show')
+        formatSizeList.classList.add('--Hide')
+        formatSizePointer.classList.add('--Hide')
+
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -175,17 +297,7 @@ const mapDispatchToProps = (dispatch) => {
 
                 dispatch(AC_USER_TOGGLE_VIEW(view))
 
-            },
-
-            typeKeyUp(event){
-              
-              let pressedKey = event.keyCode || event.which()
-
-              if(pressedKey !== 13){
-                  dispatch(AC_USER_TYPING_EDITOR(document.getElementById('EDITOR').innerHTML))
-              }
-
-            },
+            }
 
         }
 
