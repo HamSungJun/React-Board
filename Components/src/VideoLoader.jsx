@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { connect } from 'react-redux'
+
 class VideoLoader extends React.Component{
 
     constructor(props){
@@ -11,9 +13,12 @@ class VideoLoader extends React.Component{
     }
 
     render(){
+
+        const { writeState } = this.props
+
         return (
 
-            <div>
+            <div className={`Video-Loader-Wrapper ${writeState.MediaState?('--Hide'):('--Show')}`}>
                 <h3>비디오 로더</h3>
             </div>
 
@@ -21,5 +26,13 @@ class VideoLoader extends React.Component{
     }
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+        writeState : state.write
+    }
+}
+
+VideoLoader = connect(mapStateToProps , null)(VideoLoader)
 
 export default VideoLoader

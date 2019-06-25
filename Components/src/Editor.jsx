@@ -42,12 +42,12 @@ class Editor extends React.Component{
 
         })
 
-        let EditTools = document.querySelectorAll(".EditTools-Grid-Container__Item")
-        EditTools.forEach((el)=>{
-            el.addEventListener('click',(event)=>{
-                event.stopPropagation()
-            })
-        })
+        // let EditTools = document.querySelectorAll(".EditTools-Grid-Container__Item")
+        // EditTools.forEach((el)=>{
+        //     el.addEventListener('click',(event)=>{
+        //         event.stopPropagation()
+        //     })
+        // })
 
     }
 
@@ -357,7 +357,7 @@ const mapDispatchToProps = (dispatch) => {
 
             },
             changeMediaMode(mode){
-
+                
                 dispatch(AC_CHANGE_MEDIA_MODE(mode))
 
             }

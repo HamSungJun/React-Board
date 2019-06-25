@@ -4,6 +4,8 @@ let session = require('express-session')
 let app = express()
 let loginRouter = require('./routes/loginRouter.js')
 let registerRouter = require('./routes/registerRouter.js')
+let writeRouter = require('./routes/wrteRouter.js')
+
 let cors = require('cors');
 const corsOptions = {
     origin: true,
@@ -28,6 +30,8 @@ app.use(session({
     }
 
 }));
+
+app.use('/write',writeRouter)
 app.use('/login',loginRouter)
 app.use('/register',registerRouter)
 

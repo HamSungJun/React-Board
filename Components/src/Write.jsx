@@ -28,12 +28,10 @@ class Write extends React.Component{
                         <Editor />
                     </div>
                     <div className="Write-Grid-Container__Item">
-                        {
-                            writeState.MediaState?
-                                (<ImageLoader />)
-                                :
-                                (<VideoLoader />)
-                        }
+                          
+                        <ImageLoader />  
+                        <VideoLoader />
+                    
                     </div>
                 </div>
                 

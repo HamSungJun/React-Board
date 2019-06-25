@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {connect} from 'react-redux'
+
 import { MdPhotoLibrary , MdFolderOpen , MdWifi } from 'react-icons/md'
 
 import './ImageLoader.scss'
@@ -14,7 +16,7 @@ class ImageLoader extends React.Component{
         }
         this.fileInput = React.createRef()
         this.renderImageLists = this.renderImageLists.bind(this)
-        // this.handleFileInputChange = this.handleFileInputChange(this)
+        this.handleFileInputChange = this.handleFileInputChange.bind(this)
 
     }
 
@@ -34,11 +36,21 @@ class ImageLoader extends React.Component{
     renderImageLists(ImageBasket){
 
         return ImageBasket.map((el,index) => {
-            return(
+            if(el === ""){
+                return(
+                    <div key={index} className='Image-Loader-Lists__Item'>
+                        <div className='Frame-Icon'></div>
+                    </div>
+                )
+            }
+            else{
+                return(
                 <div key={index} className='Image-Loader-Lists__Item'>
-                    <div className='Frame-Icon'></div>
+                    <img className='Frame-Image' src={el} alt=""/>
                 </div>
-            )
+                )
+            }
+         
         })
 
     }
@@ -53,17 +65,71 @@ class ImageLoader extends React.Component{
     }
 
     handleFileInputChange(event){
+        
+        let fileInput = document.getElementById('File-Input')
+        let files = fileInput.files
+        let myImageBasket = this.state.ImageBasket
+        
+        for (let index = 0; index < files.length; index++) {
+        
+            let myFileReader = new FileReader()
+
+            myFileReader.addEventListener('load',()=>{
+                
+                console.log(files.item(index).type.split('/')[1])
+                
+               
 
 
-        console.log(event.target.files)
+                // fetch('http://localhost:3000/write/imageUpload',{
+
+                //     method : 'POST',
+                //     headers: {
+                //         'Accept': 'application/json',
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body : JSON.stringify({ 
+                //         data : myFileReader.result
+                //     })
+
+                // }).then(res=>res.json()).then((res)=>{
+                //     if(res.status === 1){
+                //         myImageBasket.unshift(myFileReader.result)
+                //         myImageBasket.pop()
+                //         this.setState({
+                //             ImageBasket : myImageBasket
+                //         })
+                //     }
+                // })
+
+            },false)
+
+            if(files.item(index)){
+
+                let myFormData = new FormData()
+
+                myFormData.set('title',`React-Board_${new Date(files.item(index).lastModifiedDate).toJSON().substr(0,10).replace(/-/g,"")}_${new Date().getTime()}`)
+                myFormData.set('ext',`${files.item(index).type.split('/')[1]}`)
+
+
+                myFileReader.readAsDataURL(files.item(index))
+            }
+            
+        }
+
+        console.log(myImageBasket)
+
+        
 
 
     }
     render(){
 
+        const { writeState } = this.props
+
         return (
 
-            <div className='Image-Loader-Wrapper'>
+            <div className={`Image-Loader-Wrapper ${!writeState.MediaState?('--Hide'):('--Show')}`}>
 
                 <div className='Image-Loader-Header'>
                     <div className='Image-Loader-Header__Item'>
@@ -105,5 +171,13 @@ class ImageLoader extends React.Component{
     }
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+        writeState : state.write
+    }
+}
+
+ImageLoader = connect(mapStateToProps , null)(ImageLoader)
 
 export default ImageLoader
