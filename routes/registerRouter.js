@@ -94,7 +94,7 @@ registerRouter.post('/nonformalRegisterSubmit',(req,res) => {
     EMAIL : NF_USER_EMAIL,
     USERNAME : NF_USER_USERNAME,
     PW : sha256(NF_USER_PW),
-    U_IMG_PATH : `./public/UserImages/${NF_FILE_NAME}`,
+    U_IMG_PATH : `./UserImages/${NF_FILE_NAME}`,
     createdAt : createdAt
   },secret.MongoCollections.nonformalUsers).then((response)=>{
     res.json(response)
