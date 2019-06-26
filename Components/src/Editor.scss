@@ -154,6 +154,20 @@
     height : 100%;
 }
 
+.Resize-Wrapper{
+    position: relative;
+    border : 2px solid black;
+    display: inline;
+}
+.Resize-Bullet{
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    width : 15px;
+    height : 15px;
+    border : 2px solid black;
+}
+
 #FormatSizeList{
     position : absolute;
     top : 50px;

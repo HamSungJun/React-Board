@@ -78,6 +78,8 @@ export const AC_LOGIN_PROCESS_START = () => {
         
         dispatch(AC_SET_USER_INFO(Jres))
 
+        refreshSessionStroage(Jres)
+
         if(SnapShot.login.REMEMBER){
 
           Cookies.set('user',Jres.EMAIL,{
@@ -136,4 +138,39 @@ export const AC_TOGGLE_MODAL = () => {
   return {
     type : A_TOGGLE_MODAL
   }
+}
+
+export const refreshSessionStroage = (userInfo) => {
+
+  window.sessionStorage.removeItem('USERNAME')
+  window.sessionStorage.removeItem('U_IMG_PATH')
+  window.sessionStorage.removeItem('REG_DATE')
+  window.sessionStorage.removeItem('NUM_OF_ARTICLES')
+  window.sessionStorage.removeItem('NUM_OF_REPLIES')
+  window.sessionStorage.removeItem('NUM_OF_GOTTEN_RECOMMENDS')
+  window.sessionStorage.removeItem('NUM_OF_HIT_RECOMMENS')
+  window.sessionStorage.removeItem('EMAIL')
+
+  window.sessionStorage.setItem('USERNAME',userInfo.USERNAME)
+  window.sessionStorage.setItem('U_IMG_PATH',userInfo.U_IMG_PATH)
+  window.sessionStorage.setItem('REG_DATE',userInfo.REG_DATE)
+  window.sessionStorage.setItem('NUM_OF_ARTICLES',userInfo.NUM_OF_ARTICLES)
+  window.sessionStorage.setItem('NUM_OF_REPLIES',userInfo.NUM_OF_REPLIES)
+  window.sessionStorage.setItem('NUM_OF_GOTTEN_RECOMMENDS',userInfo.NUM_OF_GOTTEN_RECOMMENDS)
+  window.sessionStorage.setItem('NUM_OF_HIT_RECOMMENS',userInfo.NUM_OF_HIT_RECOMMENS)
+  window.sessionStorage.setItem('EMAIL',userInfo.EMAIL)
+  
+}
+
+export const removeSessionStorage = () => {
+
+  window.sessionStorage.removeItem('USERNAME')
+  window.sessionStorage.removeItem('U_IMG_PATH')
+  window.sessionStorage.removeItem('REG_DATE')
+  window.sessionStorage.removeItem('NUM_OF_ARTICLES')
+  window.sessionStorage.removeItem('NUM_OF_REPLIES')
+  window.sessionStorage.removeItem('NUM_OF_GOTTEN_RECOMMENDS')
+  window.sessionStorage.removeItem('NUM_OF_HIT_RECOMMENS')
+  window.sessionStorage.removeItem('EMAIL')
+
 }

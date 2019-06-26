@@ -10,6 +10,7 @@ const userInitialState = {
     NUM_OF_GOTTEN_RECOMMENDS : 0,
     NUM_OF_HIT_RECOMMENS : 0,
     IS_SESSION_SUCCESS : false
+    
 }
 
 const userReducer = (state = userInitialState , action) => {

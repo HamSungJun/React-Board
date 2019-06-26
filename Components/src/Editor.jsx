@@ -10,8 +10,9 @@ import { withRouter } from 'react-router-dom'
 import { AC_CHANGE_VIEW_MODE , AC_CHANGE_MEDIA_MODE } from '../redux/WriteAction.js'
 import { ChromePicker } from 'react-color'
 
-import './Editor.scss'
+import * as ResizeBullets from './ResizeBullets.js'
 
+import './Editor.scss'
 
 class Editor extends React.Component{
 
@@ -25,13 +26,18 @@ class Editor extends React.Component{
 
         let InnerEditor = RICH_TEXT_AREA.document
         InnerEditor.designMode = "on"
-
-        INITIALIZE_EDIT_BUTTONS(InnerEditor)
+        
         INITIALIZE_SIZE_LISTS(InnerEditor)
+        INITIALIZE_EDIT_BUTTONS(InnerEditor)
+        INITIALIZE_DROP_EVENTS()
+        INITIALIZE_MUTATION_OBSERVER()
 
-        InnerEditor.addEventListener('click',()=>{
+        InnerEditor.addEventListener('click',(event)=>{
+            
             COLOR_PICKER_HIDE()
             FORMAT_SIZE_LIST_HIDE()
+            REMOVE_BEFORE_RESIZER()
+
         })
 
         let OuterEditor = document.querySelector("#EDITOR")
@@ -41,13 +47,6 @@ class Editor extends React.Component{
             event.stopPropagation()
 
         })
-
-        // let EditTools = document.querySelectorAll(".EditTools-Grid-Container__Item")
-        // EditTools.forEach((el)=>{
-        //     el.addEventListener('click',(event)=>{
-        //         event.stopPropagation()
-        //     })
-        // })
 
     }
 
@@ -173,6 +172,135 @@ class Editor extends React.Component{
         )
     }
 
+
+}
+
+const REMOVE_BEFORE_RESIZER = () => {
+
+    let InnerEditor = RICH_TEXT_AREA.document
+    let BulletWrappers = InnerEditor.querySelectorAll('.Resize-Wrapper')
+
+    BulletWrappers.forEach((el) => {
+        
+        let ChildImageClone = el.querySelector('img')
+        el.replaceWith(ChildImageClone)
+        el.remove()
+
+    })
+
+}
+
+const INITIALIZE_IMAGE_RESIZER = (targetImage) => {
+
+    let InnerEditor = RICH_TEXT_AREA.document
+    let InnerEditorBody = RICH_TEXT_AREA.document.body
+
+    let TotalBulletsControl = []
+
+    let TopLeftResizeBullet = InnerEditor.createElement('div')
+    let TopResizeBullet = InnerEditor.createElement('div')
+    let TopRightResizeBullet = InnerEditor.createElement('div')
+
+    let MidLeftResizeBullet = InnerEditor.createElement('div')
+    let MidRightResizeBullet = InnerEditor.createElement('div')
+
+    let BottomLeftResizeBullet = InnerEditor.createElement('div')
+    let BottomResizeBullet = InnerEditor.createElement('div')
+    let BottomRightResizeBullet = InnerEditor.createElement('div')
+
+    TotalBulletsControl.push(
+
+        TopLeftResizeBullet,
+        TopResizeBullet,
+        TopRightResizeBullet,
+        MidLeftResizeBullet,
+        MidRightResizeBullet,
+        BottomLeftResizeBullet,
+        BottomResizeBullet,
+        BottomRightResizeBullet
+
+    )
+    
+    let BulletSize = '6px'
+
+    TotalBulletsControl.forEach((el)=>{
+        el.style.position = 'absolute'
+        el.style.borderRadius = '50%'
+        el.style.backgroundColor = 'white'
+        el.style.width = BulletSize
+        el.style.height = BulletSize
+        el.style.border = '2px solid black'
+    })
+
+    ResizeBullets.DECISION_BULLETS_POSITION(TotalBulletsControl,BulletSize)
+
+    let ResizeWrapper = document.createElement('div')
+    let ClonedTargetImage = targetImage.cloneNode()
+    ResizeWrapper.classList.add('Resize-Wrapper')
+    ResizeWrapper.style.position = 'relative'
+    // ResizeWrapper.style.border = '1px solid black'
+    ResizeWrapper.style.display = 'inline-block'
+
+    ResizeWrapper.appendChild(ClonedTargetImage)
+    
+    TotalBulletsControl.forEach((el) => {
+        ResizeWrapper.appendChild(el)
+    })
+    
+    targetImage.replaceWith(ResizeWrapper)
+    
+}
+
+const INITIALIZE_MUTATION_OBSERVER = () => {
+
+    let InnerEditorBody = RICH_TEXT_AREA.document.body
+    
+    let Observer = new WebKitMutationObserver((mutations)=>{
+        mutations.forEach((mutation)=>{
+           
+            // console.log(mutation.addedNodes)
+
+            mutation.addedNodes.forEach((el)=>{
+
+                console.log(el.tagName)
+
+                if(el.tagName === 'IMG'){
+
+                    el.classList.remove('Frame-Image')
+                    
+                    el.width = parseInt((el.naturalWidth)/5)
+                    el.height = parseInt((el.naturalHeight)/5)
+
+                    el.addEventListener('click',(event)=>{
+                        event.stopPropagation()
+                        REMOVE_BEFORE_RESIZER()
+                        INITIALIZE_IMAGE_RESIZER(event.target)
+                    })
+
+                }
+
+            })
+            
+        })
+    })
+
+    let config = { attributes: true, childList: true, characterData: true , subtree: true }
+
+    Observer.observe(InnerEditorBody,config)
+
+}
+
+const INITIALIZE_DROP_EVENTS = () => {
+
+    let InnerEditorBody = RICH_TEXT_AREA.document.body
+    let cancelDropEvents = ['dragOver', 'dragEnter']
+
+    cancelDropEvents.forEach((el)=>{
+        InnerEditorBody.addEventListener(el,(event)=>{
+            event.preventDefault()
+            event.stopPropagation()
+        })
+    })
 
 }
 

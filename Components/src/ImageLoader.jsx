@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 
 import { MdPhotoLibrary , MdFolderOpen , MdWifi } from 'react-icons/md'
 
+import { SERVER_SHAREDIMAGES_URL } from '../redux/GlobalURL.js'
+
 import './ImageLoader.scss'
 
 class ImageLoader extends React.Component{
@@ -45,9 +47,13 @@ class ImageLoader extends React.Component{
             }
             else{
                 return(
-                <div key={index} className='Image-Loader-Lists__Item'>
-                    <img className='Frame-Image' src={el} alt=""/>
-                </div>
+                    <div key={index} className='Image-Loader-Lists__Item'>
+                        <img
+                        draggable={true} 
+                        onDragStart={handleDragStart} 
+                        
+                        className='Frame-Image' src={el} alt=""/>
+                    </div>
                 )
             }
          
@@ -58,6 +64,8 @@ class ImageLoader extends React.Component{
     handleActivateFileBrowser(){
 
         let fileInput = document.getElementById('File-Input')
+        fileInput.value = ''
+
         let myEvent = document.createEvent('MouseEvents')
         myEvent.initEvent('click',false,true)
         fileInput.dispatchEvent(myEvent)
@@ -72,55 +80,32 @@ class ImageLoader extends React.Component{
         
         for (let index = 0; index < files.length; index++) {
         
-            let myFileReader = new FileReader()
-
-            myFileReader.addEventListener('load',()=>{
-                
-                console.log(files.item(index).type.split('/')[1])
-                
-               
-
-
-                // fetch('http://localhost:3000/write/imageUpload',{
-
-                //     method : 'POST',
-                //     headers: {
-                //         'Accept': 'application/json',
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body : JSON.stringify({ 
-                //         data : myFileReader.result
-                //     })
-
-                // }).then(res=>res.json()).then((res)=>{
-                //     if(res.status === 1){
-                //         myImageBasket.unshift(myFileReader.result)
-                //         myImageBasket.pop()
-                //         this.setState({
-                //             ImageBasket : myImageBasket
-                //         })
-                //     }
-                // })
-
-            },false)
-
             if(files.item(index)){
-
+                
                 let myFormData = new FormData()
+                myFormData.append('file',files.item(index))
 
-                myFormData.set('title',`React-Board_${new Date(files.item(index).lastModifiedDate).toJSON().substr(0,10).replace(/-/g,"")}_${new Date().getTime()}`)
-                myFormData.set('ext',`${files.item(index).type.split('/')[1]}`)
+                fetch('http://localhost:3000/write/imageUpload',{
 
+                    method : 'POST',
+                    body : myFormData
 
-                myFileReader.readAsDataURL(files.item(index))
+                }).then(res=>res.json()).then((res)=>{
+
+                    myImageBasket.unshift(`${SERVER_SHAREDIMAGES_URL}${res.loc}`)
+                    myImageBasket.pop()
+    
+                    this.setState({
+                        ImageBasket : myImageBasket
+                    })
+                    
+                    
+                })
+
+                
             }
             
         }
-
-        console.log(myImageBasket)
-
-        
-
 
     }
     render(){
@@ -170,6 +155,13 @@ class ImageLoader extends React.Component{
 
     }
 
+}
+
+const handleDragStart = (event) => {
+   
+    event.dataTransfer.setData("text",event.target.src)
+    console.log(event.target.src)
+  
 }
 
 const mapStateToProps = (state) => {

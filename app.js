@@ -14,7 +14,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.set('PORT',process.env.PORT || 3000)
-app.use(express.static(__dirname))
+app.use(express.static('public'))
 app.use(session({
    
     secret: 'HSJPRIME',
