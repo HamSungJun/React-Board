@@ -44,6 +44,7 @@ $material_deepblack : hsl(225, 6%, 13%);
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding-top : 5px;
   
                 .TopBar__Grid-Container__Item__Item__Text{
                     color : $material_palegreen;
@@ -98,6 +99,7 @@ $material_deepblack : hsl(225, 6%, 13%);
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    padding-top : 5px;
                 }
 
                 .TopBar__Grid-Container__Item__Profile__Item-Text{
@@ -110,6 +112,7 @@ $material_deepblack : hsl(225, 6%, 13%);
                 .Profile-Image-Size{
 
                     width : 45px;
+                    height : 45px;
                     border-radius: 50%;
 
                 }

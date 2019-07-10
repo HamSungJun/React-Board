@@ -1,9 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-
 import { SERVER_URL } from '../redux/GlobalURL.js'
-import history from '../history/history.js'
 
 import * as LoginActions from '../redux/LoginAction.js'
 
@@ -26,4 +24,4 @@ class Home extends React.Component{
 
 
 
-export default Home
+export default withRouter(Home)

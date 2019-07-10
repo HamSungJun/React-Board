@@ -7,14 +7,16 @@ let sha256 = require('js-sha3').sha3_256
 let MonDB = require('../DB/MongoTransactions.js')
 let secret = require('../DB/secret')
 let mailer = require('../routes/mailer.js')
+let path = require('path')
 
 registerRouter.use(bodyParser.urlencoded({ extended: false }))
 registerRouter.use(bodyParser.json())
 registerRouter.use(bodyParser.text())
-registerRouter.use(express.static('../'))
 
 registerRouter.post('/nonformalRegisterFile',(req,res)=>{
   
+  console.log(__dirname)
+
   if(!fs.existsSync('tmp/')){
     fs.mkdirSync('tmp')
   }
@@ -22,7 +24,7 @@ registerRouter.post('/nonformalRegisterFile',(req,res)=>{
     fs.mkdirSync('./public/UserImages/')
   }
   let form = new formidable.IncomingForm()
-  let unique = Date.now()
+  let unique = new Date().getTime()
   let tmpPath = `./tmp/${unique}`
   
   process.chdir('./tmp')
@@ -94,7 +96,7 @@ registerRouter.post('/nonformalRegisterSubmit',(req,res) => {
     EMAIL : NF_USER_EMAIL,
     USERNAME : NF_USER_USERNAME,
     PW : sha256(NF_USER_PW),
-    U_IMG_PATH : `./UserImages/${NF_FILE_NAME}`,
+    U_IMG_PATH : `/UserImages/${NF_FILE_NAME}`,
     createdAt : createdAt
   },secret.MongoCollections.nonformalUsers).then((response)=>{
     res.json(response)

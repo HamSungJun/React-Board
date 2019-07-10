@@ -1,4 +1,4 @@
-import history from '../history/history.js'
+
 import { SERVER_URL , CLIENT_URL } from './GlobalURL.js';
 import Cookies from 'js-cookie'
 
@@ -43,94 +43,10 @@ export const AC_IS_REMEMBER_CHECKED = (CHECK) => {
 
 }
 
-export const AC_LOGIN_PROCESS_START = () => {
-
-    // 서버쪽으로 ID , PW를 전달하여 Auth 진행.
-    // 성공시 클라이언트 사이드 라우팅으로 홈으로 이동
-    // 에러 발생시 로그인 박스 테두리를 붉게 만듬.
-  history.push('/')
-  return (dispatch , getState) => {
-    dispatch({
-      type : A_SUBMIT_BUTTON_CLCICKED,
-      value : true
-    })
-
-    let SnapShot = getState();
-  
-    fetch(`${SERVER_URL}/login`,{
-      method : 'POST',
-      credentials : `include`,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({
-        EMAIL : SnapShot.login.EMAIL,
-        PW : SnapShot.login.PW,
-      })
-    }).then((response) => (response.json())).then((Jres) => {
-      if(Jres.status === 1){
-
-        dispatch({
-          type : A_AUTH_SUCCESS,
-          value : true
-        })
-        
-        dispatch(AC_SET_USER_INFO(Jres))
-
-        refreshSessionStroage(Jres)
-
-        if(SnapShot.login.REMEMBER){
-
-          Cookies.set('user',Jres.EMAIL,{
-            expires : 7,
-            path : CLIENT_URL
-          })
-
-        }
-
-        Cookies.set('SID',Jres.SID,{
-          expires : 7,
-          path : CLIENT_URL
-        })
-
-        history.push('/home')
-        
-      }
-      else{
-        dispatch({
-          type : A_AUTH_ERROR,
-          mesg : Jres.mesg,
-          value : true
-        })
-      }
-    })
-    
-  }
-}
-
 export const AC_SET_EMAIL_BY_COOKIE = (cookie_email) => {
   return {
     type : A_SET_EMAIL_BY_COOKIE,
     value : cookie_email
-  }
-}
-
-export const AC_USER_LOGOUT = () => {
-
-  // 서버와 연결된 세션 폐기 , 스토어 Login 값 폐기
-  history.push('/')
-
-  return {
-      type : "A_USER_LOGOUT"
-  }
-
-}
-
-export const AC_CLEAR_LOGIN = () => {
-  return {
-    type : A_CLEAR_LOGIN,
-    value : false
   }
 }
 

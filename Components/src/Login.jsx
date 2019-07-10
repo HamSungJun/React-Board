@@ -7,7 +7,7 @@ import * as loginActions from '../redux/LoginAction.js'
 import * as registerActions from '../redux/RegisterAction.js'
 
 import { RegisterBox } from './RegisterBox.jsx'
-import { LoginBox } from './LoginBox.jsx'
+import LoginBox from './LoginBox.jsx'
 
 import './Login.scss'
 
@@ -23,15 +23,10 @@ const VALIDATOR = (REGEX,VALUE) => {
 
 class Login extends React.Component{
 
-  componentDidMount(){
-
-    if(Cookies.get('user') !== undefined){
-      let INPUT_ID = document.getElementById("INPUT_ID__LOGIN")
-      let EMAIL = Cookies.get('user')
-      INPUT_ID.value = EMAIL
-      this.props.loginDispatch.setEmailByCookie(EMAIL)
-    }
-
+  componentWillMount(){
+    let { history } = this.props
+    window.sessionStorage.clear() 
+    return
   }
 
   render(){
@@ -41,7 +36,7 @@ class Login extends React.Component{
     return(
       <div className="Wrapper --Bg-lightash --Login ">
         {RegisterBox(this.props)}
-        {LoginBox(loginState , loginDispatch)}
+        <LoginBox loginState={loginState} loginDispatch={loginDispatch} />
       </div>
     )
   }
@@ -82,20 +77,8 @@ const mapDispatchToProps = (dispatch) => {
         }
   
         dispatch(loginActions.AC_TYPING_LOGIN_FORM(event.target.name,event.target.value))
-      },
-      loginSubmit(event){
-
-        if(event.target.id == "LOGIN_BTN"){
-          dispatch(loginActions.AC_LOGIN_PROCESS_START())
-        }
-        if(event.keyCode == 13){
-          dispatch(loginActions.AC_LOGIN_PROCESS_START())
-        }
-        
-      },
-      setEmailByCookie(cookie_email){
-        dispatch(loginActions.AC_SET_EMAIL_BY_COOKIE(cookie_email))
       }
+
     },
     registerDispatch : {
 

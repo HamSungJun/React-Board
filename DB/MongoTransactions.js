@@ -120,20 +120,20 @@ class DB_Machine {
             })
           }
 
-          db.collection(base).deleteOne({"TIMEID" : unique},(err)=>{
-            assert.equal(err,null)
+            db.collection(base).deleteOne({"TIMEID" : unique},(err)=>{
+              assert.equal(err,null)
 
-            if(err){
-              reject({
-                status : 0,
-                mesg : "기존 컬렉션에서 다큐먼트를 삭제중에 에러."
-              })
-            }
+              if(err){
+                reject({
+                  status : 0,
+                  mesg : "기존 컬렉션에서 다큐먼트를 삭제중에 에러."
+                })
+              }
 
-            client.close()
+              client.close()
 
-            
-          })
+              
+            })
 
         })
         
@@ -208,7 +208,7 @@ GET_USER_DATA_FROM_FORMALUSERS(email){
   return new Promise((resolve,reject) => {
 
     const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
-
+    
     client.connect((err) => {
 
       assert.equal(err,null)
@@ -260,6 +260,55 @@ GET_USER_DATA_FROM_FORMALUSERS(email){
 
   })
 }
+
+SAVE_USER_SHARED_POSTING(doc){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+
+      db.collection(secret.MongoCollections.sharedPostings).insertOne(doc,(err,result) => {
+
+        assert.equal(err,null)
+        assert.equal(1,result.insertedCount)
+
+        if(err){
+          reject({
+            status : 0,
+            mesg : "유저 포스팅 삽입중 에러"
+          })
+        }else{
+          resolve({
+            status : 1,
+          })
+        }
+
+        client.close()
+
+      })
+
+
+    })
+
+
+  })
+
+}
+
 }
 
 module.exports = DB_Machine

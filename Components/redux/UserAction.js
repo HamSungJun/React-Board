@@ -1,25 +1,14 @@
-import history from '../history/history.js'
+
 import { SERVER_URL } from './GlobalURL.js'
+import { refreshSessionStroage } from './LoginAction.js'
 
 export const A_SET_USER_INFO = "A_SET_USER_INFO"
 export const A_USER_CLICK_WRITE = "A_USER_CLICK_WRITE"
 export const A_GET_SESSION_DATA = "AC_GET_SESSION_DATA"
 
+
 export const AC_SET_USER_INFO = (userInfo) => {
-    return {
-        type : A_SET_USER_INFO,
-        value : userInfo
-    }
-}
-
-export const AC_USER_CLICK_WRITE = () => {
-
-    history.push('/write')
-
-    return {
-        type : A_USER_CLICK_WRITE
-    }
-
+    return refreshSessionStroage(userInfo)
 }
 
 export const AC_GET_SESSION_DATA = (sid) => {

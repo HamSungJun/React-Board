@@ -1,5 +1,4 @@
 import { SERVER_URL } from './GlobalURL.js'
-import history from '../history/history.js'
 import { AC_TOGGLE_MODAL } from './LoginAction.js'
 
 export const A_TYPING_REGISTER_FORM = "A_TYPING_REGISTER_FORM"
@@ -59,8 +58,7 @@ export const AC_SUBMIT_REGISTER_FORM = () => {
         dispatch({
           type : A_SUBMIT_SUCCESS
         })
-        // dispatch(AC_TOGGLE_MODAL())
-        history.push('/')
+        
       }
       else{
         dispatch(AC_SUBMIT_ERROR(Jres.mesg))

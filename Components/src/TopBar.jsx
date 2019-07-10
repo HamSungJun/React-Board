@@ -7,20 +7,37 @@ import * as UserActions from '../redux/UserAction.js'
 
 import './TopBar.scss'
 
-import Header_Icon from '../../public/Images/header-icon.svg'
+import Header_Icon from '../../public/Images/post-it.svg'
 import { MdCreate } from 'react-icons/md'
 import { MdAccountCircle } from 'react-icons/md'
 import { MdMenu } from 'react-icons/md'
 import { IoMdLogOut } from 'react-icons/io'
 import { MdPublic } from 'react-icons/md'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter , Redirect } from 'react-router-dom'
 
 class TopBar extends React.Component{
 
+    constructor(props){
+        super(props)
+        this.handleLogout = this.handleLogout.bind(this)
+        this.handleRouteToWrite = this.handleRouteToWrite.bind(this)
+    }
+
+    handleLogout(){
+        window.sessionStorage.clear()
+        let { history } = this.props
+        history.go(-(history.length - 2))
+        // history.push('/',null)
+    }
+
+    handleRouteToWrite(){
+        this.props.history.push("/write",null)
+    }
+
     render(){
 
-        let { userState, loginState, TopBarDispatch } = this.props
+        let { loginState } = this.props
 
         return (
 
@@ -44,9 +61,10 @@ class TopBar extends React.Component{
                         <div className="TopBar__Grid-Container__Item__Profile">
                             <div className="TopBar__Grid-Container__Item__Profile__Item">
                             {
-                                loginState.IS_AUTH_SUCCESS || userState.IS_SESSION_SUCCESS?
+                                loginState.IS_AUTH_SUCCESS || window.sessionStorage.USERNAME?
                                 (
-                                <img className="Profile-Image-Size" src={`${SERVER_URL}${PARSE_U_IMG_PATH(userState.U_IMG_PATH)}`} alt=""/>
+                                <img className="Profile-Image-Size" src={`${SERVER_URL}${PARSE_U_IMG_PATH(window.sessionStorage.U_IMG_PATH)}`} alt=""/>
+                                
                                 )
                                 :
                                 (
@@ -56,7 +74,7 @@ class TopBar extends React.Component{
                             }
                             </div>
                             <div className="TopBar__Grid-Container__Item__Profile__Item">
-                            <span className="TopBar__Grid-Container__Item__Profile__Item-Text">{`${userState.USERNAME}님`}</span>
+                            <span className="TopBar__Grid-Container__Item__Profile__Item-Text">{`${window.sessionStorage.USERNAME}님`}</span>
                             </div>
                         </div>
 
@@ -64,10 +82,10 @@ class TopBar extends React.Component{
                             <MdPublic className="Icon-Size" id="MdPublic" />
                         </div>
                         <div className="TopBar__Grid-Container__Item__Item">
-                            <MdCreate onClick={TopBarDispatch.write} className="Icon-Size" id="MdCreate" />
+                            <MdCreate onClick={this.handleRouteToWrite} className="Icon-Size" id="MdCreate" />
                         </div>
                         <div className="TopBar__Grid-Container__Item__Item">
-                            <IoMdLogOut onClick={TopBarDispatch.logout} className="Icon-Size" id="IoMdLogOut"/>
+                            <IoMdLogOut onClick={this.handleLogout} className="Icon-Size" id="IoMdLogOut"/>
                         </div>
 
                     </div>
@@ -93,24 +111,6 @@ const mapStateToProps = (state) => {
   
   }
   
-const mapDispatchToProps = (dispatch) => {
-
-    return {
-
-        TopBarDispatch : {
-
-            logout(){
-                dispatch(LoginActions.AC_USER_LOGOUT())
-            },
-            write(){
-                dispatch(UserActions.AC_USER_CLICK_WRITE())
-            }
-                
-        }
-
-    }
-}
-
 const PARSE_U_IMG_PATH = (path) => {
 
     let U_IMG_PATH = new String(path)
@@ -119,6 +119,6 @@ const PARSE_U_IMG_PATH = (path) => {
 
 }
 
-TopBar = withRouter(connect(mapStateToProps,mapDispatchToProps)(TopBar))
+TopBar = withRouter(connect(mapStateToProps,null)(TopBar))
 
 export default TopBar

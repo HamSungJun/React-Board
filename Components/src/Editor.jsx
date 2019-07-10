@@ -3,22 +3,28 @@ import React from 'react'
 import { MdFormatBold , MdFormatItalic , MdFormatUnderlined } from 'react-icons/md'
 import { MdFormatAlignJustify , MdFormatAlignLeft , MdFormatAlignCenter , MdFormatAlignRight } from 'react-icons/md'
 import { MdInsertLink , MdInsertPhoto , MdVideoLibrary , MdFormatColorText , MdFormatSize } from 'react-icons/md'
-import { FaUnlink } from 'react-icons/fa'
+import { FaUnlink , FaEdit } from 'react-icons/fa'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { AC_CHANGE_VIEW_MODE , AC_CHANGE_MEDIA_MODE } from '../redux/WriteAction.js'
 import { ChromePicker } from 'react-color'
+import { SERVER_URL } from '../redux/GlobalURL.js'
 
 import * as ResizeBullets from './ResizeBullets.js'
 
 import './Editor.scss'
+
+let GlobalObserver;
 
 class Editor extends React.Component{
 
     constructor(props){
 
         super(props)
+        this.state = {
+            iframeToHTML : "",
+        }
 
     }
 
@@ -30,13 +36,13 @@ class Editor extends React.Component{
         INITIALIZE_SIZE_LISTS(InnerEditor)
         INITIALIZE_EDIT_BUTTONS(InnerEditor)
         INITIALIZE_DROP_EVENTS()
-        INITIALIZE_MUTATION_OBSERVER()
+        GlobalObserver = INITIALIZE_MUTATION_OBSERVER()
 
         InnerEditor.addEventListener('click',(event)=>{
             
             COLOR_PICKER_HIDE()
             FORMAT_SIZE_LIST_HIDE()
-            REMOVE_BEFORE_RESIZER()
+            REMOVE_RESIZER_ALL()
 
         })
 
@@ -54,6 +60,68 @@ class Editor extends React.Component{
 
         let InnerEditor = RICH_TEXT_AREA.document
         InnerEditor.execCommand('foreColor',false,color.hex)
+
+    }
+
+    handleChangeViewMode(mode){
+        
+        if(mode === false){
+            let iframeToHTML = RICH_TEXT_AREA.document.body.innerHTML
+            RICH_TEXT_AREA.document.body.innerHTML = ""
+            RICH_TEXT_AREA.document.body.innerText = iframeToHTML
+        }
+        else{
+            let iframeToHTML = RICH_TEXT_AREA.document.body.innerText
+            RICH_TEXT_AREA.document.body.innerHTML = ""
+            RICH_TEXT_AREA.document.body.innerHTML = iframeToHTML
+        }
+        
+
+    }
+
+    handleEditComplete(event){
+
+        let inputValue = document.querySelector('.Title-Row__Input-Group__Input').value
+        if(inputValue.length > 0){
+
+            let POST_TITLE = event.target.previousSibling.value
+            let POST_CONTENT = RICH_TEXT_AREA.document.body.innerHTML
+            let AUTHOR = window.sessionStorage.getItem('USERNAME')
+            let U_IMG_PATH = window.sessionStorage.getItem('U_IMG_PATH')
+            let EMAIL = window.sessionStorage.getItem('EMAIL')
+            let POST_DATE = new Date().toJSON().substr(0,10)
+
+            fetch(`${SERVER_URL}/write/writeComplete`,{
+                method : 'POST',
+                credentials : 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body : JSON.stringify({
+
+                    POST_TITLE : POST_TITLE,
+                    POST_CONTENT : POST_CONTENT,
+                    AUTHOR : AUTHOR,
+                    U_IMG_PATH : U_IMG_PATH,
+                    EMAIL : EMAIL,
+                    POST_DATE : POST_DATE
+
+                })
+            }).then(res=>(res.json())).then((res)=>{
+                
+                if(res.status === 1){
+                    alert('성공적으로 포스트 하였습니다.')
+                    window.history.pushState(null,null,"/home")
+                }
+                
+            })
+
+        }
+        else{
+            alert('최소한 제목은 작성해 주셔야 합니다.')
+        }
+
 
     }
 
@@ -141,16 +209,37 @@ class Editor extends React.Component{
                 
                     <div onClick={()=>{
                         writeDispatch.changeViewMode(true)
+                        this.handleChangeViewMode(true)
                     }} className={`View-Item ${writeState.ViewState?('--View-Clicked'):('')}`}>
                         <span className="View-Item-Text">Editor</span>
                     </div>
                     <div onClick={()=>{
                         writeDispatch.changeViewMode(false)
+                        this.handleChangeViewMode(false)
                     }} className={`View-Item ${!writeState.ViewState?('--View-Clicked'):('')}`}>
                         <span className="View-Item-Text">HTML</span>
                     </div>
                     
                 </div>
+            </div>
+
+            <div className="Title-Row">
+
+                <div className="Title-Row__Input-Group">
+                    <input onChange={(event)=>{
+                        
+                        if(event.target.value.length > 0){
+                            event.target.classList.add('--Input-Active')
+                            event.target.nextSibling.classList.add('--Icon-Active')
+                        }
+                        else{
+                            event.target.classList.remove('--Input-Active')
+                            event.target.nextSibling.classList.remove('--Icon-Active')
+                        }
+                    }} className="Title-Row__Input-Group__Input" type="text" placeholder="제목을 입력하세요..."/>
+                    <FaEdit onClick={this.handleEditComplete} className="Title-Row__Input-Group__Icon" />
+                </div>
+                
             </div>
 
             <div>
@@ -175,18 +264,32 @@ class Editor extends React.Component{
 
 }
 
-const REMOVE_BEFORE_RESIZER = () => {
+const REMOVE_RESIZER_ALL = () => {
+
+    GlobalObserver.disconnect()
 
     let InnerEditor = RICH_TEXT_AREA.document
     let BulletWrappers = InnerEditor.querySelectorAll('.Resize-Wrapper')
+    if(BulletWrappers.length > 0){
 
-    BulletWrappers.forEach((el) => {
-        
-        let ChildImageClone = el.querySelector('img')
-        el.replaceWith(ChildImageClone)
-        el.remove()
+        BulletWrappers.forEach((el) => {
 
-    })
+            let ChildImage = el.querySelector('img')
+            ChildImage.draggable = true
+            ChildImage.addEventListener('click',(event)=>{
+                event.stopPropagation()
+                REMOVE_RESIZER_ALL()
+                INITIALIZE_IMAGE_RESIZER(event.target)
+            })
+
+            el.replaceWith(ChildImage)
+            el.remove()
+
+        })
+
+    }
+
+    GlobalObserver = INITIALIZE_MUTATION_OBSERVER()
 
 }
 
@@ -221,21 +324,26 @@ const INITIALIZE_IMAGE_RESIZER = (targetImage) => {
 
     )
     
-    let BulletSize = '6px'
+    let BulletSize = '10px'
 
     TotalBulletsControl.forEach((el)=>{
+
         el.style.position = 'absolute'
         el.style.borderRadius = '50%'
         el.style.backgroundColor = 'white'
         el.style.width = BulletSize
         el.style.height = BulletSize
         el.style.border = '2px solid black'
+
     })
 
     ResizeBullets.DECISION_BULLETS_POSITION(TotalBulletsControl,BulletSize)
+    ResizeBullets.ATTACH_RESIZE_HANDLER(TotalBulletsControl)
 
     let ResizeWrapper = document.createElement('div')
     let ClonedTargetImage = targetImage.cloneNode()
+    ClonedTargetImage.draggable = false
+
     ResizeWrapper.classList.add('Resize-Wrapper')
     ResizeWrapper.style.position = 'relative'
     // ResizeWrapper.style.border = '1px solid black'
@@ -248,6 +356,7 @@ const INITIALIZE_IMAGE_RESIZER = (targetImage) => {
     })
     
     targetImage.replaceWith(ResizeWrapper)
+    targetImage.remove()
     
 }
 
@@ -267,14 +376,23 @@ const INITIALIZE_MUTATION_OBSERVER = () => {
                 if(el.tagName === 'IMG'){
 
                     el.classList.remove('Frame-Image')
-                    
+                    el.draggable = true
                     el.width = parseInt((el.naturalWidth)/5)
                     el.height = parseInt((el.naturalHeight)/5)
 
                     el.addEventListener('click',(event)=>{
                         event.stopPropagation()
-                        REMOVE_BEFORE_RESIZER()
+                        REMOVE_RESIZER_ALL()
                         INITIALIZE_IMAGE_RESIZER(event.target)
+                        
+                    })
+
+                }
+
+                if(el.tagName === 'DIV' && el.classList.contains('Resize-Wrapper')){
+
+                    el.addEventListener('click',(event)=>{
+                        event.stopPropagation()
                     })
 
                 }
@@ -287,7 +405,7 @@ const INITIALIZE_MUTATION_OBSERVER = () => {
     let config = { attributes: true, childList: true, characterData: true , subtree: true }
 
     Observer.observe(InnerEditorBody,config)
-
+    return Observer
 }
 
 const INITIALIZE_DROP_EVENTS = () => {

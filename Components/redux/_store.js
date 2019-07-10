@@ -12,7 +12,6 @@ import thunk from 'redux-thunk'
 let originReducer = combineReducers({
     login : loginReducer,
     register : registerReducer,
-    user : userReducer,
     write : writeReducer
 })
 let _store = createStore(originReducer , applyMiddleware(logger , thunk))

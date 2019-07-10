@@ -1,21 +1,25 @@
 let webpack = require('webpack');
+let {CleanWebpackPlugin} = require('clean-webpack-plugin')
 let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry : path.join(__dirname,"/Components/src/Root.jsx"),
     output : {
 
         filename : "bundle.js",
-        path : path.join(__dirname,"/public"),
+        path : path.join(__dirname,"public","dist"),
     
     },
     devServer: {
         hot : true,
         contentBase: [
-            path.join(__dirname, 'public'),
+            path.join(__dirname, "public",'dist'),
             path.join(__dirname, 'Components')],
         watchContentBase: true,
         historyApiFallback: true,
+        disableHostCheck: true,
+        host: `0.0.0.0`,
         compress: true,
         port: 9000
     },
@@ -52,7 +56,11 @@ module.exports = {
     plugins : [
         new webpack.ProgressPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            template : __dirname+"/public/index.html",
+            inject : true
+        })
     ],
     target : "web"
 }
