@@ -104,3 +104,33 @@
 
 - 개발 하려는 기능 
   - `Edit Frame` 내 이미지 사이즈 조절 기능
+
+#### 2019-07-11
+
+- React-Board 리팩토링
+
+  - 불필요한 React-Redux 커넥션 제거.
+
+  - 간단한 State 데이터는 컴포넌트 생성자 내부 this.state = {...} 으로 컨트롤
+
+  - React-Router의 history 로직 추가 (비 로그인시 접근 제어 , 로그아웃 Redirecting)
+  
+  - 유저 정보를 리덕스 스토어에 저장하는 방식에서 `sessionStorage`에 저장하는 방식으로 변경(새로고침시 데이터가 증발하는 문제. Logout 이벤트에서 Clear())
+
+- 개발 완료된 내용
+
+  - 작성 완료 버튼 클릭시 내용을 서버쪽으로 `POST`
+
+  - SharedPostings 컬렉션에 POST_THUMBNAIL key 추가
+
+  - 로그아웃 버튼 클릭시 세션 스토리지 내용 Clear 및 기본 주소로 이동
+
+- 개발 예정인 내용
+
+  - 유효 세션 인증을 위한 `JSON WEB TOKEN` 도입을 할건데.. (이건좀 나중에)
+
+  - 저장된 포스트를 불러와 렌더링 하는 기능 (READ)
+
+  - 포스트중 하나를 클릭하면 내용을 렌더링 하는 기능 (READ)
+  
+  - 저장된 포스르를 수정 및 삭제할 수 있는 기능 (UPDATE or DELETE)

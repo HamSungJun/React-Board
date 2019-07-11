@@ -13,10 +13,13 @@ writeRouter.use(bodyParser.text())
 
 writeRouter.post('/imageUpload',(req,res) => {
 
-  const uploadPath = path.join(process.cwd(),'public/','SharedImages/')
+  const uploadPath = path.resolve(process.cwd(),'public/','SharedImages/')
+
+  if(!fs.existsSync(uploadPath)){
+    fs.mkdirSync(uploadPath)
+  }
 
   let form = new formidable.IncomingForm()
-
   form.uploadDir = uploadPath
   form.encoding = 'utf-8'
   form.multiples = true
@@ -34,6 +37,7 @@ writeRouter.post('/writeComplete',(req,res)=>{
   let doc = {
     POST_TITLE : req.body.POST_TITLE,
     POST_CONTENT : req.body.POST_CONTENT,
+    POST_THUMBNAIL : req.body.POST_THUMBNAIL,
     AUTHOR : req.body.AUTHOR,
     U_IMG_PATH : req.body.U_IMG_PATH,
     EMAIL : req.body.EMAIL,
@@ -76,7 +80,7 @@ function RENAME_FILE(form){
       console.log(file.lastModifiedDate)
   
       const newFileName = `React-Board_${new Date(file.lastModifiedDate).toJSON().substr(0,10).replace(/-/g,"")}_${new Date().getTime()}.${file.type.split("/")[1]}`
-      const newPath = `${form.uploadDir}${newFileName}`
+      const newPath = `${form.uploadDir}/${newFileName}`
   
       fs.rename(file.path,newPath,(err)=>{
         if(err){throw err}

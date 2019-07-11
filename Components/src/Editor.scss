@@ -233,6 +233,7 @@
 #FormatSizeList{
     position : absolute;
     top : 50px;
+    background-color :rgb(237, 240, 242);
     left : calc(50% - 20px);
     max-height: 200px;
     overflow-x : hidden;
@@ -240,8 +241,9 @@
     width : 40px;
     box-sizing: border-box;
     border : 1px solid #ccc;
-    padding-top : 10px;
+    padding-top : 15px;
     box-shadow: 2px 2px 2px grey;
+    z-index: 4;
 }
 #FormatSizeList ::-webkit-scrollbar{
     width : 0 !important;
@@ -261,11 +263,11 @@
 .top-pointing-triangle{
     position: absolute;
     top : 42px;
-    left : 25%;
+    left : 29%;
     transform: rotate(45deg);
     width : 16px;
     height : 16px;
-    background: rgb(255,255,255);
+    background-color :rgb(237, 240, 242);
     border : none;
     border-top : 1px solid #ccc;
     border-left : 1px solid #ccc;

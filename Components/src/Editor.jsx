@@ -24,7 +24,12 @@ class Editor extends React.Component{
         super(props)
         this.state = {
             iframeToHTML : "",
+            isPosting : false,
+            POST_TITLE : ""
         }
+
+        this.handleEditComplete = this.handleEditComplete.bind(this)
+        this.handleInputTitleChange = this.handleInputTitleChange.bind(this)
 
     }
 
@@ -79,15 +84,45 @@ class Editor extends React.Component{
 
     }
 
+    handleInputTitleChange(event){
+
+        if(event.target.value.length > 0){
+            event.target.classList.add('--Input-Active')
+            event.target.nextSibling.classList.add('--Icon-Active')
+        }
+        else{
+            event.target.classList.remove('--Input-Active')
+            event.target.nextSibling.classList.remove('--Icon-Active')
+        }
+
+        this.setState({
+            POST_TITLE : event.target.value
+        })
+
+    }
+
     handleEditComplete(event){
 
-        let inputValue = document.querySelector('.Title-Row__Input-Group__Input').value
+        if(this.state.isPosting){
+            return
+        }
+
+        let inputValue = this.state.POST_TITLE
+        
+        this.setState({
+            isPosting : true,
+            POST_TITLE : "포스팅 중 ..."
+        })
+
         if(inputValue.length > 0){
 
-            let POST_TITLE = event.target.previousSibling.value
+            let POST_TITLE = inputValue
             let POST_CONTENT = RICH_TEXT_AREA.document.body.innerHTML
+            let POST_THUMBNAIL = () => {
+                return RICH_TEXT_AREA.document.querySelector('img').src.split("/").reverse()[0] || undefined
+            }
             let AUTHOR = window.sessionStorage.getItem('USERNAME')
-            let U_IMG_PATH = window.sessionStorage.getItem('U_IMG_PATH')
+            let U_IMG_PATH = window.sessionStorage.getItem('U_IMG_PATH').split("/").reverse()[0]
             let EMAIL = window.sessionStorage.getItem('EMAIL')
             let POST_DATE = new Date().toJSON().substr(0,10)
 
@@ -102,17 +137,21 @@ class Editor extends React.Component{
 
                     POST_TITLE : POST_TITLE,
                     POST_CONTENT : POST_CONTENT,
+                    POST_THUMBNAIL : POST_THUMBNAIL,
+                    POST_DATE : POST_DATE,
                     AUTHOR : AUTHOR,
                     U_IMG_PATH : U_IMG_PATH,
                     EMAIL : EMAIL,
-                    POST_DATE : POST_DATE
-
+                    
                 })
             }).then(res=>(res.json())).then((res)=>{
                 
                 if(res.status === 1){
                     alert('성공적으로 포스트 하였습니다.')
-                    window.history.pushState(null,null,"/home")
+                    this.setState({
+                        isPosting : false
+                    })
+                    this.props.history.push(`/home?user=${window.sessionStorage.getItem('EMAIL')}`,null)
                 }
                 
             })
@@ -120,6 +159,9 @@ class Editor extends React.Component{
         }
         else{
             alert('최소한 제목은 작성해 주셔야 합니다.')
+            this.setState({
+                isPosting : false
+            })
         }
 
 
@@ -226,18 +268,10 @@ class Editor extends React.Component{
             <div className="Title-Row">
 
                 <div className="Title-Row__Input-Group">
-                    <input onChange={(event)=>{
-                        
-                        if(event.target.value.length > 0){
-                            event.target.classList.add('--Input-Active')
-                            event.target.nextSibling.classList.add('--Icon-Active')
-                        }
-                        else{
-                            event.target.classList.remove('--Input-Active')
-                            event.target.nextSibling.classList.remove('--Icon-Active')
-                        }
-                    }} className="Title-Row__Input-Group__Input" type="text" placeholder="제목을 입력하세요..."/>
+              
+                    <input className="Title-Row__Input-Group__Input" onChange={this.handleInputTitleChange} type="text" value={this.state.POST_TITLE} placeholder="제목을 입력하세요..."/>
                     <FaEdit onClick={this.handleEditComplete} className="Title-Row__Input-Group__Icon" />
+
                 </div>
                 
             </div>

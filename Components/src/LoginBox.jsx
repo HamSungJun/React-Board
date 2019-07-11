@@ -62,7 +62,7 @@ class LoginBox extends React.Component{
           console.log(`로그인 성공 : ${Jres}`)
           refreshSessionStroage(Jres)
           
-          this.props.history.push(`/home?user=${sha3_256(window.sessionStorage.EMAIL)}`)
+          this.props.history.push(`/home?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}`)
 
           if(this.state.REMEMBER){
   

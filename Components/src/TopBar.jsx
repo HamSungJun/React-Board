@@ -15,6 +15,7 @@ import { IoMdLogOut } from 'react-icons/io'
 import { MdPublic } from 'react-icons/md'
 import { connect } from 'react-redux';
 import { withRouter , Redirect } from 'react-router-dom'
+import { sha3_256 } from 'js-sha3'
 
 class TopBar extends React.Component{
 
@@ -32,7 +33,8 @@ class TopBar extends React.Component{
     }
 
     handleRouteToWrite(){
-        this.props.history.push("/write",null)
+        let { history } = this.props
+        history.push(`/write?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}`,null)
     }
 
     render(){
