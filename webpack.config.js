@@ -1,5 +1,4 @@
 let webpack = require('webpack');
-let {CleanWebpackPlugin} = require('clean-webpack-plugin')
 let path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin')
 

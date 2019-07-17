@@ -13,7 +13,7 @@ export const AC_SET_USER_INFO = (userInfo) => {
 
 export const AC_GET_SESSION_DATA = (sid) => {
 
-    return (dispatch , getState) => {
+    return (dispatch) => {
 
         fetch(`${SERVER_URL}/login/getSessionData`,{
             method : `POST`,

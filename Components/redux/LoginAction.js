@@ -1,9 +1,3 @@
-
-import { SERVER_URL , CLIENT_URL } from './GlobalURL.js';
-import Cookies from 'js-cookie'
-
-import { AC_SET_USER_INFO } from './UserAction.js'
-
 export const A_TYPING_LOGIN_FORM_EMAIL = "A_TYPING_LOGIN_FORM_EMAIL"
 export const A_TYPING_LOGIN_FORM_PW = "A_TYPING_LOGIN_FORM_PW"
 export const A_IS_REMEMBER_CHECKED = "A_IS_REMEMBER_CHECKED"

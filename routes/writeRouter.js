@@ -59,7 +59,7 @@ writeRouter.post('/writeComplete',(req,res)=>{
 
 writeRouter.post('/tempDocSave',(req,res)=>{
 
-  let uniqDocName = `TempDoc_${new Date().getTime()}`
+  // let uniqDocName = `TempDoc_${new Date().getTime()}`
  
   let doc = {
     TEMP_SAVE_TITLE : req.body.TEMP_SAVE_TITLE,
@@ -106,7 +106,7 @@ async function GET_FILE_RENAMED(form,res){
 
 function RENAME_FILE(form){
 
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve) => {
 
     form.on('file',(name,file)=>{
 

@@ -1,5 +1,4 @@
 import { SERVER_URL } from './GlobalURL.js'
-import { AC_TOGGLE_MODAL } from './LoginAction.js'
 
 export const A_TYPING_REGISTER_FORM = "A_TYPING_REGISTER_FORM"
 export const A_TYPING_USERNAME = "A_TYPING_USERNAME"

@@ -7,7 +7,6 @@ let sha256 = require('js-sha3').sha3_256
 let MonDB = require('../DB/MongoTransactions.js')
 let secret = require('../DB/secret')
 let mailer = require('../routes/mailer.js')
-let path = require('path')
 
 registerRouter.use(bodyParser.urlencoded({ extended: false }))
 registerRouter.use(bodyParser.json())
@@ -56,7 +55,7 @@ registerRouter.post('/nonformalRegisterFile',(req,res)=>{
 
 })
 
-registerRouter.delete('/nonformalRegisterFile',(req,res)=> {
+registerRouter.delete('/nonformalRegisterFile',(req)=> {
   
   let uniqueID = req.body
 

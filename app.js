@@ -5,7 +5,6 @@ let app = express()
 let loginRouter = require('./routes/loginRouter.js')
 let registerRouter = require('./routes/registerRouter.js')
 let writeRouter = require('./routes/writeRouter.js')
-let fs = require('fs')
 let path = require('path')
 
 let cors = require('cors');
