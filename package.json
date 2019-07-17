@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint ./",
     "dev": "webpack-dev-server --hot",
     "production": "webpack -p",
     "bundle": "webpack"
@@ -56,6 +57,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^1.0.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-react": "^7.14.2",
     "file-loader": "^2.0.0",
     "img-loader": "^3.0.1",
     "redux-devtools": "^3.4.1",

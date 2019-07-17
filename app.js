@@ -18,13 +18,6 @@ app.use(cors(corsOptions));
 app.set('PORT',process.env.PORT || 3000)
 app.use(express.static(path.join(__dirname,'public')))
 
-app.get('*',(req,res) => {
-    
-    res.sendFile(path.join(__dirname,'public','dist','index.html'))
-    
-})
-
-
 app.use(session({
    
     secret: 'HSJPRIME',
@@ -44,6 +37,12 @@ app.use(session({
 app.use('/write',writeRouter)
 app.use('/login',loginRouter)
 app.use('/register',registerRouter)
+
+app.use('*',(req,res) => {
+    
+    res.sendFile(path.join(__dirname,'public','dist','index.html'))
+    
+})
 
 app.listen(app.get('PORT'),()=>{
     console.log(`익스프레스 서버는 ${app.get('PORT')}번을 리스닝 합니다.`)

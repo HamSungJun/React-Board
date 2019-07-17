@@ -57,6 +57,42 @@ writeRouter.post('/writeComplete',(req,res)=>{
 
 })
 
+writeRouter.post('/tempDocSave',(req,res)=>{
+
+  let uniqDocName = `TempDoc_${new Date().getTime()}`
+ 
+  let doc = {
+    TEMP_SAVE_TITLE : req.body.TEMP_SAVE_TITLE,
+    TEMP_SAVE_CONTENT : req.body.TEMP_SAVE_CONTENT,
+    AUTHOR : req.body.EMAIL
+  }
+
+  let DB_Machine = new MonDB()
+
+  DB_Machine.SAVE_USER_TEMP_DOCUMENT(doc).then((response) => {
+    if(response.status === 1){
+      res.json(response)
+      res.end()
+    }
+  })
+
+})
+
+writeRouter.get('/getUserTempDocs',(req,res) => {
+  // console.log(req.query.user)
+
+  let DB_Machine = new MonDB()
+
+  DB_Machine.GET_USER_TEMP_DOCUMENT_WITHOUT_CONTENT(req.query.user).then((response) => {
+    if(response.status === 1){
+      console.log(response)
+      res.json(response)
+      res.end()
+    }
+  })
+  
+})
+
 async function GET_FILE_RENAMED(form,res){
 
   let fileRenamed = await RENAME_FILE(form)

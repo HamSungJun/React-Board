@@ -11,6 +11,7 @@ import { AC_CHANGE_VIEW_MODE , AC_CHANGE_MEDIA_MODE } from '../redux/WriteAction
 import { ChromePicker } from 'react-color'
 import { SERVER_URL } from '../redux/GlobalURL.js'
 
+import TempDocLoader from './TempDocLoader.jsx'
 import * as ResizeBullets from './ResizeBullets.js'
 
 import './Editor.scss'
@@ -25,15 +26,22 @@ class Editor extends React.Component{
         this.state = {
             iframeToHTML : "",
             isPosting : false,
-            POST_TITLE : ""
+            isShowingTempDoc : false,
+            POST_TITLE : "",
+            USER_TEMP_DOCS : []
         }
 
         this.handleEditComplete = this.handleEditComplete.bind(this)
         this.handleInputTitleChange = this.handleInputTitleChange.bind(this)
-
+        this.handleSaveTempDoc = this.handleSaveTempDoc.bind(this)
+        this.getUserTempDocs = this.getUserTempDocs.bind(this)
+        this.handleShowTempDoc = this.handleShowTempDoc.bind(this)
+        
     }
 
     componentDidMount(){
+
+        this.getUserTempDocs()
 
         let InnerEditor = RICH_TEXT_AREA.document
         InnerEditor.designMode = "on"
@@ -59,6 +67,25 @@ class Editor extends React.Component{
 
         })
 
+    }
+
+    getUserTempDocs(){
+
+        fetch(`${SERVER_URL}/write/getUserTempDocs?user=${window.sessionStorage.getItem('EMAIL')}`,{
+            method : 'GET',
+            credentials : 'include'
+        })
+        .then(res=>res.json())
+        .then((res) => {
+            console.log(res)
+            if(res.status === 1){
+                this.setState({
+                    USER_TEMP_DOCS : res.payload
+                })
+            }
+            
+        })
+        
     }
 
     handleColorChange(color,event){
@@ -167,6 +194,44 @@ class Editor extends React.Component{
 
     }
 
+    handleSaveTempDoc(){
+
+        if(this.state.POST_TITLE.length === 0){
+            return alert('임시 저장시 제목은 필수입니다.')
+        }
+
+        if(confirm('현재 작성중인 글을 임시 저장 하시겠습니까?')){
+
+            fetch(`${SERVER_URL}/write/tempDocSave`,{
+                method : 'POST',
+                credentials : 'include',
+                headers : {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({
+
+                    TEMP_SAVE_TITLE : this.state.POST_TITLE,
+                    TEMP_SAVE_CONTENT : RICH_TEXT_AREA.document.body.innerHTML,
+                    EMAIL : window.sessionStorage.getItem('EMAIL')
+
+                })
+            })
+            .then(res=>res.json())
+            .then((res) => {
+                if(res.status === 1){
+                    alert(`성공적으로 임시저장 하였습니다. ${res.DOC_ID}`)
+                }
+            })
+
+        }
+
+    }
+
+    handleShowTempDoc(){
+       return this.setState({isShowingTempDoc: !this.state.isShowingTempDoc})
+    }
+
     render(){
 
         let { writeState , writeDispatch } = this.props
@@ -249,6 +314,14 @@ class Editor extends React.Component{
 
                 <div className="Nested-Flex-View">
                 
+                    <div onClick={this.handleSaveTempDoc} className="Write-Save">
+                        <span className="Write-Save__Text">임시저장</span>
+                    </div>
+
+                    <div onClick={this.handleShowTempDoc} className="Show-Temp-Doc">
+                        <span className="Write-Save__Text">불러오기</span>
+                    </div>
+
                     <div onClick={()=>{
                         writeDispatch.changeViewMode(true)
                         this.handleChangeViewMode(true)
@@ -280,6 +353,7 @@ class Editor extends React.Component{
 
                 <div id="EDITOR">
 
+                    <TempDocLoader show={this.state.isShowingTempDoc} docs={this.state.USER_TEMP_DOCS} />
                     <iframe id="RICH_TEXT_AREA"  name="RICH_TEXT_AREA" frameBorder="0"></iframe>
 
                 </div>

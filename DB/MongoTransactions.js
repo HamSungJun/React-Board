@@ -309,6 +309,96 @@ SAVE_USER_SHARED_POSTING(doc){
 
 }
 
+SAVE_USER_TEMP_DOCUMENT(doc){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+
+      db.collection(secret.MongoCollections.tempSavedDocs).insertOne(doc,(err,result) => {
+
+        assert.equal(err,null)
+        assert.equal(1,result.insertedCount)
+        
+        if(err){
+          reject({
+            status : 0,
+            mesg : "유저 포스팅 삽입중 에러"
+          })
+        }else{
+          resolve({
+            status : 1,
+            DOC_ID : result.insertedId
+          })
+        }
+
+        client.close()
+
+      })
+
+
+    })
+
+
+  })
+
+}
+
+GET_USER_TEMP_DOCUMENT_WITHOUT_CONTENT(user){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+
+      db.collection(secret.MongoCollections.tempSavedDocs).find({AUTHOR:user},{projection : {
+        TEMP_SAVE_TITLE : 1,
+      }}).toArray((err,result)=>{
+
+        if(err){
+          console.log(err)
+        }
+
+        resolve({
+          status : 1,
+          payload : result
+        })
+        client.close()
+        
+      })
+    })
+
+  })
+
+}
+
 }
 
 module.exports = DB_Machine
