@@ -7,6 +7,8 @@ import * as LoginActions from '../redux/LoginAction.js'
 
 import './Home.scss'
 import TopBar from './TopBar.jsx'
+import ArticleLoader from './ArticleLoader.jsx'
+import ArticleFilter from './ArticleFilter.jsx'
 
 class Home extends React.Component{
 
@@ -17,6 +19,18 @@ class Home extends React.Component{
 
         <TopBar />
         
+        <div className="Home-Grid-Container">
+
+          <div className="Home-Grid-Container__Item">
+            <ArticleFilter />
+          </div>
+          <div className="Home-Grid-Container__Item">
+            <ArticleLoader />
+          </div>
+          <div className="Home-Grid-Container__Item">
+            
+          </div>
+        </div>
       </div>
     )
   }

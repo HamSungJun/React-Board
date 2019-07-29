@@ -2,6 +2,7 @@
 let express = require('express')
 let session = require('express-session')
 let app = express()
+let readRouter = require('./routes/readRouter.js')
 let loginRouter = require('./routes/loginRouter.js')
 let registerRouter = require('./routes/registerRouter.js')
 let writeRouter = require('./routes/writeRouter.js')
@@ -33,6 +34,7 @@ app.use(session({
 
 }));
 
+app.use('/read',readRouter)
 app.use('/write',writeRouter)
 app.use('/login',loginRouter)
 app.use('/register',registerRouter)

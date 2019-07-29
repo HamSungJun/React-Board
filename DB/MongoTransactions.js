@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 const secret = require('./secret.js')
 const assert = require('assert');
 
@@ -380,6 +381,7 @@ GET_USER_TEMP_DOCUMENT_WITHOUT_CONTENT(user){
 
       db.collection(secret.MongoCollections.tempSavedDocs).find({AUTHOR:user},{projection : {
         TEMP_SAVE_TITLE : 1,
+        TEMP_SAVE_DATE : 1
       }}).toArray((err,result)=>{
 
         if(err){
@@ -398,6 +400,147 @@ GET_USER_TEMP_DOCUMENT_WITHOUT_CONTENT(user){
   })
 
 }
+
+GET_TEMP_DOC_CONTENT_BY_ID(_id){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+
+      db.collection(secret.MongoCollections.tempSavedDocs).find({_id:new ObjectId(_id)},{projection : {
+        TEMP_SAVE_CONTENT : 1,
+      }}).toArray((err,result)=>{
+
+        if(err){
+          console.log(err)
+        }
+
+        resolve({
+          status : 1,
+          payload : result
+        })
+
+        client.close()
+        
+      })
+    })
+
+  })
+
+}
+
+GET_READABLE_DOCS(skip,limit,query={}){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+
+      db.collection(secret.MongoCollections.sharedPostings)
+      .find(query,{
+        projection : {
+          POST_CONTENT : 0,
+        }
+      })
+      .skip(skip)
+      .limit(limit)
+      .toArray((err,result)=>{
+
+        if(err){
+          console.log(err)
+        }
+
+        result.sort((a,b)=>{
+          return new Date(b.POST_DATE).getTime() - new Date(a.POST_DATE).getTime()
+        })
+
+        resolve({
+          status : 1,
+          payload : result
+        })
+
+        client.close()
+        
+      })
+    })
+
+  })
+
+}
+
+GET_CONTENT_BY_ID(_id){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+
+      db.collection(secret.MongoCollections.sharedPostings)
+      .find({_id : new ObjectId(_id)},{
+        projection : {
+          POST_CONTENT : 1,
+        }
+      })
+      .toArray((err,result)=>{
+
+        if(err){
+          console.log(err)
+        }
+        
+        resolve({
+          status : 1,
+          payload : result
+        })
+
+        client.close()
+        
+      })
+    })
+
+  })
+
+}
+
 
 }
 

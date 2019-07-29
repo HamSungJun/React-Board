@@ -1,0 +1,23 @@
+.View-Grid-Container{
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    height: calc(100vh - 65px);
+    
+    .View-Grid-Container__Item:nth-child(1){
+        padding : 8px;
+        padding-top : 73px;
+        background-color: white;
+        min-height: calc(100vh - 65px);
+        height : calc(100vh - 65px);
+        
+    }
+    .View-Grid-Container__Item:nth-child(2){
+
+        background-color: hsl(225, 6%, 13%);
+        padding-top : 65px;
+        min-height: calc(100vh - 65px);
+        height : calc(100vh - 65px);
+
+    }
+
+}

@@ -8,7 +8,7 @@ import * as UserActions from '../redux/UserAction.js'
 import './TopBar.scss'
 
 import Header_Icon from '../../public/Images/post-it.svg'
-import { MdCreate } from 'react-icons/md'
+import { MdCreate, MdSearch } from 'react-icons/md'
 import { MdAccountCircle } from 'react-icons/md'
 import { MdMenu } from 'react-icons/md'
 import { IoMdLogOut } from 'react-icons/io'
@@ -23,6 +23,7 @@ class TopBar extends React.Component{
         super(props)
         this.handleLogout = this.handleLogout.bind(this)
         this.handleRouteToWrite = this.handleRouteToWrite.bind(this)
+        this.handleRouteToHome = this.handleRouteToHome.bind(this)
     }
 
     handleLogout(){
@@ -35,6 +36,10 @@ class TopBar extends React.Component{
     handleRouteToWrite(){
         let { history } = this.props
         history.push(`/write?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}`,null)
+    }
+    handleRouteToHome(){
+        let { history } = this.props
+        history.push(`/home?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}`,null)
     }
 
     render(){
@@ -56,7 +61,12 @@ class TopBar extends React.Component{
                     </div>
                     </div>
 
-                    <div className="TopBar__Grid-Container__Item"></div>
+                    <div className="TopBar__Grid-Container__Item">
+                        <div className="TopBar__Grid-Container__Item__Search">
+                            <MdSearch id="SEARCH" size={22} />
+                            <input type="text" placeholder="검색"/>
+                        </div>
+                    </div>
 
                     <div className="TopBar__Grid-Container__Item">
               
@@ -81,7 +91,7 @@ class TopBar extends React.Component{
                         </div>
 
                         <div className="TopBar__Grid-Container__Item__Item">
-                            <MdPublic className="Icon-Size" id="MdPublic" />
+                            <MdPublic onClick={this.handleRouteToHome} className="Icon-Size" id="MdPublic" />
                         </div>
                         <div className="TopBar__Grid-Container__Item__Item">
                             <MdCreate onClick={this.handleRouteToWrite} className="Icon-Size" id="MdCreate" />

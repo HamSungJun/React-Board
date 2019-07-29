@@ -1,10 +1,48 @@
 .TempDocLoader-Container{
-    position : absolute;
-    left : 15px;
+
     top : 15px;
+    left : 15px;
     width : 535px;
     height : 300px;
+    overflow-y : auto;
     border-radius: 4px;
     background-color: white;
     box-shadow: 2px 2px 5px #ccc;
+    position : absolute;
+    
+}
+.TempDocLoader-Container__Item{
+    padding : 10px 10px 5px 10px;
+    border-bottom : 1px solid #ccc;
+    height : 50px;
+    cursor: pointer;
+}
+
+.TempDocLoader-Container__Item__Title{
+    height : 20px;
+    margin-bottom : 10px;
+}
+.TempDocLoader-Container__Item__Title span{
+    font-size : 13pt;
+}
+.TempDocLoader-Container__Item__Sub{
+    display: grid;
+    height : 20px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.TempDocLoader-Container__Item__Sub div{
+    display: flex;
+    align-items: flex-end;
+}
+.TempDocLoader-Container__Item__Sub div span{
+    color : #ccc;
+    font-size : 10pt;
+    letter-spacing: 0.05em;
+}
+.TempDocLoader-Container__Item__Sub div:nth-child(1){
+    justify-content: flex-start;
+}
+.TempDocLoader-Container__Item__Sub div:nth-child(2){
+    justify-content: flex-end;
 }

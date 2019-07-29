@@ -26,6 +26,7 @@ class Editor extends React.Component{
         this.state = {
             iframeToHTML : "",
             isPosting : false,
+            isTempSaving : false,
             isShowingTempDoc : false,
             POST_TITLE : "",
             USER_TEMP_DOCS : []
@@ -135,13 +136,14 @@ class Editor extends React.Component{
         }
 
         let inputValue = this.state.POST_TITLE
-        
-        this.setState({
-            isPosting : true,
-            POST_TITLE : "포스팅 중 ..."
-        })
+
 
         if(inputValue.length > 0){
+        
+            this.setState({
+                isPosting : true,
+                POST_TITLE : "포스팅 중 ..."
+            })
 
             let POST_TITLE = inputValue
             let POST_CONTENT = RICH_TEXT_AREA.document.body.innerHTML
@@ -200,7 +202,13 @@ class Editor extends React.Component{
             return alert('임시 저장시 제목은 필수입니다.')
         }
 
+        if(this.state.isTempSaving){return}
+
         if(confirm('현재 작성중인 글을 임시 저장 하시겠습니까?')){
+
+            this.setState({
+                isTempSaving : true
+            })
 
             fetch(`${SERVER_URL}/write/tempDocSave`,{
                 method : 'POST',
@@ -221,6 +229,9 @@ class Editor extends React.Component{
             .then((res) => {
                 if(res.status === 1){
                     alert(`성공적으로 임시저장 하였습니다. ${res.DOC_ID}`)
+                    this.setState({
+                        isTempSaving : false
+                    })
                 }
             })
 
@@ -353,7 +364,7 @@ class Editor extends React.Component{
 
                 <div id="EDITOR">
 
-                    <TempDocLoader show={this.state.isShowingTempDoc} docs={this.state.USER_TEMP_DOCS} />
+                    <TempDocLoader tempDocToggler={this.handleShowTempDoc} show={this.state.isShowingTempDoc} docs={this.state.USER_TEMP_DOCS} />
                     <iframe id="RICH_TEXT_AREA"  name="RICH_TEXT_AREA" frameBorder="0"></iframe>
 
                 </div>
@@ -485,9 +496,10 @@ const INITIALIZE_MUTATION_OBSERVER = () => {
 
                     el.classList.remove('Frame-Image')
                     el.draggable = true
-                    el.width = parseInt((el.naturalWidth)/5)
-                    el.height = parseInt((el.naturalHeight)/5)
-
+                    // el.width = parseInt((el.naturalWidth)/5)
+                    // el.height = parseInt((el.naturalHeight)/5)
+                    el.style.maxWidth = '100%'
+                    el.style.height = 'auto !important'
                     el.addEventListener('click',(event)=>{
                         event.stopPropagation()
                         REMOVE_RESIZER_ALL()

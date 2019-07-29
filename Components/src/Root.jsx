@@ -10,6 +10,7 @@ import _store from '../redux/_store.js'
 import Login from './Login.jsx'
 import Home from './Home.jsx'
 import Write from './Write.jsx'
+import ArticleView from './ArticleView.jsx'
 import NotFound from './NotFound.jsx'
 
 import '../Styles/Share.scss'
@@ -32,6 +33,9 @@ class Root extends React.Component{
               }}></Route>
               <Route path="/write" render={()=>{
                 return RouteDecision(Write)
+              }}></Route>
+              <Route path="/view" render={()=>{
+                return RouteDecision(ArticleView)
               }}></Route>
               <Route component={NotFound}></Route>
 

@@ -64,6 +64,7 @@ writeRouter.post('/tempDocSave',(req,res)=>{
   let doc = {
     TEMP_SAVE_TITLE : req.body.TEMP_SAVE_TITLE,
     TEMP_SAVE_CONTENT : req.body.TEMP_SAVE_CONTENT,
+    TEMP_SAVE_DATE : new Date().getTime(),
     AUTHOR : req.body.EMAIL
   }
 
@@ -93,6 +94,20 @@ writeRouter.get('/getUserTempDocs',(req,res) => {
   
 })
 
+writeRouter.get('/getTempDocContent',(req,res) => {
+
+  let DB_Machine = new MonDB()
+  console.log(req.query._id)
+  DB_Machine.GET_TEMP_DOC_CONTENT_BY_ID(req.query._id).then((response) => {
+    if(response.status === 1){
+      console.log(response)
+      res.json(response)
+      res.end()
+    }
+  })
+  
+})
+
 async function GET_FILE_RENAMED(form,res){
 
   let fileRenamed = await RENAME_FILE(form)
@@ -110,10 +125,10 @@ function RENAME_FILE(form){
 
     form.on('file',(name,file)=>{
 
-      console.log(file.path)
-      console.log(file.name)
-      console.log(form.uploadDir)
-      console.log(file.lastModifiedDate)
+      // console.log(file.path)
+      // console.log(file.name)
+      // console.log(form.uploadDir)
+      // console.log(file.lastModifiedDate)
   
       const newFileName = `React-Board_${new Date(file.lastModifiedDate).toJSON().substr(0,10).replace(/-/g,"")}_${new Date().getTime()}.${file.type.split("/")[1]}`
       const newPath = `${form.uploadDir}/${newFileName}`

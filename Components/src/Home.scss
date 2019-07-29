@@ -31,14 +31,39 @@ $material_deepblack : hsl(225, 6%, 13%);
   display: none;
 } /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
 
-.--Home{
-    
+.Home-Grid-Container{
+    display: grid;
+    height : 100vh;
+}
+
+.Home-Grid-Container__Item{
+  padding-top : 65px;
+  min-height: calc(100vh - 65px);
+  height : calc(100vh - 65px);
 }
 
 /* #Media Queries
 ================================================== */
 /* Large Desktop */
 @media only screen and (min-width: 1441px) {
+
+  .Home-Grid-Container{
+
+    grid-template-columns: 300px 1fr 350px;
+    
+    .Home-Grid-Container__Item:nth-child(1){
+      border-right: 1px solid #ccc;
+    }
+    .Home-Grid-Container__Item:nth-child(2){
+        
+    }
+    .Home-Grid-Container__Item:nth-child(3){
+  
+      background-color: #1f2023;
+
+    }
+
+}
 
 }
 /* Smaller that standard */
