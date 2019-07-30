@@ -24,7 +24,7 @@ class ArticleLoader extends React.Component{
                     this.handleRouteToPostContent(el._id)
                 }}  className="ArticleLoader-Wrapper__Item" key={index}>
                     <div className="ArticleLoader-Wrapper__Item__Thumbnail">
-                        <img src={el.POST_THUMBNAIL === null ? (`${SERVER_URL}/Images/no-img.jpg`) : ("")} alt=""/>
+                        <img src={el.POST_THUMBNAIL === 'none' ? `${SERVER_URL}/Images/no-img.jpg` : el.POST_THUMBNAIL } alt=""/>
                     </div>
                     <div>
                         <div className="ArticleLoader-Wrapper__Item__Title">
@@ -33,7 +33,7 @@ class ArticleLoader extends React.Component{
                                 <span>{el.POST_TITLE}</span>
                             </div>
                             <div className="ArticleLoader-Wrapper__Item__Title__Item">
-                                <span>{el.POST_DATE}</span>
+                                <span>{new Date(el.POST_DATE).toLocaleDateString('kr')}</span>
                             </div>
                             
                         </div>

@@ -43,8 +43,6 @@ writeRouter.post('/writeComplete',(req,res)=>{
     EMAIL : req.body.EMAIL,
     POST_DATE : req.body.POST_DATE
   }
-  
-  doc.POST_DATE = new Date(doc.POST_DATE).toLocaleDateString('kr')
 
   let DB_Machine = new MonDB();
   

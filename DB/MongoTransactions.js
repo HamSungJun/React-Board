@@ -478,7 +478,7 @@ GET_READABLE_DOCS(skip,limit,query={}){
         }
 
         result.sort((a,b)=>{
-          return new Date(b.POST_DATE).getTime() - new Date(a.POST_DATE).getTime()
+          return b.POST_DATE - a.POST_DATE
         })
 
         resolve({

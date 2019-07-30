@@ -8,8 +8,10 @@ import { FaUnlink , FaEdit } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { AC_CHANGE_VIEW_MODE , AC_CHANGE_MEDIA_MODE } from '../redux/WriteAction.js'
+
 import { ChromePicker } from 'react-color'
 import { SERVER_URL } from '../redux/GlobalURL.js'
+
 
 import TempDocLoader from './TempDocLoader.jsx'
 import * as ResizeBullets from './ResizeBullets.js'
@@ -147,13 +149,11 @@ class Editor extends React.Component{
 
             let POST_TITLE = inputValue
             let POST_CONTENT = RICH_TEXT_AREA.document.body.innerHTML
-            let POST_THUMBNAIL = () => {
-                return RICH_TEXT_AREA.document.querySelector('img').src.split("/").reverse()[0] || undefined
-            }
+            let POST_THUMBNAIL = RICH_TEXT_AREA.document.querySelector('img') ? RICH_TEXT_AREA.document.querySelector('img').src : "none"
             let AUTHOR = window.sessionStorage.getItem('USERNAME')
             let U_IMG_PATH = window.sessionStorage.getItem('U_IMG_PATH').split("/").reverse()[0]
             let EMAIL = window.sessionStorage.getItem('EMAIL')
-            let POST_DATE = new Date().toJSON().substr(0,10)
+            let POST_DATE = new Date().getTime()
 
             fetch(`${SERVER_URL}/write/writeComplete`,{
                 method : 'POST',
@@ -176,11 +176,13 @@ class Editor extends React.Component{
             }).then(res=>(res.json())).then((res)=>{
                 
                 if(res.status === 1){
-                    alert('성공적으로 포스트 하였습니다.')
                     this.setState({
                         isPosting : false
                     })
-                    this.props.history.push(`/home?user=${window.sessionStorage.getItem('EMAIL')}`,null)
+                    
+                    this.props.history.push(`/home?user=${window.sessionStorage.getItem('EMAIL')}`,{
+                        reload : true
+                    })
                 }
                 
             })

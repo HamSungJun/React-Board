@@ -21,7 +21,7 @@ let ArticleLoaderReducer = (state = ArticleLoaderInitialState , action) => {
 
             return Object.assign({},state,{
                 IS_INITIAL_LOADING : false,
-                READABLE_DOCS : state.READABLE_DOCS.concat(action.value)
+                READABLE_DOCS : action.value
             })
         default :
             return state
