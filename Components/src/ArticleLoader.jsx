@@ -3,22 +3,30 @@ import { SERVER_URL } from '../redux/GlobalURL.js'
 import './ArticleLoader.scss'
 import { MdSearch } from 'react-icons/md'
 import { connect } from 'react-redux'
-import { AC_LOAD_INITIAL_POSTINGS } from '../redux/ArticleLoaderAction.js'
+import { AC_LOAD_POSTINGS } from '../redux/ArticleLoaderAction.js'
 import { HashLoader } from 'react-spinners'
 import { withRouter } from 'react-router-dom' 
 
 class ArticleLoader extends React.Component{
 
+    constructor(props){
+        super(props)
+        this.handleScrollBottom = this.handleScrollBottom.bind(this)
+    }
+
     componentDidMount(){
         let { articleLoaderState , articleLoaderDispatch } = this.props
         if(articleLoaderState.READABLE_DOCS.length === 0){
-            articleLoaderDispatch.loadInitialPostings()
+            articleLoaderDispatch.loadPostings()
         }
+        let articleWrapper = document.querySelector(".ArticleLoader-Wrapper");
+        articleWrapper.addEventListener('scroll',this.handleScrollBottom);
+
     }
 
     renderReadableDocs(){
         let { articleLoaderState } = this.props
-        return articleLoaderState.READABLE_DOCS.map((el,index) => {
+        const makeDocTemplate = (el,index) => {
             return (
                 <div onClick={()=>{
                     this.handleRouteToPostContent(el._id)
@@ -49,6 +57,14 @@ class ArticleLoader extends React.Component{
                     </div>
                 </div>
             )
+        }
+        return articleLoaderState.READABLE_DOCS.map((el,index) => {
+            if(articleLoaderState.IS_SEARCHING && !!el.SEARCH_TOUCHED){
+                return makeDocTemplate(el,index)
+            }
+            else if(!articleLoaderState.IS_SEARCHING){
+                return makeDocTemplate(el,index)
+            }
         })
 
     }
@@ -57,6 +73,12 @@ class ArticleLoader extends React.Component{
         return this.props.history.push(`/view?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}&postId=${postId}`,{
             postId : postId
         })
+    }
+
+    handleScrollBottom(event){
+        if(event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight){
+            this.props.articleLoaderDispatch.loadPostings()
+        }
     }
 
     render(){
@@ -78,8 +100,8 @@ const mapDispatchToProps = (dispatch) => {
 
     return {
         articleLoaderDispatch : {
-            loadInitialPostings(){
-                return dispatch(AC_LOAD_INITIAL_POSTINGS())
+            loadPostings(){
+                return dispatch(AC_LOAD_POSTINGS())
             }
         }
     }

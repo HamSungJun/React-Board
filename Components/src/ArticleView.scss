@@ -1,14 +1,12 @@
 .View-Grid-Container{
     display: grid;
     grid-template-columns: 1fr 350px;
-    height: calc(100vh - 65px);
+    height: 100vh;
     
     .View-Grid-Container__Item:nth-child(1){
-        padding : 8px;
-        padding-top : 73px;
+        padding : 73px 8px 8px 8px;
         background-color: white;
-        min-height: calc(100vh - 65px);
-        height : calc(100vh - 65px);
+        height : calc(100vh - 81px);
         
     }
     .View-Grid-Container__Item:nth-child(2){
@@ -17,7 +15,47 @@
         padding-top : 65px;
         min-height: calc(100vh - 65px);
         height : calc(100vh - 65px);
+        width : 350px;
+        transition : width 300ms ease;
 
+        .View-Grid-Container__Item__Item{
+            height: 50px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 0 10px;
+            grid-column-gap: 15px;
+            margin-top : 15px;
+        }
+
+        .View-Btn{
+            outline: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 3px 3px black;
+            transition: all 300ms ease;
+        }
+        .View-Btn:hover{
+            background-color: #00E677;
+        }
     }
+    .--Element-Centered{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height : calc(100vh - 81px);
+    }
+}
 
+.Interface-Icon{
+    font-size: 25px;
+    margin-right: 5px;
+    margin-bottom: 2px;
 }

@@ -1,0 +1,156 @@
+.ArticleReplyPane-Container{
+    height: calc(100vh - 66px);
+    width: 60vw;
+    top: 66px;
+    right: 0;
+    position: absolute;
+    background-color: white;
+    transition : width 600ms ease;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    box-shadow: -6px 0px 10px 0px #ccc;
+}
+.--ArticleReplyPane-Hide{
+    width : 0;
+}
+
+.ArticleReplyPane-Inner{
+    background-color: white;
+    height: 100%;
+    position: relative;
+}
+.ArticleReplyPane-Inner__Header{
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    height: 60px;
+}
+.ArticleReplyPane-Inner__Header__Item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+.ArticleReplyPane-Inner__Header__Item__Title{
+    font-size: 1.3vw;
+    font-weight: bold;
+}
+.ArticleReplyPane-Inner__Header__Item__User-Image{
+    border-radius: 50%;
+    width : 45px;
+    height: 45px;
+}
+
+.ArticleReplyPane-Inner__Sub-Info{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 30px;
+    color : #aaa;
+}
+.ArticleReplyPane-Inner__Sub-Info__Item{
+    margin-right: 10px;
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+    text-align: center;
+}
+.ArticleReplyPane-Inner__Sub-Info__Item:last-child{
+    // margin-right: 0;
+    padding-right : 0;
+    border-right: none;
+}
+.ArticleReplyPane-Inner__Sub-Info__Item__Thumb-Number{
+    margin: 0 5px;
+}
+
+.ArticleReplyPane-Inner__List{
+    min-height: calc(100% - 151px);
+    height: calc(100% - 151px);
+    overflow-y: auto;
+}
+.ArticleReplyPane-Inner__Interface{
+    border-top: 1px solid #ccc;
+    grid-template-columns: 1fr 120px;
+    height: 60px;
+    display: grid;
+}
+.ArticleReplyPane-Inner__Interface__Item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ArticleReplyPane-Inner__Interface__Item__Input, #SEND_REPLY{
+    width: 98%;
+    height: 80%;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    font-size: 1vw;
+}
+.ArticleReplyPane-Inner__Interface__Item__Input{
+    background-color: lightgray;
+}
+#Fold{
+    color : rgb(32, 33, 35);
+    font-size: 1.5vw;
+    cursor: pointer;
+}
+#THUMB_UP{
+    color: rgb(69, 133, 195);
+    font-size: 16px;
+    cursor: pointer;
+    transition: font-size 300ms linear;
+}
+#THUMB_UP:hover{
+    font-size: 20px;
+}
+#SEND_REPLY{
+    width : 95%;
+    background-color: lightgray;
+    transition: all 300ms ease;
+}
+#SEND_REPLY:hover, .OK{
+    background-color: rgb(32, 33, 35) !important;
+    color: white;
+    cursor: pointer;
+}
+.Reply-Row{
+    height: 50px;
+    display: grid;
+    grid-template-columns: 50px 100px 1fr 100px 30px;
+    margin-bottom : 3px;
+    border-bottom : 1px solid #ccc;
+}
+.Reply-Row:last-child{
+    border-bottom: none;
+}
+.Reply-Row__Item img{
+    width : 45px;
+    height : 45px;
+    border-radius: 50%;
+}
+.Reply-Row__Item{
+    display: flex;
+    align-items: center;
+}
+.Reply-Row__Item:not(:nth-child(3)){
+    justify-content: center;
+}
+.Reply-Row__Item:nth-child(2){
+    color : #4385f4;
+}
+.Reply-Row__Item:nth-child(3){
+    justify-content: flex-start;
+}
+.Font-Bold{
+    font-weight: bold;
+}
+.Delete-Icon{
+    color: rgb(222, 75, 59);
+    width : 20px;
+    height: 20px;
+    cursor: pointer;
+}
+

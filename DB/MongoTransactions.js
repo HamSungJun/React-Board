@@ -516,11 +516,7 @@ GET_CONTENT_BY_ID(_id){
       const db = client.db(secret.MongoDB)
 
       db.collection(secret.MongoCollections.sharedPostings)
-      .find({_id : new ObjectId(_id)},{
-        projection : {
-          POST_CONTENT : 1,
-        }
-      })
+      .find({_id : new ObjectId(_id)})
       .toArray((err,result)=>{
 
         if(err){
@@ -541,7 +537,135 @@ GET_CONTENT_BY_ID(_id){
 
 }
 
+POST_REPLY_BY_ID(_id,doc){
 
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+      doc._id = new ObjectId()
+      db.collection(secret.MongoCollections.sharedPostings)
+      .findOneAndUpdate({_id:new ObjectId(_id)},{$push:{POST_REPLY : doc}},{returnOriginal:false},(err,doc) => {
+        if(err){
+          console.log(err)
+          return reject({
+            status : 0,
+            mesg : "다큐먼트 업데이트중 에러."
+          })
+        }
+          
+          resolve({
+            status : 1,
+            payload : doc.value
+          })
+
+      })
+
+    })
+
+  })
+
+}
+
+DELETE_REPLY_BY_ID(targetArticleId,targetReplyId){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+      db.collection(secret.MongoCollections.sharedPostings)
+      .findOneAndUpdate({
+        _id: new ObjectId(targetArticleId)
+      },{
+        $pull : {"POST_REPLY" : {_id : new ObjectId(targetReplyId)}}
+      },{
+        returnOriginal : false
+      },(err,doc) => {
+
+        if(err){
+          console.log(err)
+          return reject({
+            status : 0,
+            mesg : "다큐먼트 업데이트중 에러."
+          })
+        }
+
+        resolve({
+          status : 1,
+          payload : doc.value
+        })
+
+      })
+
+    })
+
+  })
+
+}
+
+RECOMMEND_UP_BY_EMAIL(targetArticleId,EMAIL){
+
+  return new Promise((resolve,reject) => {
+
+    const client = new MongoClient(secret.MongoURL,{useNewUrlParser : true});
+
+    client.connect((err) => {
+
+      assert.equal(err,null)
+
+      if(err){
+        console.log(err)
+        reject({
+          status : 0,
+          mesg : "DB 클라이언트 연결 에러."
+        })
+      }
+
+      const db = client.db(secret.MongoDB)
+      db.collection(secret.MongoCollections.sharedPostings)
+      .findOne({_id:new ObjectId(targetArticleId)},(err,result) => {
+        console.log(result)
+      })
+      
+
+        // resolve({
+        //   status : 1,
+        //   payload : doc.value
+        // })
+
+      
+
+    })
+
+  })
+
+}
 }
 
 module.exports = DB_Machine

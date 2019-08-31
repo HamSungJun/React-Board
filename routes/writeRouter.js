@@ -38,10 +38,12 @@ writeRouter.post('/writeComplete',(req,res)=>{
     POST_TITLE : req.body.POST_TITLE,
     POST_CONTENT : req.body.POST_CONTENT,
     POST_THUMBNAIL : req.body.POST_THUMBNAIL,
+    POST_REPLY : [],
     AUTHOR : req.body.AUTHOR,
     U_IMG_PATH : req.body.U_IMG_PATH,
     EMAIL : req.body.EMAIL,
-    POST_DATE : req.body.POST_DATE
+    POST_DATE : req.body.POST_DATE,
+    RECOMMEND : []
   }
 
   let DB_Machine = new MonDB();

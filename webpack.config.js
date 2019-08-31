@@ -56,10 +56,6 @@ module.exports = {
         new webpack.ProgressPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new HtmlWebpackPlugin({
-            template : __dirname+"/public/index.html",
-            inject : true
-        })
     ],
     target : "web"
 }

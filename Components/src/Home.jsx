@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SERVER_URL } from '../redux/GlobalURL.js'
-import { AC_LOAD_INITIAL_POSTINGS } from '../redux/ArticleLoaderAction.js'
+import { AC_LOAD_POSTINGS } from '../redux/ArticleLoaderAction.js'
 import * as LoginActions from '../redux/LoginAction.js'
 import _store from '../redux/_store.js'
 
@@ -18,8 +18,11 @@ class Home extends React.Component{
   }
 
   componentDidMount(){
+    if(!this.props.location.state){
+      return
+    }
     if(this.props.location.state.reload === true){
-      _store.dispatch(AC_LOAD_INITIAL_POSTINGS())
+      
     }
   }
 
@@ -46,7 +49,5 @@ class Home extends React.Component{
     )
   }
 }
-
-
 
 export default withRouter(Home)

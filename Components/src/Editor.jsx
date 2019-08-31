@@ -139,7 +139,6 @@ class Editor extends React.Component{
 
         let inputValue = this.state.POST_TITLE
 
-
         if(inputValue.length > 0){
         
             this.setState({

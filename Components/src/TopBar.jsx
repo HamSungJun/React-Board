@@ -16,6 +16,7 @@ import { MdPublic } from 'react-icons/md'
 import { connect } from 'react-redux';
 import { withRouter , Redirect } from 'react-router-dom'
 import { sha3_256 } from 'js-sha3'
+import {AC_TITLE_SEARCH} from '../redux/ArticleLoaderAction.js'
 
 class TopBar extends React.Component{
 
@@ -24,6 +25,7 @@ class TopBar extends React.Component{
         this.handleLogout = this.handleLogout.bind(this)
         this.handleRouteToWrite = this.handleRouteToWrite.bind(this)
         this.handleRouteToHome = this.handleRouteToHome.bind(this)
+        this.handleTitleSearch = this.handleTitleSearch.bind(this)
     }
 
     handleLogout(){
@@ -40,6 +42,10 @@ class TopBar extends React.Component{
     handleRouteToHome(){
         let { history } = this.props
         history.push(`/home?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}`,null)
+    }
+
+    handleTitleSearch(event){
+        return this.props.articleLoaderDispatch.titleSearch(event.target.value)
     }
 
     render(){
@@ -64,7 +70,7 @@ class TopBar extends React.Component{
                     <div className="TopBar__Grid-Container__Item">
                         <div className="TopBar__Grid-Container__Item__Search">
                             <MdSearch id="SEARCH" size={22} />
-                            <input type="text" placeholder="검색"/>
+                            <input onChange={this.handleTitleSearch} type="text" placeholder="검색"/>
                         </div>
                     </div>
 
@@ -121,7 +127,19 @@ const mapStateToProps = (state) => {
   
     }
   
-  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        articleLoaderDispatch : {
+            titleSearch(searchText){
+                dispatch(AC_TITLE_SEARCH(searchText))
+            }
+        }
+    }
+
+}
   
 const PARSE_U_IMG_PATH = (path) => {
 
@@ -131,6 +149,6 @@ const PARSE_U_IMG_PATH = (path) => {
 
 }
 
-TopBar = withRouter(connect(mapStateToProps,null)(TopBar))
+TopBar = withRouter(connect(mapStateToProps,mapDispatchToProps)(TopBar))
 
 export default TopBar

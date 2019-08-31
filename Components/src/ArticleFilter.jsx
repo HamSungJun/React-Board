@@ -2,6 +2,9 @@ import React from 'react'
 import './AticleFilter.scss'
 import {MdFilter, MdUpdate, MdPhotoFilter, MdTrendingUp , MdTrendingDown, MdInsertPhoto} from 'react-icons/md'
 import {FaReplyd, FaEye, FaThumbsUp, FaSortAmountUp, FaSortAmountDown} from 'react-icons/fa'
+import {AC_FILT_READABLE_DOCS} from '../redux/ArticleLoaderAction.js'
+
+import {connect} from 'react-redux'
 
 class ArticleFilter extends React.Component{
 
@@ -23,16 +26,19 @@ class ArticleFilter extends React.Component{
     handleFilterClick(e,type,order){
 
         let stateNow = this.state
-        
+
         if(stateNow[type] === order){
-            stateNow[type] = "RESET"
-            return this.setState(stateNow)
+            return
         }
-        else{
-            stateNow[type] = order
-            return this.setState(stateNow)
-        }
- 
+        
+        Object.keys(stateNow).forEach((el) => {
+            stateNow[el] = "RESET"
+        })
+
+        stateNow[type] = order
+        this.props.articleFilterDispatch.filtReadableDocs(type,order)
+        return this.setState(stateNow)
+        
     }
 
     renderQueryOptions(){
@@ -106,6 +112,16 @@ class ArticleFilter extends React.Component{
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        articleFilterDispatch : {
+            filtReadableDocs(type,order){
+                dispatch(AC_FILT_READABLE_DOCS(type,order))
+            }
+        }
+    }
+}
 
+ArticleFilter = connect(null,mapDispatchToProps)(ArticleFilter)
 
 export default ArticleFilter
