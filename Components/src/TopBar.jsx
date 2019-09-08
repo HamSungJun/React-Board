@@ -43,7 +43,6 @@ class TopBar extends React.Component{
         let { history } = this.props
         history.push(`/home?user=${window.sessionStorage.getItem('EMAIL').split("@")[0]}`,null)
     }
-
     handleTitleSearch(event){
         return this.props.articleLoaderDispatch.titleSearch(event.target.value)
     }
@@ -60,10 +59,10 @@ class TopBar extends React.Component{
 
                     <div className="TopBar__Grid-Container__Item">
                     <div className="TopBar__Grid-Container__Item__Item">
-                        <img className="TopBar__Grid-Container__Item__Item__Img" src={Header_Icon} alt="Header_Icon"/>
+                        <img onClick={this.handleRouteToHome} className="TopBar__Grid-Container__Item__Item__Img" src={Header_Icon} alt="Header_Icon"/>
                     </div>
                     <div className="TopBar__Grid-Container__Item__Item">
-                        <span className="TopBar__Grid-Container__Item__Item__Text">React-Board</span>
+                        <span onClick={this.handleRouteToHome} className="TopBar__Grid-Container__Item__Item__Text">React-Board</span>
                     </div>
                     </div>
 

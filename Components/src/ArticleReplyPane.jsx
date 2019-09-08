@@ -98,7 +98,7 @@ class ArticleReplyPane extends React.Component{
                                     this.props.thumbUpHandler(this.props.location.state.postId,window.sessionStorage.getItem('EMAIL'))
                                 }
                             }} id="THUMB_UP" />
-                            <span className="ArticleReplyPane-Inner__Sub-Info__Item__Thumb-Number">{this.props.post.RECOMMEND}</span>
+                            <span className="ArticleReplyPane-Inner__Sub-Info__Item__Thumb-Number">{(this.props.post.RECOMMEND || []).length}</span>
                         </div>
                     </div>
                     <div className="ArticleReplyPane-Inner__List">

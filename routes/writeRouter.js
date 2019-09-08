@@ -43,7 +43,8 @@ writeRouter.post('/writeComplete',(req,res)=>{
     U_IMG_PATH : req.body.U_IMG_PATH,
     EMAIL : req.body.EMAIL,
     POST_DATE : req.body.POST_DATE,
-    RECOMMEND : []
+    RECOMMEND : [],
+    EYE : 0
   }
 
   let DB_Machine = new MonDB();

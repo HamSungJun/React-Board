@@ -17,15 +17,6 @@ class Home extends React.Component{
     super(props)
   }
 
-  componentDidMount(){
-    if(!this.props.location.state){
-      return
-    }
-    if(this.props.location.state.reload === true){
-      
-    }
-  }
-
   render(){
 
     return(

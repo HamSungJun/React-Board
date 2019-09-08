@@ -4,6 +4,8 @@ export const A_LOAD_POSTINGS = "A_LOAD_POSTINGS"
 export const A_LOAD_POSTINGS_DONE = "A_LOAD_POSTINGS_DONE"
 export const A_FILT_READABLE_DOCS = "A_FILT_READABLE_DOCS"
 export const A_TITLE_SEARCH = "A_TITLE_SEARCH"
+export const A_POST_EYE_UP = "A_POST_EYE_UP"
+export const A_REFRESH_ARTICLE_LOAD_STATE = "A_REFRESH_ARTICLE_LOAD_STATE"
 
 export const AC_LOAD_POSTINGS = () => {
 
@@ -14,18 +16,7 @@ export const AC_LOAD_POSTINGS = () => {
         if(SnapShot.IS_FETCHING){
             return
         }
-
-        let dispatchObject = {
-            type : A_LOAD_POSTINGS,
-            value : false
-        }
-
-        if(SnapShot.READABLE_DOCS.length === 0){
-            dispatchObject.value = true
-        }
-
-        dispatch(dispatchObject)
-        
+    
         fetch(`${SERVER_URL}/read?skip=${SnapShot.SKIP}&limit=${SnapShot.LIMIT}`,{
             method : 'GET'
         })
@@ -49,18 +40,48 @@ export const AC_FILT_READABLE_DOCS = (type,order) => {
 
         switch(`${type}.${order}`){
 
-            // case 'REPLY.UP' :
-            // case 'REPLY.DOWN' :
-            
-            // case 'EYE.DOWN' :
-            // case 'EYE.UP' :
-            
-            // case 'THUMB.UP' :
-            // case 'THUMB.DOWN' :
-        
             case 'REPLY.RESET' :
+            case 'REPLY.DOWN' :
+                dispatch({
+                    type : A_FILT_READABLE_DOCS,
+                    value : FILT_ARRAY(getState().articleLoader.READABLE_DOCS,'POST_REPLY','DOWN')
+                })
+                break;
+            case 'REPLY.UP' :
+                dispatch({
+                    type : A_FILT_READABLE_DOCS,
+                    value : FILT_ARRAY(getState().articleLoader.READABLE_DOCS,'POST_REPLY','UP')
+                })
+                break;
+
             case 'EYE.RESET' :
+            case 'EYE.DOWN' :
+                dispatch({
+                    type : A_FILT_READABLE_DOCS,
+                    value : FILT_ARRAY(getState().articleLoader.READABLE_DOCS,'EYE','DOWN')
+                })
+                break;
+            case 'EYE.UP' :
+                dispatch({
+                    type : A_FILT_READABLE_DOCS,
+                    value : FILT_ARRAY(getState().articleLoader.READABLE_DOCS,'EYE','UP')
+                })
+                break;
+            
             case 'THUMB.RESET' :
+            case 'THUMB.DOWN' :
+                dispatch({
+                    type : A_FILT_READABLE_DOCS,
+                    value : FILT_ARRAY(getState().articleLoader.READABLE_DOCS,'RECOMMEND','DOWN')
+                })
+                break;
+            case 'THUMB.UP' :
+                dispatch({
+                    type : A_FILT_READABLE_DOCS,
+                    value : FILT_ARRAY(getState().articleLoader.READABLE_DOCS,'RECOMMEND','UP')
+                })
+                break;
+                
             case 'TIME.RESET' :
             case 'TIME.DOWN' :
                 dispatch({
@@ -124,12 +145,56 @@ export const SEARCH_ARRAY = (array,searchText) => {
 export const FILT_ARRAY = (array,key,direction) => {
     if(direction === 'UP'){
         return array.sort((a,b) => {
-            return a[key] - b[key]
+            if(Array.isArray(a[key])){
+                return a[key].length - b[key].length
+            } else {
+                return a[key] - b[key]
+            }
         })
     }
     else{
         return array.sort((a,b) => {
-            return b[key] - a[key]
+            if(Array.isArray(a[key])){
+                return b[key].length - a[key].length
+            } else {
+                return b[key] - a[key]
+            }
         })
     }
+}
+
+export const AC_POST_EYE_UP = (postId) => {
+
+    return (dispatch) => {
+
+        return fetch(`${SERVER_URL}/read/postEyeUp`,{
+            method : 'PUT',
+            headers : {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify({
+                targetArticleId : postId
+            })
+
+        }).then(res => res.json())
+        .then(res => {
+            if(res.status === 1){
+                dispatch({
+                    type : A_POST_EYE_UP,
+                    value : res.payload
+                })
+            }
+        })
+
+    }
+
+}
+
+export const AC_REFRESH_ARTICLE_LOAD_STATE = () => {
+
+    return {
+        type : A_REFRESH_ARTICLE_LOAD_STATE
+    }
+
 }

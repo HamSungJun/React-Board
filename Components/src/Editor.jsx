@@ -8,6 +8,7 @@ import { FaUnlink , FaEdit } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { AC_CHANGE_VIEW_MODE , AC_CHANGE_MEDIA_MODE } from '../redux/WriteAction.js'
+import { AC_REFRESH_ARTICLE_LOAD_STATE } from '../redux/ArticleLoaderAction.js'
 
 import { ChromePicker } from 'react-color'
 import { SERVER_URL } from '../redux/GlobalURL.js'
@@ -133,6 +134,8 @@ class Editor extends React.Component{
 
     handleEditComplete(event){
 
+        const {articleLoaderDispatch} = this.props
+
         if(this.state.isPosting){
             return
         }
@@ -178,10 +181,8 @@ class Editor extends React.Component{
                     this.setState({
                         isPosting : false
                     })
-                    
-                    this.props.history.push(`/home?user=${window.sessionStorage.getItem('EMAIL')}`,{
-                        reload : true
-                    })
+                    articleLoaderDispatch.refreshArticleLoadState()
+                    this.props.history.push(`/home?user=${window.sessionStorage.getItem('EMAIL')}`,null)
                 }
                 
             })
@@ -728,6 +729,14 @@ const mapDispatchToProps = (dispatch) => {
                 dispatch(AC_CHANGE_MEDIA_MODE(mode))
 
             }
+
+        },
+        articleLoaderDispatch : {
+
+            refreshArticleLoadState(){
+                return dispatch(AC_REFRESH_ARTICLE_LOAD_STATE())
+            }
+
         }
 
     }

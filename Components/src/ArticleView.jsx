@@ -129,6 +129,10 @@ class ArticleView extends React.Component{
     }
 
     handleThumbUpClick(targetArticleId,EMAIL){
+
+        if(this.state.POST.RECOMMEND.includes(EMAIL)){
+            return alert("이미 추천한 게시물입니다.")
+        }
         
         fetch(`${SERVER_URL}/read/recommendUp`,{
             method : 'POST',
@@ -143,6 +147,7 @@ class ArticleView extends React.Component{
         }).then(res => res.json())
         .then(res => {
             if(res.status === 1){
+                
                 this.setState({
                     POST : res.payload
                 })

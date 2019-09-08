@@ -2,8 +2,9 @@ import React from 'react'
 import { SERVER_URL } from '../redux/GlobalURL.js'
 import './ArticleLoader.scss'
 import { MdSearch } from 'react-icons/md'
+import { FaThumbsUp, FaEye, FaReplyd } from 'react-icons/fa'
 import { connect } from 'react-redux'
-import { AC_LOAD_POSTINGS } from '../redux/ArticleLoaderAction.js'
+import { AC_LOAD_POSTINGS, AC_POST_EYE_UP, AC_REFRESH_ARTICLE_LOAD_STATE } from '../redux/ArticleLoaderAction.js'
 import { HashLoader } from 'react-spinners'
 import { withRouter } from 'react-router-dom' 
 
@@ -15,27 +16,31 @@ class ArticleLoader extends React.Component{
     }
 
     componentDidMount(){
+
         let { articleLoaderState , articleLoaderDispatch } = this.props
-        if(articleLoaderState.READABLE_DOCS.length === 0){
+
+        if(articleLoaderState.SKIP === 0){
             articleLoaderDispatch.loadPostings()
         }
+
         let articleWrapper = document.querySelector(".ArticleLoader-Wrapper");
         articleWrapper.addEventListener('scroll',this.handleScrollBottom);
 
     }
 
     renderReadableDocs(){
-        let { articleLoaderState } = this.props
+        let { articleLoaderState, articleLoaderDispatch } = this.props
         const makeDocTemplate = (el,index) => {
             return (
                 <div onClick={()=>{
+                    this.props.articleLoaderDispatch.postEyeUp(el._id)
                     this.handleRouteToPostContent(el._id)
                 }}  className="ArticleLoader-Wrapper__Item" key={index}>
                     <div className="ArticleLoader-Wrapper__Item__Thumbnail">
                         <img src={el.POST_THUMBNAIL === 'none' ? `${SERVER_URL}/Images/no-img.jpg` : el.POST_THUMBNAIL } alt=""/>
                     </div>
                     <div>
-                        <div className="ArticleLoader-Wrapper__Item__Title">
+                        <div className="ArticleLoader-Wrapper__Item__Sub-Row">
                         
                             <div className="ArticleLoader-Wrapper__Item__Title__Item">
                                 <span>{el.POST_TITLE}</span>
@@ -45,13 +50,22 @@ class ArticleLoader extends React.Component{
                             </div>
                             
                         </div>
-                        <div>
+                        <div className="ArticleLoader-Wrapper__Item__Sub-Row">
                             <div className="ArticleLoader-Wrapper__Item__Author">
                                 <img src={`${SERVER_URL}/UserImages/${el.U_IMG_PATH}`} alt=""/>
                                 <span>{el.AUTHOR}</span>
                             </div>
-                            <div>
-
+                            <div className="ArticleLoader-Wrapper__Item__Recommend">
+                                <FaThumbsUp className="ThumbUp-Icon" />
+                                <span className="ThumbUp-Number">{(el.RECOMMEND || []).length}</span>
+                            </div>
+                            <div className="ArticleLoader-Wrapper__Item__Eye">
+                                <FaEye className="Eye-Icon" />
+                                <span className="Eye-Number">{(el.EYE || 0)}</span>
+                            </div>
+                            <div className="ArticleLoader-Wrapper__Item__Recommend">
+                                <FaReplyd className="Reply-Icon" />
+                                <span className="Reply-Number">{(el.POST_REPLY || []).length}</span>
                             </div>
                         </div>
                     </div>
@@ -84,9 +98,9 @@ class ArticleLoader extends React.Component{
     render(){
         let {articleLoaderState} = this.props
         return (
-            <div className={`ArticleLoader-Wrapper ${articleLoaderState.IS_INITIAL_LOADING?('--Element-Centered'):("")}`}>
+            <div className={`ArticleLoader-Wrapper ${articleLoaderState.SKIP === 0?('--Element-Centered'):("")}`}>
                 {
-                    articleLoaderState.IS_INITIAL_LOADING ?
+                    articleLoaderState.SKIP === 0 ?
                         (<HashLoader size={150} />)
                         :
                         (this.renderReadableDocs())
@@ -100,8 +114,11 @@ const mapDispatchToProps = (dispatch) => {
 
     return {
         articleLoaderDispatch : {
-            loadPostings(){
-                return dispatch(AC_LOAD_POSTINGS())
+            loadPostings(explicitSkip){
+                return dispatch(AC_LOAD_POSTINGS(explicitSkip))
+            },
+            postEyeUp(postId){
+                return dispatch(AC_POST_EYE_UP(postId))
             }
         }
     }
